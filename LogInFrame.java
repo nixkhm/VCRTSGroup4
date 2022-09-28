@@ -23,10 +23,17 @@ public class LogInFrame {
         // implementation)
         JButton logInButton = new JButton("Log In");
         JButton registerButton = new JButton("Register");
-        JTextField userName = new JTextField("Username:");
-        JTextField pass = new JTextField("Password:");
+        JLabel userNameText = new JLabel("Username:");
+        JLabel passText = new JLabel("Password:");
+        userNameText.setForeground(Color.white);
+        passText.setForeground(Color.white);
+        JTextField userName = new JTextField();
+        JTextField pass = new JTextField();
         userName.setColumns(20);
         pass.setColumns(20);
+
+        // To separate the components in JFrame
+        JLabel placeHolder = new JLabel("                      ");
 
         // The JPanel object that will hold all of the componenets
         JPanel panel = new JPanel();
@@ -36,7 +43,10 @@ public class LogInFrame {
 
         // adding all the components into the Panel
         panel.add(logInText);
+        panel.add(placeHolder);
+        panel.add(userNameText);
         panel.add(userName);
+        panel.add(passText);
         panel.add(pass);
         panel.add(logInButton);
         panel.add(registerButton);
