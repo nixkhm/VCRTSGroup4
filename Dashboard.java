@@ -25,18 +25,17 @@ public class Dashboard {
         JPanel panel5 = new JPanel();
         JPanel panel6 = new JPanel();
         JPanel panel7 = new JPanel();
-
+        
         // Setting background of the panels
-        panel.setBackground(new Color(205, 205, 205));
+        panel.setBackground(new Color(41, 55, 77));
         panel2.setBackground(new Color(205, 205, 205));
         panel3.setBackground(new Color(205, 205, 205));
         panel4.setBackground(new Color(205, 205, 205));
         panel5.setBackground(new Color(205, 205, 205));
         panel6.setBackground(new Color(205, 205, 205));
-        panel7.setBackground(new Color(205, 205, 205));
-
+        panel7.setBackground(new Color(205, 205, 205));    
         // Logo Panel
-        panel.setBounds(30, 20, 300, 200);
+        panel.setBounds(30, 20, 300, 150);
 
         // Options Panel
         panel2.setBounds(30, 260, 175, 50);
@@ -52,7 +51,20 @@ public class Dashboard {
         JLabel homeLabel = new JLabel("Home");
         homeLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         panel2.add(homeLabel);
-
+        
+        //Placing the logo on the logo panel
+        JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
+        panel.add(logoLabel);
+       
+        
+        //Greeting card to greet users who signed in.        
+        JLabel greetingUser = new JLabel( "Hello, [username_goes_here]!");
+        greetingUser.setForeground(new Color(255,255,255));
+        greetingUser.setFont(new Font( "Monospaced", Font.BOLD, 25));
+        JPanel greetingUserCard = new JPanel();
+        greetingUserCard.add(greetingUser);
+        greetingUserCard.setBounds(350,50, 600,100);
+        greetingUserCard.setBackground(new Color(41, 55, 77));
         // adding the multiple panels onto the dashboard
         dashboard.add(panel);
         dashboard.add(panel2);
@@ -61,7 +73,7 @@ public class Dashboard {
         dashboard.add(panel5);
         dashboard.add(panel6);
         dashboard.add(panel7);
-
+        dashboard.add(greetingUserCard);
         // setting the Frame to be visible for view
         dashboard.setVisible(true);
 
