@@ -6,13 +6,12 @@ public class OwnerCreation{
     private String ownerModel;
     private Double ownerYear;
 
-    public ownerCreation(private String ownerName, private String ownerMake, private String ownerModel, private double ownerYear,){
+    public void ownerCreation (String ownerName, String ownerMake, String ownerModel, double ownerYear){
         this.ownerName = ownerName;
         this.ownerMake = ownerMake;
         this.ownerModel = ownerModel;
         this.ownerYear = ownerYear;
     }
-
     public String getOwnerName(){
         return ownerName;
     }
