@@ -55,7 +55,7 @@ public class Dashboard {
         //Placing the logo on the logo panel
         JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
         panel.add(logoLabel);
-        //
+       
         
         //Greeting card to greet users who signed in.        
         JLabel greetingUser = new JLabel( "Hello, [username_goes_here]!");
