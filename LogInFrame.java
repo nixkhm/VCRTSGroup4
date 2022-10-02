@@ -1,9 +1,35 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.time.*;
+import java.time.format.*;
+
+class ClickListener implements ActionListener{
+	//Once the user signs in by clicking the button, the program will generate a file containing the time and date that the user logged in.
+	public void actionPerformed(ActionEvent e) {
+	    File transcript = new File("transcript.txt");   
+	    DateTimeFormatter logInTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+	    LocalDateTime now = LocalDateTime.now();
+	    System.out.println(logInTimeAndDate.format(now));
+	    String date = ""+logInTimeAndDate.format(now);
+		try {
+			transcript.createNewFile();
+			FileWriter logInTranscript = new FileWriter(transcript);
+			logInTranscript.write(date);
+			logInTranscript.close();
+		} catch (IOException e1) {
+			
+			e1.printStackTrace();
+		}
+	}
+}
 
 public class LogInFrame {
+    
     public static void main(String[] args) {
-
+        ActionListener goToDashboard = new ClickListener();
         // The frame that will hold the entire Log-In screen
         JFrame logInWindow = new JFrame("VCRTS");
         logInWindow.setSize(300, 400);
@@ -20,18 +46,15 @@ public class LogInFrame {
         logInText.setForeground(new Color(249, 217, 126));
 
         // Created buttons for register & sign-in (Will not use Text-Field for
-        // implementation)
-        JButton logInButton = new JButton("Log In");
-        JButton registerButton = new JButton("Register");
-        JLabel userNameText = new JLabel("Username:");
-        JLabel passText = new JLabel("Password:");
-        userNameText.setForeground(Color.white);
-        passText.setForeground(Color.white);
-        JTextField userName = new JTextField();
-        JTextField pass = new JTextField();
-        userName.setColumns(20);
-        pass.setColumns(20);
-
+        // implementation). These three buttons will each lead to their own dashboards.
+        JLabel signIn = new JLabel("Who is signing in?");
+        signIn.setForeground(Color.white);
+        JButton renterButton = new JButton("Renter");       
+        JButton cloudControlButton = new JButton("Cloud Controller");
+        JButton clientButton = new JButton("Client");
+        renterButton.addActionListener(goToDashboard);
+        cloudControlButton.addActionListener(goToDashboard);
+        clientButton.addActionListener(goToDashboard);
         // To separate the components in JFrame
         JLabel placeHolder = new JLabel("                      ");
 
@@ -44,19 +67,33 @@ public class LogInFrame {
         // adding all the components into the Panel
         panel.add(logInText);
         panel.add(placeHolder);
-        panel.add(userNameText);
-        panel.add(userName);
-        panel.add(passText);
-        panel.add(pass);
-        panel.add(logInButton);
-        panel.add(registerButton);
+        panel.add(signIn);
+        panel.add(renterButton);
+        panel.add(cloudControlButton);
+        panel.add(clientButton);
         panel.add(icon);
-
+        
         // adding the Panel to the frame
         logInWindow.add(panel);
-
+        
         // setting the Frame to be visible for view
         logInWindow.setVisible(true);
     }
 
+	
+
 }
+        //Saved the original logIn layout for the future.
+        /* 
+        JButton logInButton = new JButton("Log In");
+        JButton registerButton = new JButton("Register");
+        JLabel userNameText = new JLabel("Username:");
+        JLabel passText = new JLabel("Password:");
+        userNameText.setForeground(Color.white);
+        passText.setForeground(Color.white);
+        JTextField userName = new JTextField();
+        JTextField pass = new JTextField();
+        userName.setColumns(20);
+        pass.setColumns(20);
+         */
+       
