@@ -25,7 +25,7 @@ public class Dashboard {
         JPanel panel5 = new JPanel();
         JPanel panel6 = new JPanel();
         JPanel panel7 = new JPanel();
-        
+
         // Setting background of the panels
         panel.setBackground(new Color(41, 55, 77));
         panel2.setBackground(new Color(205, 205, 205));
@@ -33,7 +33,7 @@ public class Dashboard {
         panel4.setBackground(new Color(205, 205, 205));
         panel5.setBackground(new Color(205, 205, 205));
         panel6.setBackground(new Color(205, 205, 205));
-        panel7.setBackground(new Color(205, 205, 205));    
+        panel7.setBackground(new Color(205, 205, 205));
         // Logo Panel
         panel.setBounds(30, 20, 300, 150);
 
@@ -45,25 +45,67 @@ public class Dashboard {
         panel6.setBounds(30, 660, 175, 50);
 
         // user Panel
-        panel7.setBounds(1000, 30, 150, 150);
+        panel7.setBounds(1000, 30, 175, 50);
 
         // Label for "Home" option
-        JLabel homeLabel = new JLabel("Home");
+        JButton homeLabel = new JButton("Home");
         homeLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
+        homeLabel.setOpaque(false);
+        homeLabel.setContentAreaFilled(false);
+        homeLabel.setBorderPainted(false);
         panel2.add(homeLabel);
-        
-        //Placing the logo on the logo panel
+
+        // Label for "Submitting a Job" option
+        JButton tasksLabel = new JButton("Submit a Job");
+        tasksLabel.setFont(new Font("Monospaced", Font.BOLD, 22));
+        tasksLabel.setOpaque(false);
+        tasksLabel.setContentAreaFilled(false);
+        tasksLabel.setBorderPainted(false);
+        panel3.add(tasksLabel);
+
+        // Label for "Jobs in Progress" option
+        JButton JIPLabel = new JButton("Jobs in Progress");
+        JIPLabel.setFont(new Font("Monospaced", Font.BOLD, 17));
+        JIPLabel.setOpaque(false);
+        JIPLabel.setContentAreaFilled(false);
+        JIPLabel.setBorderPainted(false);
+        panel4.add(JIPLabel);
+
+        // Label for "History" option
+        JButton historyLabel = new JButton("History");
+        historyLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
+        historyLabel.setOpaque(false);
+        historyLabel.setContentAreaFilled(false);
+        historyLabel.setBorderPainted(false);
+        panel5.add(historyLabel);
+
+        // Label for "Job History" option
+        JButton settingsLabel = new JButton("Settings");
+        settingsLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
+        settingsLabel.setOpaque(false);
+        settingsLabel.setContentAreaFilled(false);
+        settingsLabel.setBorderPainted(false);
+        panel6.add(settingsLabel);
+
+        // Label for "Profile" option
+        JButton userLabel = new JButton("Profile");
+        userLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
+        userLabel.setOpaque(false);
+        userLabel.setContentAreaFilled(false);
+        userLabel.setBorderPainted(false);
+        panel7.add(userLabel);
+
+        // Placing the logo on the logo panel
         JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
         panel.add(logoLabel);
-       
-        
-        //Greeting card to greet users who signed in.        
-        JLabel greetingUser = new JLabel( "Hello, [username_goes_here]!");
-        greetingUser.setForeground(new Color(255,255,255));
-        greetingUser.setFont(new Font( "Monospaced", Font.BOLD, 25));
+
+        // Greeting card to greet users who signed in.
+        JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
+        greetingUser.setForeground(new Color(255, 255, 255));
+        greetingUser.setFont(new Font("Monospaced", Font.BOLD, 25));
         JPanel greetingUserCard = new JPanel();
         greetingUserCard.add(greetingUser);
-        greetingUserCard.setBounds(350,50, 600,100);
+        greetingUserCard.setBounds(350, 50, 600, 100);
         greetingUserCard.setBackground(new Color(41, 55, 77));
         // adding the multiple panels onto the dashboard
         dashboard.add(panel);
