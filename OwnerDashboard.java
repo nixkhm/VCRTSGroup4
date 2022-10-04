@@ -3,6 +3,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+class registerACarListener implements ActionListener {
+    // Once the user signs in by clicking the button, the program will generate a
+    // file containing the time and date that the user logged in.
+    public void actionPerformed(ActionEvent e) {
+        RegistrationFrame registration = new RegistrationFrame();
+
+    }
+}
+
 public class OwnerDashboard {
 
     // The Frame that will hold the entire dashboard
@@ -19,7 +28,7 @@ public class OwnerDashboard {
 
     JButton homeLabel = new JButton("Home");
 
-    JButton tasksLabel = new JButton("Register a Vehicle");
+    JButton registerACar = new JButton("Register a Vehicle");
 
     JButton JIPLabel = new JButton("View my Vehicles");
 
@@ -35,7 +44,7 @@ public class OwnerDashboard {
 
     JPanel greetingUserCard = new JPanel();
 
-    public OwnerDashboard(){
+    public OwnerDashboard() {
 
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
@@ -75,16 +84,20 @@ public class OwnerDashboard {
         homeLabel.addActionListener(goToLogin);
         homeLabel.addActionListener(e -> {
             dashboard.dispose();
-         });
-
-
+        });
 
         // Label for "Submitting a Job" option
-        tasksLabel.setFont(new Font("Monospaced", Font.BOLD, 15));
-        tasksLabel.setOpaque(false);
-        tasksLabel.setContentAreaFilled(false);
-        tasksLabel.setBorderPainted(false);
-        panel3.add(tasksLabel);
+        registerACar.setFont(new Font("Monospaced", Font.BOLD, 15));
+        registerACar.setOpaque(false);
+        registerACar.setContentAreaFilled(false);
+        registerACar.setBorderPainted(false);
+        panel3.add(registerACar);
+
+        ActionListener register = new registerACarListener();
+        registerACar.addActionListener(register);
+        registerACar.addActionListener(e -> {
+            dashboard.dispose();
+        });
 
         // Label for "Jobs in Progress" option
         JIPLabel.setFont(new Font("Monospaced", Font.BOLD, 17));
