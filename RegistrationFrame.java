@@ -1,11 +1,18 @@
 import javax.swing.*;
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.time.*;
+import java.time.format.*;
 public class RegistrationFrame {
     public static void main(String[] args) {
         // This frame will display the car registration form which will ask the user to
         // input details such as car make, model and year. The inputs will then be
         // received by the backend and added to the registry.
+
+        //This frame will display the car registration form which will ask the user to input details such as car make, model and year. The inputs will then be received by the backend and added to the registry.
+        ActionListener submitClick = new ClickListener();
         JFrame dashboard = new JFrame("Car Registration");
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
@@ -74,7 +81,40 @@ public class RegistrationFrame {
 
         // Submit button
         JButton submitButton = new JButton("Submit");
-        submitPanel.add(submitButton);
+        submitButton.addActionListener(new ClickListener(){
+            public void actionPerformed(ActionEvent e){
+        String ownerIdText = ownerIdInput.getText();
+        String durationOfRegistryText = durationOfRegistryInput.getText();
+        String carMakeText = carMakeInput.getText();
+        String carModelText = carModelInput.getText();
+        String carYearText = carYearInput.getText();
+        String info = "\nOwner ID: "+ownerIdText+" \nDuration of Registry: "+durationOfRegistryText+"\n Car Make: "+carMakeText+"\n Car Model: "+carModelText+"\n Car Year: "+carYearText;
+        File carRegistration = new File("Car Registration Information.txt");   
+	    DateTimeFormatter registrationTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+	    LocalDateTime now = LocalDateTime.now();
+	    System.out.println(registrationTimeAndDate.format(now));
+	    String date = "Registration date: "+registrationTimeAndDate.format(now);
+		try {
+			carRegistration.createNewFile();
+			FileWriter registrationTranscript = new FileWriter(carRegistration);
+			registrationTranscript.write(date);
+            registrationTranscript.write(info);
+            /* 
+            JLabel successMessage = new JLabel("Car successfully registered.");
+            JPanel successPanel = new JPanel();
+            successPanel.setBounds(500,650, 100,100);
+            successPanel.add(successMessage);
+            dashboard.add(successPanel);
+            */
+			registrationTranscript.close();
+		} catch (IOException e1) {
+			
+			e1.printStackTrace();
+		}
+	}
+            
+        });         
+        submitPanel.add(submitButton);       
         dashboard.add(submitPanel);
         dashboard.add(carModelInput);
         dashboard.add(carMakeInput);
@@ -87,6 +127,7 @@ public class RegistrationFrame {
         dashboard.add(ownerIdPanel);
         dashboard.add(durationOfRegistryPanel);
         dashboard.setVisible(true);
-
+        
     }
+   
 }
