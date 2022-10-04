@@ -1,0 +1,6 @@
+2022/10/04 18:04:55
+ clientID: 590
+ Approximate job duration: 
+ Job type: 
+ Job Deadline: 
+ Notes: 
