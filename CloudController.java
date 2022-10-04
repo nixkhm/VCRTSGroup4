@@ -27,6 +27,15 @@ import java.time.format.*;
 // 	}
 // }
 
+class logInListener implements ActionListener {
+    // Once the user signs in by clicking the button, the program will generate a
+    // file containing the time and date that the user logged in.
+    public void actionPerformed(ActionEvent e) {
+        LogInFrame logInDashboard = new LogInFrame(); 
+        
+    }
+}
+
 public class CloudController {
     public static void main(String[] args) {
 
@@ -79,7 +88,12 @@ public class CloudController {
         homeLabel.setContentAreaFilled(false);
         homeLabel.setBorderPainted(false);
         panel2.add(homeLabel);
-
+        ActionListener goToLogin = new logInListener();
+        homeLabel.addActionListener(goToLogin);
+        homeLabel.addActionListener(e -> {
+            cloudControllerDash.dispose();
+         });
+         
         // Label for "Pending Applications" option
         JButton pendingAppsLabel = new JButton("Pending Applications");
         pendingAppsLabel.setFont(new Font("Monospaced", Font.BOLD, 14));
