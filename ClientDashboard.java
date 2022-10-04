@@ -1,10 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 
 public class ClientDashboard {
 
+
     // The Frame that will hold the entire dashboard
-    JFrame dashboard = new JFrame("VCRTS Dashboard");
+    JFrame dashboard = new JFrame("Client Dashboard");
 
     // Creating multiple panels that will represent options on a menu
     JPanel panel = new JPanel();
@@ -34,11 +38,8 @@ public class ClientDashboard {
 
     JPanel greetingUserCard = new JPanel();
 
-    public JFrame getFrame() {
-        return dashboard;
-    }
 
-    public ClientDashboard() {
+     public ClientDashboard(){  
 
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
@@ -73,6 +74,11 @@ public class ClientDashboard {
         homeLabel.setContentAreaFilled(false);
         homeLabel.setBorderPainted(false);
         panel2.add(homeLabel);
+        ActionListener goToLogin = new logInListener();
+        homeLabel.addActionListener(goToLogin);
+        homeLabel.addActionListener(e -> {
+            dashboard.dispose();
+         });
 
         // Label for "Submitting a Job" option
         tasksLabel.setFont(new Font("Monospaced", Font.BOLD, 22));
@@ -127,8 +133,8 @@ public class ClientDashboard {
         dashboard.add(panel6);
         dashboard.add(panel7);
         dashboard.add(greetingUserCard);
-
         // setting the Frame to be visible for view
         dashboard.setVisible(true);
     }
 }
+
