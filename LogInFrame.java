@@ -10,7 +10,6 @@ public class LogInFrame {
 
     // registering the ClickListener
     ActionListener goToDashboard = new ClickListener();
-    ActionListener goToCCDashboard = new cloudControllerListener();
 
     // The frame that will hold the entire Log-In screen
     JFrame logInWindow = new JFrame("VCRTS");
@@ -55,7 +54,7 @@ public class LogInFrame {
             logInWindow.dispose();
         });
 
-        cloudControlButton.addActionListener(goToCCDashboard);
+        cloudControlButton.addActionListener(goToDashboard);
         ActionListener cloud = new cloudControllerListener();
         cloudControlButton.addActionListener(cloud);
         cloudControlButton.addActionListener(e -> {
@@ -63,7 +62,7 @@ public class LogInFrame {
         });
 
         clientButton.addActionListener(goToDashboard);
-        ActionListener client = new logInListener();
+        ActionListener client = new clientListener();
         clientButton.addActionListener(client);
         clientButton.addActionListener(e -> {
             logInWindow.dispose();
