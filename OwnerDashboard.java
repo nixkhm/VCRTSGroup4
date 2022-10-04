@@ -2,31 +2,56 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+class registerACarListener implements ActionListener {
+    // Once the user signs in by clicking the button, the program will generate a
+    // file containing the time and date that the user logged in.
+    public void actionPerformed(ActionEvent e) {
+        RegistrationFrame registration = new RegistrationFrame();
+
+    }
+}
+
 public class OwnerDashboard {
 
-    
-    public static void main(String[] args) {
+    // The Frame that will hold the entire dashboard
+    JFrame dashboard = new JFrame("Owner Dashboard");
 
-        // this is a template to go by to organize the Panels, variable names will be
-        // modified accordingly
+    // Creating multiple panels that will represent options on a menu
+    JPanel panel = new JPanel();
+    JPanel panel2 = new JPanel();
+    JPanel panel3 = new JPanel();
+    JPanel panel4 = new JPanel();
+    JPanel panel5 = new JPanel();
+    JPanel panel6 = new JPanel();
+    JPanel panel7 = new JPanel();
 
-        // The Frame that will hold the entire dashboard
-        JFrame dashboard = new JFrame("VCRTS Dashboard");
+    JButton homeLabel = new JButton("Home");
+
+    JButton registerACar = new JButton("Register a Vehicle");
+
+    JButton JIPLabel = new JButton("View my Vehicles");
+
+    JButton historyLabel = new JButton("History");
+
+    JButton settingsLabel = new JButton("Settings");
+
+    JButton userLabel = new JButton("Profile");
+
+    JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
+
+    JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
+
+    JPanel greetingUserCard = new JPanel();
+
+    public OwnerDashboard() {
+
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
         dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         dashboard.setResizable(false);
         dashboard.getContentPane().setBackground(new Color(41, 55, 77));
         dashboard.setLayout(null);
-
-        // Creating multiple panels that will represent options on a menu
-        JPanel panel = new JPanel();
-        JPanel panel2 = new JPanel();
-        JPanel panel3 = new JPanel();
-        JPanel panel4 = new JPanel();
-        JPanel panel5 = new JPanel();
-        JPanel panel6 = new JPanel();
-        JPanel panel7 = new JPanel();
 
         // Setting background of the panels
         panel.setBackground(new Color(41, 55, 77));
@@ -50,22 +75,31 @@ public class OwnerDashboard {
         panel7.setBounds(1000, 30, 175, 50);
 
         // Label for "Home" option
-        JButton homeLabel = new JButton("Home");
         homeLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         homeLabel.setOpaque(false);
         homeLabel.setContentAreaFilled(false);
         homeLabel.setBorderPainted(false);
         panel2.add(homeLabel);
+        ActionListener goToLogin = new logInListener();
+        homeLabel.addActionListener(goToLogin);
+        homeLabel.addActionListener(e -> {
+            dashboard.dispose();
+        });
 
         // Label for "Submitting a Job" option
-        JButton tasksLabel = new JButton("Register a Vehicle");
-        tasksLabel.setFont(new Font("Monospaced", Font.BOLD, 15));
-        tasksLabel.setOpaque(false);
-        tasksLabel.setContentAreaFilled(false);
-        tasksLabel.setBorderPainted(false);
-        panel3.add(tasksLabel);
+        registerACar.setFont(new Font("Monospaced", Font.BOLD, 15));
+        registerACar.setOpaque(false);
+        registerACar.setContentAreaFilled(false);
+        registerACar.setBorderPainted(false);
+        panel3.add(registerACar);
+
+        ActionListener register = new registerACarListener();
+        registerACar.addActionListener(register);
+        registerACar.addActionListener(e -> {
+            dashboard.dispose();
+        });
+
         // Label for "Jobs in Progress" option
-        JButton JIPLabel = new JButton("View my Vehicles");
         JIPLabel.setFont(new Font("Monospaced", Font.BOLD, 17));
         JIPLabel.setOpaque(false);
         JIPLabel.setContentAreaFilled(false);
@@ -73,15 +107,13 @@ public class OwnerDashboard {
         panel4.add(JIPLabel);
 
         // Label for "History" option
-        JButton historyLabel = new JButton("History");
         historyLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         historyLabel.setOpaque(false);
         historyLabel.setContentAreaFilled(false);
         historyLabel.setBorderPainted(false);
         panel5.add(historyLabel);
-        
+
         // Label for "Job History" option
-        JButton settingsLabel = new JButton("Settings");
         settingsLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         settingsLabel.setOpaque(false);
         settingsLabel.setContentAreaFilled(false);
@@ -89,7 +121,6 @@ public class OwnerDashboard {
         panel6.add(settingsLabel);
 
         // Label for "Profile" option
-        JButton userLabel = new JButton("Profile");
         userLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         userLabel.setOpaque(false);
         userLabel.setContentAreaFilled(false);
@@ -97,14 +128,12 @@ public class OwnerDashboard {
         panel7.add(userLabel);
 
         // Placing the logo on the logo panel
-        JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
         panel.add(logoLabel);
 
         // Greeting card to greet users who signed in.
-        JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
         greetingUser.setForeground(new Color(255, 255, 255));
         greetingUser.setFont(new Font("Monospaced", Font.BOLD, 25));
-        JPanel greetingUserCard = new JPanel();
+
         greetingUserCard.add(greetingUser);
         greetingUserCard.setBounds(350, 50, 600, 100);
         greetingUserCard.setBackground(new Color(41, 55, 77));
@@ -119,7 +148,6 @@ public class OwnerDashboard {
         dashboard.add(greetingUserCard);
         // setting the Frame to be visible for view
         dashboard.setVisible(true);
-
     }
 
 }
