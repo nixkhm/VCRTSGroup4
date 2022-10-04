@@ -6,27 +6,6 @@ import java.io.*;
 import java.time.*;
 import java.time.format.*;
 
-
-// class ClickListener implements ActionListener{
-// 	//Once the user signs in by clicking the button, the program will generate a file containing the time and date that the user logged in.
-// 	public void actionPerformed(ActionEvent e) {
-// 	    File transcript = new File("transcript.txt");   
-// 	    DateTimeFormatter logInTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-// 	    LocalDateTime now = LocalDateTime.now();
-// 	    System.out.println(logInTimeAndDate.format(now));
-// 	    String date = ""+logInTimeAndDate.format(now);
-// 		try {
-// 			transcript.createNewFile();
-// 			FileWriter logInTranscript = new FileWriter(transcript);
-// 			logInTranscript.write(date);
-// 			logInTranscript.close();
-// 		} catch (IOException e1) {
-			
-// 			e1.printStackTrace();
-// 		}
-// 	}
-// }
-
 class logInListener implements ActionListener {
     // Once the user signs in by clicking the button, the program will generate a
     // file containing the time and date that the user logged in.

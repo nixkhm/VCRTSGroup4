@@ -1,10 +1,22 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class logInListener implements ActionListener {
+    // Once the user signs in by clicking the button, the program will generate a
+    // file containing the time and date that the user logged in.
+    public void actionPerformed(ActionEvent e) {
+        LogInFrame logInDashboard = new LogInFrame(); 
+        
+    }
+}
 
 public class ClientDashboard {
+    public static void main(String[] args){
 
     // The Frame that will hold the entire dashboard
-    JFrame dashboard = new JFrame("VCRTS Dashboard");
+    JFrame dashboard = new JFrame("Client Dashboard");
 
     // Creating multiple panels that will represent options on a menu
     JPanel panel = new JPanel();
@@ -34,7 +46,8 @@ public class ClientDashboard {
 
     JPanel greetingUserCard = new JPanel();
 
-    public ClientDashboard() {
+
+       
 
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
@@ -69,6 +82,11 @@ public class ClientDashboard {
         homeLabel.setContentAreaFilled(false);
         homeLabel.setBorderPainted(false);
         panel2.add(homeLabel);
+        ActionListener goToLogin = new logInListener();
+        homeLabel.addActionListener(goToLogin);
+        homeLabel.addActionListener(e -> {
+            dashboard.dispose();
+         });
 
         // Label for "Submitting a Job" option
         tasksLabel.setFont(new Font("Monospaced", Font.BOLD, 22));
@@ -127,3 +145,4 @@ public class ClientDashboard {
         dashboard.setVisible(true);
     }
 }
+
