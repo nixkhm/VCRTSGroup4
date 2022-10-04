@@ -1,5 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+class submitButtonListener implements ActionListener {
+    // Once the user signs in by clicking the button, the program will generate a
+    // file containing the time and date that the user logged in.
+    public void actionPerformed(ActionEvent e) {
+        OwnerDashboard dashboard = new OwnerDashboard();
+
+    }
+}
 
 public class RegistrationFrame {
 
@@ -88,6 +99,12 @@ public class RegistrationFrame {
         carMakeInput.setBounds(300, 350, 200, 50);
         carYearInput = new JTextField();
         carYearInput.setBounds(300, 400, 200, 50);
+
+        ActionListener goToDash = new submitButtonListener();
+        submitButton.addActionListener(goToDash);
+        submitButton.addActionListener(e -> {
+            dashboard.dispose();
+        });
 
         // Submit button
         submitPanel.add(submitButton);
