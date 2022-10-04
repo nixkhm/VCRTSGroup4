@@ -8,7 +8,6 @@ import java.time.format.*;
 
 public class LogInFrame {
 
-    // registering the ClickListener
     ActionListener goToDashboard = new ClickListener();
 
     // The frame that will hold the entire Log-In screen
@@ -18,20 +17,16 @@ public class LogInFrame {
     ImageIcon img = new ImageIcon("logo.png");
     JLabel icon = new JLabel(img, JLabel.CENTER);
 
-    // Label for the title of the frame
     JLabel logInText = new JLabel("VCRTS Log In");
 
-    // Label for direction of dashboard
     JLabel signIn = new JLabel("Who is signing in?");
 
-    // different buttons to specify which entity
-    JButton ownerButton = new JButton("Owner");
+    JButton renterButton = new JButton("Renter");
     JButton cloudControlButton = new JButton("Cloud Controller");
     JButton clientButton = new JButton("Client");
 
     JLabel placeHolder = new JLabel("                      ");
 
-    // Panel for the entire frame
     JPanel panel = new JPanel();
 
     public LogInFrame() {
@@ -47,10 +42,10 @@ public class LogInFrame {
         // implementation). These three buttons will each lead to their own dashboards.
         signIn.setForeground(Color.white);
 
-        ownerButton.addActionListener(goToDashboard);
-        ActionListener owner = new ownerListener();
-        ownerButton.addActionListener(owner);
-        ownerButton.addActionListener(e -> {
+        renterButton.addActionListener(goToDashboard);
+        ActionListener renter = new ownerListener();
+        renterButton.addActionListener(renter);
+        renterButton.addActionListener(e -> {
             logInWindow.dispose();
         });
 
@@ -75,7 +70,7 @@ public class LogInFrame {
         panel.add(logInText);
         panel.add(placeHolder);
         panel.add(signIn);
-        panel.add(ownerButton);
+        panel.add(renterButton);
         panel.add(cloudControlButton);
         panel.add(clientButton);
         panel.add(icon);

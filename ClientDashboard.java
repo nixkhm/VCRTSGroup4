@@ -3,56 +3,31 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class submitAJobListener implements ActionListener {
-    // Once the user signs in by clicking the button, the program will generate a
-    // file containing the time and date that the user logged in.
-    public void actionPerformed(ActionEvent e) {
-        ClientSubmission logInDashboard = new ClientSubmission();
-
-    }
-}
 
 public class ClientDashboard {
 
-    // The Frame that will hold the entire dashboard
-    JFrame dashboard = new JFrame("Client Dashboard");
+    public static void main(String[] args) {
 
-    // Creating multiple panels that will represent options on a menu
-    JPanel panel = new JPanel();
-    JPanel panel2 = new JPanel();
-    JPanel panel3 = new JPanel();
-    JPanel panel4 = new JPanel();
-    JPanel panel5 = new JPanel();
-    JPanel panel6 = new JPanel();
-    JPanel panel7 = new JPanel();
+        // this is a template to go by to organize the Panels, variable names will be
+        // modified accordingly
 
-    // Label for "Home" option
-    JButton homeLabel = new JButton("Home");
-
-    JButton tasksLabel = new JButton("Submit a Job");
-
-    JButton JIPLabel = new JButton("Jobs in Progress");
-
-    JButton historyLabel = new JButton("History");
-
-    JButton settingsLabel = new JButton("Settings");
-
-    JButton userLabel = new JButton("Profile");
-
-    JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
-
-    JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
-
-    JPanel greetingUserCard = new JPanel();
-
-    public ClientDashboard() {
-
+        // The Frame that will hold the entire dashboard
+        JFrame dashboard = new JFrame("VCRTS Dashboard");
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
         dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         dashboard.setResizable(false);
         dashboard.getContentPane().setBackground(new Color(41, 55, 77));
         dashboard.setLayout(null);
+
+        // Creating multiple panels that will represent options on a menu
+        JPanel panel = new JPanel();
+        JPanel panel2 = new JPanel();
+        JPanel panel3 = new JPanel();
+        JPanel panel4 = new JPanel();
+        JPanel panel5 = new JPanel();
+        JPanel panel6 = new JPanel();
+        JPanel panel7 = new JPanel();
 
         // Setting background of the panels
         panel.setBackground(new Color(41, 55, 77));
@@ -75,32 +50,29 @@ public class ClientDashboard {
         // user Panel
         panel7.setBounds(1000, 30, 175, 50);
 
+        // Label for "Home" option
+        JButton homeLabel = new JButton("Home");
         homeLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         homeLabel.setOpaque(false);
         homeLabel.setContentAreaFilled(false);
         homeLabel.setBorderPainted(false);
         panel2.add(homeLabel);
-
         ActionListener goToLogin = new logInListener();
         homeLabel.addActionListener(goToLogin);
         homeLabel.addActionListener(e -> {
             dashboard.dispose();
-        });
+         });
 
         // Label for "Submitting a Job" option
+        JButton tasksLabel = new JButton("Submit a Job");
         tasksLabel.setFont(new Font("Monospaced", Font.BOLD, 22));
         tasksLabel.setOpaque(false);
         tasksLabel.setContentAreaFilled(false);
         tasksLabel.setBorderPainted(false);
         panel3.add(tasksLabel);
 
-        ActionListener goToSubmit = new submitAJobListener();
-        tasksLabel.addActionListener(goToSubmit);
-        tasksLabel.addActionListener(e -> {
-            dashboard.dispose();
-        });
-
         // Label for "Jobs in Progress" option
+        JButton JIPLabel = new JButton("Jobs in Progress");
         JIPLabel.setFont(new Font("Monospaced", Font.BOLD, 17));
         JIPLabel.setOpaque(false);
         JIPLabel.setContentAreaFilled(false);
@@ -108,6 +80,7 @@ public class ClientDashboard {
         panel4.add(JIPLabel);
 
         // Label for "History" option
+        JButton historyLabel = new JButton("History");
         historyLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         historyLabel.setOpaque(false);
         historyLabel.setContentAreaFilled(false);
@@ -115,6 +88,7 @@ public class ClientDashboard {
         panel5.add(historyLabel);
 
         // Label for "Job History" option
+        JButton settingsLabel = new JButton("Settings");
         settingsLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         settingsLabel.setOpaque(false);
         settingsLabel.setContentAreaFilled(false);
@@ -122,6 +96,7 @@ public class ClientDashboard {
         panel6.add(settingsLabel);
 
         // Label for "Profile" option
+        JButton userLabel = new JButton("Profile");
         userLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         userLabel.setOpaque(false);
         userLabel.setContentAreaFilled(false);
@@ -129,11 +104,14 @@ public class ClientDashboard {
         panel7.add(userLabel);
 
         // Placing the logo on the logo panel
+        JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
         panel.add(logoLabel);
 
         // Greeting card to greet users who signed in.
+        JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
         greetingUser.setForeground(new Color(255, 255, 255));
         greetingUser.setFont(new Font("Monospaced", Font.BOLD, 25));
+        JPanel greetingUserCard = new JPanel();
         greetingUserCard.add(greetingUser);
         greetingUserCard.setBounds(350, 50, 600, 100);
         greetingUserCard.setBackground(new Color(41, 55, 77));
@@ -148,5 +126,8 @@ public class ClientDashboard {
         dashboard.add(greetingUserCard);
         // setting the Frame to be visible for view
         dashboard.setVisible(true);
+
     }
+
 }
+
