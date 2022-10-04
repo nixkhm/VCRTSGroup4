@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class OwnerDashboard {
-
+    ActionListener rL = new registrationListener();
     // The Frame that will hold the entire dashboard
     JFrame dashboard = new JFrame("Owner Dashboard");
 
@@ -20,7 +20,7 @@ public class OwnerDashboard {
     JButton homeLabel = new JButton("Home");
 
     JButton tasksLabel = new JButton("Register a Vehicle");
-
+    
     JButton JIPLabel = new JButton("View my Vehicles");
 
     JButton historyLabel = new JButton("History");
@@ -125,6 +125,14 @@ public class OwnerDashboard {
         greetingUserCard.setBounds(350, 50, 600, 100);
         greetingUserCard.setBackground(new Color(41, 55, 77));
         // adding the multiple panels onto the dashboard
+
+    
+        
+        ActionListener rL = new registrationListener();
+        tasksLabel.addActionListener(rL);
+        tasksLabel.addActionListener(e -> {
+            dashboard.dispose();
+        });
         dashboard.add(panel);
         dashboard.add(panel2);
         dashboard.add(panel3);
@@ -136,5 +144,10 @@ public class OwnerDashboard {
         // setting the Frame to be visible for view
         dashboard.setVisible(true);
     }
-
+    class registrationListener implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            RegistrationFrame registrationFrame = new RegistrationFrame();
+        }
+    }
 }
+

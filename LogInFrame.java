@@ -48,7 +48,7 @@ public class LogInFrame {
         signIn.setForeground(Color.white);
 
         renterButton.addActionListener(goToDashboard);
-        ActionListener renter = new clientListener();
+        ActionListener renter = new ownerListener();
         renterButton.addActionListener(renter);
         renterButton.addActionListener(e -> {
             logInWindow.dispose();
