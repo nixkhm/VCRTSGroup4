@@ -6,7 +6,6 @@ import java.io.*;
 import java.time.*;
 import java.time.format.*;
 
-
 // class ClickListener implements ActionListener{
 // 	//Once the user signs in by clicking the button, the program will generate a file containing the time and date that the user logged in.
 // 	public void actionPerformed(ActionEvent e) {
@@ -21,7 +20,7 @@ import java.time.format.*;
 // 			logInTranscript.write(date);
 // 			logInTranscript.close();
 // 		} catch (IOException e1) {
-			
+
 // 			e1.printStackTrace();
 // 		}
 // 	}
@@ -31,34 +30,51 @@ class logInListener implements ActionListener {
     // Once the user signs in by clicking the button, the program will generate a
     // file containing the time and date that the user logged in.
     public void actionPerformed(ActionEvent e) {
-        LogInFrame logInDashboard = new LogInFrame(); 
-        
+        LogInFrame logInDashboard = new LogInFrame();
     }
 }
 
 public class CloudController {
-    public static void main(String[] args) {
 
-        // this is a template to go by to organize the Panels, variable names will be
-        // modified accordingly
+    JFrame cloudControllerDash = new JFrame("Cloud Controller Dashboard");
 
+    // Creating multiple panels that will represent options on a menu
+    JPanel panel = new JPanel();
+    JPanel panel2 = new JPanel();
+    JPanel panel3 = new JPanel();
+    JPanel panel4 = new JPanel();
+    JPanel panel5 = new JPanel();
+    JPanel panel6 = new JPanel();
+    JPanel panel7 = new JPanel();
+
+    JButton homeLabel = new JButton("Home");
+
+    ActionListener goToLogin = new logInListener();
+
+    JButton pendingAppsLabel = new JButton("Pending Applications");
+
+    JButton JIPLabel = new JButton("Jobs in Progress");
+
+    JButton historyLabel = new JButton("History");
+
+    JButton userDataLabel = new JButton("User Data");
+
+    JButton userLabel = new JButton("Profile");
+
+    JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
+
+    JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
+
+    JPanel greetingUserCard = new JPanel();
+
+    public CloudController() {
         // The Frame that will hold the entire dashboard
-        JFrame cloudControllerDash = new JFrame("Cloud Controller Dashboard");
         cloudControllerDash.setSize(1200, 800);
         cloudControllerDash.setLocationRelativeTo(null);
         cloudControllerDash.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cloudControllerDash.setResizable(false);
         cloudControllerDash.getContentPane().setBackground(new Color(41, 55, 77));
         cloudControllerDash.setLayout(null);
-
-        // Creating multiple panels that will represent options on a menu
-        JPanel panel = new JPanel();
-        JPanel panel2 = new JPanel();
-        JPanel panel3 = new JPanel();
-        JPanel panel4 = new JPanel();
-        JPanel panel5 = new JPanel();
-        JPanel panel6 = new JPanel();
-        JPanel panel7 = new JPanel();
 
         // Setting background of the panels
         panel.setBackground(new Color(41, 55, 77));
@@ -82,20 +98,17 @@ public class CloudController {
         panel7.setBounds(1000, 30, 175, 50);
 
         // Label for "Home" option
-        JButton homeLabel = new JButton("Home");
         homeLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         homeLabel.setOpaque(false);
         homeLabel.setContentAreaFilled(false);
         homeLabel.setBorderPainted(false);
         panel2.add(homeLabel);
-        ActionListener goToLogin = new logInListener();
         homeLabel.addActionListener(goToLogin);
         homeLabel.addActionListener(e -> {
             cloudControllerDash.dispose();
-         });
-         
+        });
+
         // Label for "Pending Applications" option
-        JButton pendingAppsLabel = new JButton("Pending Applications");
         pendingAppsLabel.setFont(new Font("Monospaced", Font.BOLD, 14));
         pendingAppsLabel.setOpaque(false);
         pendingAppsLabel.setContentAreaFilled(false);
@@ -103,7 +116,6 @@ public class CloudController {
         panel3.add(pendingAppsLabel);
 
         // Label for "Jobs in Progress" option
-        JButton JIPLabel = new JButton("Jobs in Progress");
         JIPLabel.setFont(new Font("Monospaced", Font.BOLD, 17));
         JIPLabel.setOpaque(false);
         JIPLabel.setContentAreaFilled(false);
@@ -111,7 +123,6 @@ public class CloudController {
         panel4.add(JIPLabel);
 
         // Label for "History" option
-        JButton historyLabel = new JButton("History");
         historyLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         historyLabel.setOpaque(false);
         historyLabel.setContentAreaFilled(false);
@@ -119,7 +130,6 @@ public class CloudController {
         panel5.add(historyLabel);
 
         // Label for "User Data" option
-        JButton userDataLabel = new JButton("User Data");
         userDataLabel.setFont(new Font("Monospaced", Font.BOLD, 32));
         userDataLabel.setOpaque(false);
         userDataLabel.setContentAreaFilled(false);
@@ -127,7 +137,6 @@ public class CloudController {
         panel6.add(userDataLabel);
 
         // Label for "Profile" option
-        JButton userLabel = new JButton("Profile");
         userLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         userLabel.setOpaque(false);
         userLabel.setContentAreaFilled(false);
@@ -135,14 +144,11 @@ public class CloudController {
         panel7.add(userLabel);
 
         // Placing the logo on the logo panel
-        JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
         panel.add(logoLabel);
 
         // Greeting card to greet users who signed in.
-        JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
         greetingUser.setForeground(new Color(255, 255, 255));
         greetingUser.setFont(new Font("Monospaced", Font.BOLD, 25));
-        JPanel greetingUserCard = new JPanel();
         greetingUserCard.add(greetingUser);
         greetingUserCard.setBounds(350, 50, 600, 100);
         greetingUserCard.setBackground(new Color(41, 55, 77));
@@ -155,7 +161,9 @@ public class CloudController {
         cloudControllerDash.add(panel6);
         cloudControllerDash.add(panel7);
         cloudControllerDash.add(greetingUserCard);
+
         // setting the Frame to be visible for view
         cloudControllerDash.setVisible(true);
     }
+
 }

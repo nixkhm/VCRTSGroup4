@@ -34,6 +34,10 @@ public class ClientDashboard {
 
     JPanel greetingUserCard = new JPanel();
 
+    public JFrame getFrame() {
+        return dashboard;
+    }
+
     public ClientDashboard() {
 
         dashboard.setSize(1200, 800);
@@ -123,6 +127,7 @@ public class ClientDashboard {
         dashboard.add(panel6);
         dashboard.add(panel7);
         dashboard.add(greetingUserCard);
+
         // setting the Frame to be visible for view
         dashboard.setVisible(true);
     }

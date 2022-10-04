@@ -33,6 +33,10 @@ public class OwnerDashboard {
 
     JPanel greetingUserCard = new JPanel();
 
+    public JFrame getFrame() {
+        return dashboard;
+    }
+
     public OwnerDashboard() {
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
