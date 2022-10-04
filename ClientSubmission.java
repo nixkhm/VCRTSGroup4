@@ -102,6 +102,6 @@ public class ClientSubmission {
         dashboard.add(carYearPanel);
         dashboard.add(ownerIdPanel);
         dashboard.add(durationOfRegistryPanel);
-        dashboard.setVisible(true);
+        dashboard.setVisible(false);
     }
 }
