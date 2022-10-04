@@ -10,6 +10,7 @@ public class LogInFrame {
 
     // registering the ClickListener
     ActionListener goToDashboard = new ClickListener();
+    ActionListener goToCCDashboard = new cloudControllerListener();
 
     // The frame that will hold the entire Log-In screen
     JFrame logInWindow = new JFrame("VCRTS");
@@ -49,7 +50,7 @@ public class LogInFrame {
         signIn.setForeground(Color.white);
 
         renterButton.addActionListener(goToDashboard);
-        cloudControlButton.addActionListener(goToDashboard);
+        cloudControlButton.addActionListener(goToCCDashboard);
         clientButton.addActionListener(goToDashboard);
 
         // setting the background of the Panel to match the background of the logo
@@ -92,6 +93,16 @@ class ClickListener implements ActionListener {
         }
     }
 }
+
+class cloudControllerListener implements ActionListener {
+    // Once the user signs in by clicking the button, the program will generate a
+    // file containing the time and date that the user logged in.
+    public void actionPerformed(ActionEvent e) {
+        CloudController cloudController = new CloudController(); 
+    }
+}
+
+
 
 // Saved the original logIn layout for the future.
 /*
