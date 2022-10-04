@@ -3,17 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class logInListener implements ActionListener {
-    // Once the user signs in by clicking the button, the program will generate a
-    // file containing the time and date that the user logged in.
-    public void actionPerformed(ActionEvent e) {
-        LogInFrame logInDashboard = new LogInFrame(); 
-        
-    }
-}
 
 public class ClientDashboard {
-    public static void main(String[] args){
+
 
     // The Frame that will hold the entire dashboard
     JFrame dashboard = new JFrame("Client Dashboard");
@@ -47,7 +39,7 @@ public class ClientDashboard {
     JPanel greetingUserCard = new JPanel();
 
 
-       
+     public ClientDashboard(){  
 
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
