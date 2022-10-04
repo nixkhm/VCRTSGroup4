@@ -21,7 +21,7 @@ public class LogInFrame {
 
     JLabel signIn = new JLabel("Who is signing in?");
 
-    JButton renterButton = new JButton("Renter");
+    JButton ownerButton = new JButton("Owner");
     JButton cloudControlButton = new JButton("Cloud Controller");
     JButton clientButton = new JButton("Client");
 
@@ -42,10 +42,10 @@ public class LogInFrame {
         // implementation). These three buttons will each lead to their own dashboards.
         signIn.setForeground(Color.white);
 
-        renterButton.addActionListener(goToDashboard);
-        ActionListener renter = new ownerListener();
-        renterButton.addActionListener(renter);
-        renterButton.addActionListener(e -> {
+        ownerButton.addActionListener(goToDashboard);
+        ActionListener owner = new ownerListener();
+        ownerButton.addActionListener(owner);
+        ownerButton.addActionListener(e -> {
             logInWindow.dispose();
         });
 
@@ -70,7 +70,7 @@ public class LogInFrame {
         panel.add(logInText);
         panel.add(placeHolder);
         panel.add(signIn);
-        panel.add(renterButton);
+        panel.add(ownerButton);
         panel.add(cloudControlButton);
         panel.add(clientButton);
         panel.add(icon);

@@ -62,6 +62,7 @@ public class ClientDashboard {
         panel5.setBackground(new Color(205, 205, 205));
         panel6.setBackground(new Color(205, 205, 205));
         panel7.setBackground(new Color(205, 205, 205));
+
         // Logo Panel
         panel.setBounds(30, 20, 300, 150);
 
@@ -137,6 +138,7 @@ public class ClientDashboard {
         greetingUserCard.add(greetingUser);
         greetingUserCard.setBounds(350, 50, 600, 100);
         greetingUserCard.setBackground(new Color(41, 55, 77));
+
         // adding the multiple panels onto the dashboard
         dashboard.add(panel);
         dashboard.add(panel2);
