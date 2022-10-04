@@ -64,7 +64,6 @@ public class OwnerDashboard {
         tasksLabel.setContentAreaFilled(false);
         tasksLabel.setBorderPainted(false);
         panel3.add(tasksLabel);
-        tasksLabel.addActionListener();
         // Label for "Jobs in Progress" option
         JButton JIPLabel = new JButton("View my Vehicles");
         JIPLabel.setFont(new Font("Monospaced", Font.BOLD, 17));
