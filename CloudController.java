@@ -2,23 +2,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.time.*;
+import java.time.format.*;
 
+class logInListener implements ActionListener {
+    // Once the user signs in by clicking the button, the program will generate a
+    // file containing the time and date that the user logged in.
+    public void actionPerformed(ActionEvent e) {
+        LogInFrame logInDashboard = new LogInFrame(); 
+        
+    }
+}
 
-public class ClientDashboard {
-
-    public static void main(String[] args) {
+public class CloudController {
 
         // this is a template to go by to organize the Panels, variable names will be
         // modified accordingly
 
         // The Frame that will hold the entire dashboard
-        JFrame dashboard = new JFrame("VCRTS Dashboard");
-        dashboard.setSize(1200, 800);
-        dashboard.setLocationRelativeTo(null);
-        dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        dashboard.setResizable(false);
-        dashboard.getContentPane().setBackground(new Color(41, 55, 77));
-        dashboard.setLayout(null);
+        JFrame cloudControllerDash = new JFrame("Cloud Controller Dashboard");
 
         // Creating multiple panels that will represent options on a menu
         JPanel panel = new JPanel();
@@ -29,6 +32,30 @@ public class ClientDashboard {
         JPanel panel6 = new JPanel();
         JPanel panel7 = new JPanel();
 
+        // Buttons
+        JButton homeLabel = new JButton("Home");
+        JButton pendingAppsLabel = new JButton("Pending Applications");
+        JButton JIPLabel = new JButton("Jobs in Progress");
+        JButton historyLabel = new JButton("History");
+        JButton userDataLabel = new JButton("User Data");
+        JButton userLabel = new JButton("Profile");
+
+        // labels
+        JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
+        JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
+        JPanel greetingUserCard = new JPanel();
+
+        public CloudController(){
+
+        // Setting b
+        cloudControllerDash.setSize(1200, 800);
+        cloudControllerDash.setLocationRelativeTo(null);
+        cloudControllerDash.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        cloudControllerDash.setResizable(false);
+        cloudControllerDash.getContentPane().setBackground(new Color(41, 55, 77));
+        cloudControllerDash.setLayout(null);
+
+        
         // Setting background of the panels
         panel.setBackground(new Color(41, 55, 77));
         panel2.setBackground(new Color(205, 205, 205));
@@ -51,7 +78,6 @@ public class ClientDashboard {
         panel7.setBounds(1000, 30, 175, 50);
 
         // Label for "Home" option
-        JButton homeLabel = new JButton("Home");
         homeLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         homeLabel.setOpaque(false);
         homeLabel.setContentAreaFilled(false);
@@ -60,19 +86,17 @@ public class ClientDashboard {
         ActionListener goToLogin = new logInListener();
         homeLabel.addActionListener(goToLogin);
         homeLabel.addActionListener(e -> {
-            dashboard.dispose();
+            cloudControllerDash.dispose();
          });
-
-        // Label for "Submitting a Job" option
-        JButton tasksLabel = new JButton("Submit a Job");
-        tasksLabel.setFont(new Font("Monospaced", Font.BOLD, 22));
-        tasksLabel.setOpaque(false);
-        tasksLabel.setContentAreaFilled(false);
-        tasksLabel.setBorderPainted(false);
-        panel3.add(tasksLabel);
+         
+        // Label for "Pending Applications" option
+        pendingAppsLabel.setFont(new Font("Monospaced", Font.BOLD, 14));
+        pendingAppsLabel.setOpaque(false);
+        pendingAppsLabel.setContentAreaFilled(false);
+        pendingAppsLabel.setBorderPainted(false);
+        panel3.add(pendingAppsLabel);
 
         // Label for "Jobs in Progress" option
-        JButton JIPLabel = new JButton("Jobs in Progress");
         JIPLabel.setFont(new Font("Monospaced", Font.BOLD, 17));
         JIPLabel.setOpaque(false);
         JIPLabel.setContentAreaFilled(false);
@@ -80,23 +104,20 @@ public class ClientDashboard {
         panel4.add(JIPLabel);
 
         // Label for "History" option
-        JButton historyLabel = new JButton("History");
         historyLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         historyLabel.setOpaque(false);
         historyLabel.setContentAreaFilled(false);
         historyLabel.setBorderPainted(false);
         panel5.add(historyLabel);
 
-        // Label for "Job History" option
-        JButton settingsLabel = new JButton("Settings");
-        settingsLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
-        settingsLabel.setOpaque(false);
-        settingsLabel.setContentAreaFilled(false);
-        settingsLabel.setBorderPainted(false);
-        panel6.add(settingsLabel);
+        // Label for "User Data" option
+        userDataLabel.setFont(new Font("Monospaced", Font.BOLD, 32));
+        userDataLabel.setOpaque(false);
+        userDataLabel.setContentAreaFilled(false);
+        userDataLabel.setBorderPainted(false);
+        panel6.add(userDataLabel);
 
         // Label for "Profile" option
-        JButton userLabel = new JButton("Profile");
         userLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         userLabel.setOpaque(false);
         userLabel.setContentAreaFilled(false);
@@ -104,30 +125,24 @@ public class ClientDashboard {
         panel7.add(userLabel);
 
         // Placing the logo on the logo panel
-        JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
         panel.add(logoLabel);
 
         // Greeting card to greet users who signed in.
-        JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
         greetingUser.setForeground(new Color(255, 255, 255));
         greetingUser.setFont(new Font("Monospaced", Font.BOLD, 25));
-        JPanel greetingUserCard = new JPanel();
         greetingUserCard.add(greetingUser);
         greetingUserCard.setBounds(350, 50, 600, 100);
         greetingUserCard.setBackground(new Color(41, 55, 77));
         // adding the multiple panels onto the dashboard
-        dashboard.add(panel);
-        dashboard.add(panel2);
-        dashboard.add(panel3);
-        dashboard.add(panel4);
-        dashboard.add(panel5);
-        dashboard.add(panel6);
-        dashboard.add(panel7);
-        dashboard.add(greetingUserCard);
+        cloudControllerDash.add(panel);
+        cloudControllerDash.add(panel2);
+        cloudControllerDash.add(panel3);
+        cloudControllerDash.add(panel4);
+        cloudControllerDash.add(panel5);
+        cloudControllerDash.add(panel6);
+        cloudControllerDash.add(panel7);
+        cloudControllerDash.add(greetingUserCard);
         // setting the Frame to be visible for view
-        dashboard.setVisible(true);
-
+        cloudControllerDash.setVisible(true);
     }
-
 }
-

@@ -30,7 +30,6 @@ public class LogInFrame {
     JPanel panel = new JPanel();
 
     public LogInFrame() {
-
         logInWindow.setSize(300, 400);
         logInWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         logInWindow.setLocationRelativeTo(null);
@@ -44,8 +43,25 @@ public class LogInFrame {
         signIn.setForeground(Color.white);
 
         renterButton.addActionListener(goToDashboard);
+        ActionListener renter = new clientListener();
+        renterButton.addActionListener(renter);
+        renterButton.addActionListener(e -> {
+            logInWindow.dispose();
+        });
+
         cloudControlButton.addActionListener(goToDashboard);
+        ActionListener cloud = new cloudControllerListener();
+        cloudControlButton.addActionListener(cloud);
+        cloudControlButton.addActionListener(e -> {
+            logInWindow.dispose();
+        });
+
         clientButton.addActionListener(goToDashboard);
+        ActionListener client = new clientListener();
+        clientButton.addActionListener(client);
+        clientButton.addActionListener(e -> {
+            logInWindow.dispose();
+        });
 
         // setting the background of the Panel to match the background of the logo
         panel.setBackground(new Color(41, 55, 77));
@@ -68,6 +84,7 @@ public class LogInFrame {
 }
 
 class ClickListener implements ActionListener {
+
     // Once the user signs in by clicking the button, the program will generate a
     // file containing the time and date that the user logged in.
     public void actionPerformed(ActionEvent e) {
@@ -85,6 +102,30 @@ class ClickListener implements ActionListener {
 
             e1.printStackTrace();
         }
+    }
+}
+
+class clientListener implements ActionListener {
+    // Once the user signs in by clicking the button, the program will generate a
+    // file containing the time and date that the user logged in.
+    public void actionPerformed(ActionEvent e) {
+        ClientDashboard client = new ClientDashboard();
+    }
+}
+
+class ownerListener implements ActionListener {
+    // Once the user signs in by clicking the button, the program will generate a
+    // file containing the time and date that the user logged in.
+    public void actionPerformed(ActionEvent e) {
+        OwnerDashboard owner = new OwnerDashboard();
+    }
+}
+
+class cloudControllerListener implements ActionListener {
+    // Once the user signs in by clicking the button, the program will generate a
+    // file containing the time and date that the user logged in.
+    public void actionPerformed(ActionEvent e) {
+        CloudController cloudController = new CloudController();
     }
 }
 
