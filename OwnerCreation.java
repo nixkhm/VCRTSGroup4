@@ -1,6 +1,9 @@
 import java.util.*;
 
 public class OwnerCreation{
+   
+    Scanner scan = new Scanner(System.in);
+
     private String ownerName;
     private String ownerMake;
     private String ownerModel;
@@ -28,4 +31,5 @@ public class OwnerCreation{
         return ownerYear;
     }
     
+
 }
