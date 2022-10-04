@@ -62,16 +62,15 @@ public class ClientDashboard {
         panel5.setBackground(new Color(205, 205, 205));
         panel6.setBackground(new Color(205, 205, 205));
         panel7.setBackground(new Color(205, 205, 205));
-
         // Logo Panel
         panel.setBounds(30, 20, 300, 150);
 
         // Options Panel
-        panel2.setBounds(30, 260, 175, 50);
-        panel3.setBounds(30, 360, 175, 50);
-        panel4.setBounds(30, 460, 175, 50);
-        panel5.setBounds(30, 560, 175, 50);
-        panel6.setBounds(30, 660, 175, 50);
+        panel2.setBounds(100, 260, 175, 50);
+        panel3.setBounds(100, 360, 175, 50);
+        panel4.setBounds(100, 460, 175, 50);
+        panel5.setBounds(100, 560, 175, 50);
+        panel6.setBounds(100, 660, 175, 50);
 
         // user Panel
         panel7.setBounds(1000, 30, 175, 50);

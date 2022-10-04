@@ -1,6 +1,6 @@
-2022/10/04 16:26:20
- OwnerID: 64757584
- Duration of Registry: 1 hour
- Car Model: CRV
- Car Make: Honda
- Car Year: 2004
+2022/10/04 16:34:03
+ OwnerID: 
+ Duration of Registry: 
+ Car Model: 
+ Car Make: 
+ Car Year: 

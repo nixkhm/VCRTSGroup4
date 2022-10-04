@@ -118,7 +118,7 @@ class submitButtonListener implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
 
-        ClientDashboard cloudController = new ClientDashboard();
+        ClientDashboard goToDash = new ClientDashboard();
     }
 
 }
