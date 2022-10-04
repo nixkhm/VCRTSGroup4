@@ -119,38 +119,30 @@ public class RegistrationFrame {
     class submitButtonListener implements ActionListener {
         // Once the user signs in by clicking the button, the program will generate a
         // file containing the time and date that the user logged in.
-        class ClickListener implements ActionListener {
-    
-            // Once the user signs in by clicking the button, the program will generate a
-            // file containing the time and date that the user logged in.
-            public void actionPerformed(ActionEvent e) {
-                
-                File registrationTranscript = new File("Car_Registration.txt");
-                DateTimeFormatter registrationTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                LocalDateTime now = LocalDateTime.now();                
-                String date = "" + registrationTimeAndDate.format(now);
-                String ownerID = ownerIdInput.getText();
-                String durationOfRegistry = durationOfRegistryInput.getText();
-                String carModel = carModelInput.getText();
-                String carMake = carMakeInput.getText();
-                String carYear = carYearInput.getText();
-                String info = "\n OwnerID: "+ownerID+"\n Duration of Registry: "+durationOfRegistry+"\n Car Model: "+carModel+"\n Car Make: "+carMake+"\n Car Year: "+carYear+"";
-                try {
-                    registrationTranscript.createNewFile();
-                    FileWriter regTranscript = new FileWriter(registrationTranscript);
-                    regTranscript.write(date);
-                    regTranscript.write(info);
-                    regTranscript.close();
-                } catch (IOException e1) {
         
-                    e1.printStackTrace();
-                }
-            }
-        }
-    
         public void actionPerformed(ActionEvent e) {
-            OwnerDashboard dashboard = new OwnerDashboard();
+            File registrationTranscript = new File("Car_Registration.txt");
+            DateTimeFormatter registrationTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();                
+            String date = "" + registrationTimeAndDate.format(now);
+            String ownerID = ownerIdInput.getText();
+            String durationOfRegistry = durationOfRegistryInput.getText();
+            String carModel = carModelInput.getText();
+            String carMake = carMakeInput.getText();
+            String carYear = carYearInput.getText();
+            String info = "\n OwnerID: "+ownerID+"\n Duration of Registry: "+durationOfRegistry+"\n Car Model: "+carModel+"\n Car Make: "+carMake+"\n Car Year: "+carYear+"";
+            try {
+                registrationTranscript.createNewFile();
+                FileWriter regTranscript = new FileWriter(registrationTranscript);
+                regTranscript.write(date);
+                regTranscript.write(info);
+                regTranscript.close();
+            } catch (IOException e1) {
     
+                e1.printStackTrace();
+            }
+            OwnerDashboard dashboard = new OwnerDashboard();
+           
         }
     }
 }
