@@ -110,6 +110,7 @@ class clientListener implements ActionListener {
     // file containing the time and date that the user logged in.
     public void actionPerformed(ActionEvent e) {
         ClientDashboard client = new ClientDashboard();
+        client.main();
     }
 }
 
@@ -118,6 +119,7 @@ class ownerListener implements ActionListener {
     // file containing the time and date that the user logged in.
     public void actionPerformed(ActionEvent e) {
         OwnerDashboard owner = new OwnerDashboard();
+        owner.main();
     }
 }
 

@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 public class ClientDashboard {
 
-    public static void main(String[] args) {
+    public static void main() {
 
         // this is a template to go by to organize the Panels, variable names will be
         // modified accordingly
