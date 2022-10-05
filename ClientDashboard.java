@@ -2,13 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 class submitAJobListener implements ActionListener {
     // Once the user signs in by clicking the button, the program will generate a
     // file containing the time and date that the user logged in.
     public void actionPerformed(ActionEvent e) {
-        ClientSubmission logInDashboard = new ClientSubmission();
-
+        try {
+            ClientSubmission logInDashboard = new ClientSubmission();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 }
 
@@ -61,7 +65,7 @@ public class ClientDashboard {
         panel4.setBackground(new Color(205, 205, 205));
         panel5.setBackground(new Color(205, 205, 205));
         panel6.setBackground(new Color(205, 205, 205));
-        panel7.setBackground(new Color(205, 205, 205));      
+        panel7.setBackground(new Color(205, 205, 205));
         // Logo Panel
         panel.setBounds(30, 20, 300, 150);
 
