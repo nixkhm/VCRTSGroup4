@@ -3,13 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.nio.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.format.*;
 import java.time.*;
+
 
 public class RegistrationFrame {
 
@@ -23,6 +19,8 @@ public class RegistrationFrame {
     JLabel registrationTitle = new JLabel("Car Registration");
 
     JPanel submitPanel = new JPanel();
+
+    JPanel returnPanel = new JPanel();
 
     JPanel carModelPanel = new JPanel();
 
@@ -45,6 +43,8 @@ public class RegistrationFrame {
 
     JButton submitButton = new JButton("Submit");
 
+    JButton goBackButton = new JButton("Go Back");
+
     public RegistrationFrame() {
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
@@ -63,6 +63,7 @@ public class RegistrationFrame {
 
         // Panels that are supposed to include all the labels.
         submitPanel.setBounds(400, 500, 100, 50);
+        returnPanel.setBounds(600, 500, 100, 50);
         carModelPanel.setBackground(Color.LIGHT_GRAY);
         carModelPanel.setBounds(50, 300, 200, 50);
 
@@ -105,8 +106,16 @@ public class RegistrationFrame {
             dashboard.dispose();
         });
 
+        ActionListener goToDash2 = new submitButtonListener();
+        goBackButton.addActionListener(goToDash2);
+        goBackButton.addActionListener(e -> {
+            dashboard.dispose();
+        });
+
         // Submit button
         submitPanel.add(submitButton);
+        returnPanel.add(goBackButton);
+        dashboard.add(returnPanel);
         dashboard.add(submitPanel);
         dashboard.add(carModelInput);
         dashboard.add(carMakeInput);
@@ -119,42 +128,35 @@ public class RegistrationFrame {
         dashboard.add(ownerIdPanel);
         dashboard.add(durationOfRegistryPanel);
         dashboard.setVisible(true);
-
     }
-
     class submitButtonListener implements ActionListener {
         // Once the user signs in by clicking the button, the program will generate a
         // file containing the time and date that the user logged in.
-
+        
         public void actionPerformed(ActionEvent e) {
+            File registrationTranscript = new File("Car_Registration.txt");
             DateTimeFormatter registrationTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime now = LocalDateTime.now();                
             String date = "" + registrationTimeAndDate.format(now);
             String ownerID = ownerIdInput.getText();
             String durationOfRegistry = durationOfRegistryInput.getText();
             String carModel = carModelInput.getText();
             String carMake = carMakeInput.getText();
             String carYear = carYearInput.getText();
-            String info = "\n OwnerID: " + ownerID + "\n Duration of Registry: " + durationOfRegistry + "\n Car Model: "
-                    + carModel + "\n Car Make: " + carMake + "\n Car Year: " + carYear + "";
-
+            String info = "\n OwnerID: "+ownerID+"\n Duration of Registry: "+durationOfRegistry+"\n Car Model: "+carModel+"\n Car Make: "+carMake+"\n Car Year: "+carYear+"";
             try {
-                File registrationTranscript = new File("Car_Registration.txt");
+                registrationTranscript.createNewFile();
                 FileWriter regTranscript = new FileWriter(registrationTranscript);
-                Path existingFile = FileSystems.getDefault().getPath("Car_Registration.txt");
-                String content = Files.readString(existingFile, StandardCharsets.UTF_8) + "\n";
-                regTranscript.write(content);
+                regTranscript.write(date);
                 regTranscript.write(info);
-                regTranscript.write("\n" + date);
                 regTranscript.close();
             } catch (IOException e1) {
-
+    
                 e1.printStackTrace();
             }
-
             OwnerDashboard dashboard = new OwnerDashboard();
+
 
         }
     }
-
 }

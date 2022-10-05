@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.time.format.*;
 import java.time.*;
-
 public class ClientSubmission {
 
     // This frame will display the car registration form which will ask the user to
@@ -18,6 +17,8 @@ public class ClientSubmission {
     JLabel registrationTitle = new JLabel("Submit a Job");
 
     JPanel submitPanel = new JPanel();
+
+    JPanel returnPanel = new JPanel();
 
     JPanel carModelPanel = new JPanel();
 
@@ -40,6 +41,8 @@ public class ClientSubmission {
 
     JButton submitButton = new JButton("Submit");
 
+    JButton goBackButton = new JButton("Go Back");
+
     public ClientSubmission() {
 
         dashboard.setSize(1200, 800);
@@ -59,6 +62,7 @@ public class ClientSubmission {
 
         // Panels that are supposed to include all the labels.
         submitPanel.setBounds(400, 500, 100, 50);
+        returnPanel.setBounds(600, 500, 100, 50);
         carModelPanel.setBackground(Color.LIGHT_GRAY);
         carModelPanel.setBounds(50, 300, 200, 50);
         carMakePanel.setBackground(Color.LIGHT_GRAY);
@@ -100,8 +104,16 @@ public class ClientSubmission {
             dashboard.dispose();
         });
 
+        ActionListener goToDash2 = new submitButtonListener();
+        goBackButton.addActionListener(goToDash2);
+        goBackButton.addActionListener(e -> {
+            dashboard.dispose();
+        });
+
         // Submit button
         submitPanel.add(submitButton);
+        returnPanel.add(goBackButton);
+        dashboard.add(returnPanel);
         dashboard.add(submitPanel);
         dashboard.add(approxInput);
         dashboard.add(jobDeadlineInput);
@@ -116,33 +128,32 @@ public class ClientSubmission {
         dashboard.setVisible(true);
     }
 
-    class submitButtonListener implements ActionListener {
 
-        public void actionPerformed(ActionEvent e) {
-            File jobTranscript = new File("job_Submission.txt");
-            DateTimeFormatter jobTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-            String date = "" + jobTimeAndDate.format(now);
-            String clientID = clientIdInput.getText();
-            String approxJobDuration = jobTypeInput.getText();
-            String jobType = approxInput.getText();
-            String jobDeadline = jobDeadlineInput.getText();
-            String notesOptional = notesInput.getText();
-            String info = "\n clientID: " + clientID + "\n Approximate job duration: " + approxJobDuration
-                    + "\n Job type: " + jobType + "\n Job Deadline: " + jobDeadline + "\n Notes: " + notesOptional + "";
-            try {
-                jobTranscript.createNewFile();
-                FileWriter regTranscript = new FileWriter(jobTranscript);
-                regTranscript.write(date);
-                regTranscript.write(info);
-                regTranscript.close();
-            } catch (IOException e1) {
+class submitButtonListener implements ActionListener {
 
-                e1.printStackTrace();
-            }
+    public void actionPerformed(ActionEvent e) {
+        File jobTranscript = new File("job_Submission.txt");
+        DateTimeFormatter jobTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();                
+        String date = "" + jobTimeAndDate.format(now);
+        String clientID = clientIdInput.getText();
+        String approxJobDuration = jobTypeInput.getText();
+        String jobType = approxInput.getText();
+        String jobDeadline = jobDeadlineInput.getText();
+        String notesOptional = notesInput.getText();
+        String info = "\n clientID: "+clientID+"\n Approximate job duration: "+approxJobDuration+"\n Job type: "+jobType+"\n Job Deadline: "+jobDeadline+"\n Notes: "+notesOptional+"";
+        try {
+            jobTranscript.createNewFile();
+            FileWriter regTranscript = new FileWriter(jobTranscript);
+            regTranscript.write(date);
+            regTranscript.write(info);
+            regTranscript.close();
+        } catch (IOException e1) {
 
-            ClientDashboard dash = new ClientDashboard();
-        }
-
+        ClientDashboard goToDash = new ClientDashboard();
+        ClientDashboard goToDash2 = new ClientDashboard();
     }
+
+}
+}
 }
