@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.time.format.*;
 import java.time.*;
+
 public class ClientSubmission {
 
     // This frame will display the car registration form which will ask the user to
@@ -115,30 +116,33 @@ public class ClientSubmission {
         dashboard.setVisible(true);
     }
 
+    class submitButtonListener implements ActionListener {
 
-class submitButtonListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            File jobTranscript = new File("job_Submission.txt");
+            DateTimeFormatter jobTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            String date = "" + jobTimeAndDate.format(now);
+            String clientID = clientIdInput.getText();
+            String approxJobDuration = jobTypeInput.getText();
+            String jobType = approxInput.getText();
+            String jobDeadline = jobDeadlineInput.getText();
+            String notesOptional = notesInput.getText();
+            String info = "\n clientID: " + clientID + "\n Approximate job duration: " + approxJobDuration
+                    + "\n Job type: " + jobType + "\n Job Deadline: " + jobDeadline + "\n Notes: " + notesOptional + "";
+            try {
+                jobTranscript.createNewFile();
+                FileWriter regTranscript = new FileWriter(jobTranscript);
+                regTranscript.write(date);
+                regTranscript.write(info);
+                regTranscript.close();
+            } catch (IOException e1) {
 
-    public void actionPerformed(ActionEvent e) {
-        File jobTranscript = new File("job_Submission.txt");
-        DateTimeFormatter jobTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();                
-        String date = "" + jobTimeAndDate.format(now);
-        String clientID = clientIdInput.getText();
-        String approxJobDuration = jobTypeInput.getText();
-        String jobType = approxInput.getText();
-        String jobDeadline = jobDeadlineInput.getText();
-        String notesOptional = notesInput.getText();
-        String info = "\n clientID: "+clientID+"\n Approximate job duration: "+approxJobDuration+"\n Job type: "+jobType+"\n Job Deadline: "+jobDeadline+"\n Notes: "+notesOptional+"";
-        try {
-            jobTranscript.createNewFile();
-            FileWriter regTranscript = new FileWriter(jobTranscript);
-            regTranscript.write(date);
-            regTranscript.write(info);
-            regTranscript.close();
-        } catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
-            e1.printStackTrace();
+            ClientDashboard dash = new ClientDashboard();
         }
-    }
 
-}}
+    }
+}
