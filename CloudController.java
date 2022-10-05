@@ -1,4 +1,6 @@
+
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,13 +9,40 @@ import java.time.*;
 import java.time.format.*;
 
 class logInListener implements ActionListener {
-    // Once the user signs in by clicking the button, the program will generate a
-    // file containing the time and date that the user logged in.
+    // Goes back to login Dashboard
     public void actionPerformed(ActionEvent e) {
         LogInFrame logInDashboard = new LogInFrame();
-
     }
 }
+
+class pendingAppsListener implements ActionListener {
+    // Returns pending applications
+    public void actionPerformed(ActionEvent e) {
+        PendingAppsFrame pendingAppsDashboard = new PendingAppsFrame();
+    }
+}
+
+class JIPListener implements ActionListener {
+    // Returns jobs in progress
+    public void actionPerformed(ActionEvent e) {
+        JIPFrame jipDashboard = new JIPFrame();
+    }
+}
+
+class historyListener implements ActionListener {
+    // Returns job history
+    public void actionPerformed(ActionEvent e) {
+        HistoryFrame historyDashboard = new HistoryFrame();        
+    }
+}
+
+class userDataListener implements ActionListener {
+    // Returns user data
+    public void actionPerformed(ActionEvent e) {
+        
+    }
+}
+
 
 public class CloudController {
     // this is a template to go by to organize the Panels, variable names will be
@@ -94,6 +123,12 @@ public class CloudController {
         pendingAppsLabel.setBorderPainted(false);
         panel3.add(pendingAppsLabel);
 
+        ActionListener goToPendingApps = new pendingAppsListener();
+        pendingAppsLabel.addActionListener(goToPendingApps);
+        pendingAppsLabel.addActionListener(e -> {
+            dashboard.dispose();
+        });
+
         // Label for "Jobs in Progress" option
         JIPLabel.setFont(new Font("Monospaced", Font.BOLD, 17));
         JIPLabel.setOpaque(false);
@@ -101,12 +136,24 @@ public class CloudController {
         JIPLabel.setBorderPainted(false);
         panel4.add(JIPLabel);
 
+        ActionListener goToJIPS = new JIPListener();
+        JIPLabel.addActionListener(goToJIPS);
+        JIPLabel.addActionListener(e -> {
+            dashboard.dispose();
+        });
+
         // Label for "History" option
         historyLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         historyLabel.setOpaque(false);
         historyLabel.setContentAreaFilled(false);
         historyLabel.setBorderPainted(false);
         panel5.add(historyLabel);
+
+        ActionListener goToHistory = new JIPListener();
+        historyLabel.addActionListener(goToHistory);
+        historyLabel.addActionListener(e -> {
+            dashboard.dispose();
+        });
 
         // Label for "User Data" option
         userDataLabel.setFont(new Font("Monospaced", Font.BOLD, 32));
