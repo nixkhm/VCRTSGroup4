@@ -18,6 +18,8 @@ public class ClientSubmission {
 
     JPanel submitPanel = new JPanel();
 
+    JPanel returnPanel = new JPanel();
+
     JPanel carModelPanel = new JPanel();
 
     JPanel carMakePanel = new JPanel();
@@ -39,6 +41,8 @@ public class ClientSubmission {
 
     JButton submitButton = new JButton("Submit");
 
+    JButton goBackButton = new JButton("Go Back");
+
     public ClientSubmission() {
 
         dashboard.setSize(1200, 800);
@@ -58,6 +62,7 @@ public class ClientSubmission {
 
         // Panels that are supposed to include all the labels.
         submitPanel.setBounds(400, 500, 100, 50);
+        returnPanel.setBounds(600, 500, 100, 50);
         carModelPanel.setBackground(Color.LIGHT_GRAY);
         carModelPanel.setBounds(50, 300, 200, 50);
         carMakePanel.setBackground(Color.LIGHT_GRAY);
@@ -99,8 +104,16 @@ public class ClientSubmission {
             dashboard.dispose();
         });
 
+        ActionListener goToDash2 = new submitButtonListener();
+        goBackButton.addActionListener(goToDash2);
+        goBackButton.addActionListener(e -> {
+            dashboard.dispose();
+        });
+
         // Submit button
         submitPanel.add(submitButton);
+        returnPanel.add(goBackButton);
+        dashboard.add(returnPanel);
         dashboard.add(submitPanel);
         dashboard.add(approxInput);
         dashboard.add(jobDeadlineInput);
@@ -137,8 +150,10 @@ class submitButtonListener implements ActionListener {
             regTranscript.close();
         } catch (IOException e1) {
 
-            e1.printStackTrace();
-        }
+        ClientDashboard goToDash = new ClientDashboard();
+        ClientDashboard goToDash2 = new ClientDashboard();
     }
 
-}}
+}
+}
+}

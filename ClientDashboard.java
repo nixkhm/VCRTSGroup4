@@ -61,7 +61,7 @@ public class ClientDashboard {
         panel4.setBackground(new Color(205, 205, 205));
         panel5.setBackground(new Color(205, 205, 205));
         panel6.setBackground(new Color(205, 205, 205));
-        panel7.setBackground(new Color(205, 205, 205));
+        panel7.setBackground(new Color(205, 205, 205));      
         // Logo Panel
         panel.setBounds(30, 20, 300, 150);
 
