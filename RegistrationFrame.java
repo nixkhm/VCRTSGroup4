@@ -3,9 +3,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.format.*;
 import java.time.*;
-
 
 public class RegistrationFrame {
 
@@ -44,6 +48,9 @@ public class RegistrationFrame {
     JButton submitButton = new JButton("Submit");
 
     JButton goBackButton = new JButton("Go Back");
+
+    Path file = FileSystems.getDefault().getPath("Car_Registration.txt");
+    File registrationTranscript = file.toFile();
 
     public RegistrationFrame() {
         dashboard.setSize(1200, 800);
@@ -129,34 +136,45 @@ public class RegistrationFrame {
         dashboard.add(durationOfRegistryPanel);
         dashboard.setVisible(true);
     }
+
     class submitButtonListener implements ActionListener {
         // Once the user signs in by clicking the button, the program will generate a
         // file containing the time and date that the user logged in.
-        
+
         public void actionPerformed(ActionEvent e) {
-            File registrationTranscript = new File("Car_Registration.txt");
+
+            String str = "";
+            try {
+                str = readFile(registrationTranscript, StandardCharsets.UTF_8);
+            } catch (IOException e2) {
+                e2.printStackTrace();
+            }
+
             DateTimeFormatter registrationTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();                
+            LocalDateTime now = LocalDateTime.now();
             String date = "" + registrationTimeAndDate.format(now);
             String ownerID = ownerIdInput.getText();
             String durationOfRegistry = durationOfRegistryInput.getText();
             String carModel = carModelInput.getText();
             String carMake = carMakeInput.getText();
             String carYear = carYearInput.getText();
-            String info = "\n OwnerID: "+ownerID+"\n Duration of Registry: "+durationOfRegistry+"\n Car Model: "+carModel+"\n Car Make: "+carMake+"\n Car Year: "+carYear+"";
+            String info = "\n OwnerID: " + ownerID + "\n Duration of Registry: " + durationOfRegistry + "\n Car Model: "
+                    + carModel + "\n Car Make: " + carMake + "\n Car Year: " + carYear + "";
             try {
-                registrationTranscript.createNewFile();
                 FileWriter regTranscript = new FileWriter(registrationTranscript);
                 regTranscript.write(date);
-                regTranscript.write(info);
+                regTranscript.write(info + "\n");
+                regTranscript.write(str);
                 regTranscript.close();
             } catch (IOException e1) {
-    
+
                 e1.printStackTrace();
             }
             OwnerDashboard dashboard = new OwnerDashboard();
-
-
         }
+    }
+
+    public static String readFile(File file, Charset charset) throws IOException {
+        return new String(Files.readAllBytes(file.toPath()), charset);
     }
 }
