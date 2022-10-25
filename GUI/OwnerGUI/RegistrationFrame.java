@@ -1,4 +1,7 @@
+package GUI.OwnerGUI;
+
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,16 +14,16 @@ import java.nio.file.Path;
 import java.time.format.*;
 import java.time.*;
 
-public class ClientSubmission {
+public class RegistrationFrame {
 
     // This frame will display the car registration form which will ask the user to
     // input details such as car make, model and year. The inputs will then be
     // received by the backend and added to the registry.
-    JFrame dashboard = new JFrame("Submit a Job");
+    JFrame dashboard = new JFrame("Car Registration");
 
     JPanel titlePanel = new JPanel();
 
-    JLabel registrationTitle = new JLabel("Submit a Job");
+    JLabel registrationTitle = new JLabel("Car Registration");
 
     JPanel submitPanel = new JPanel();
 
@@ -37,23 +40,22 @@ public class ClientSubmission {
     JPanel durationOfRegistryPanel = new JPanel();
 
     // Labels for each text box.
-    JLabel clientID = new JLabel("Client ID");
-    JLabel jobType = new JLabel("Job Type");
-    JLabel approxJobDuration = new JLabel("Approximate Job Duration");
-    JLabel jobDeadline = new JLabel("Job Deadline");
-    JLabel notes = new JLabel("Notes (Optional)");
+    JLabel ownerID = new JLabel("Owner ID");
+    JLabel durationOfRegistry = new JLabel("Duration of registry input");
+    JLabel carModel = new JLabel("Car Model");
+    JLabel carMake = new JLabel("Car Make");
+    JLabel carYear = new JLabel("Car Year");
 
-    JTextField approxInput, jobDeadlineInput, notesInput, clientIdInput, jobTypeInput;
+    JTextField carModelInput, carMakeInput, carYearInput, ownerIdInput, durationOfRegistryInput;
 
     JButton submitButton = new JButton("Submit");
 
     JButton goBackButton = new JButton("Go Back");
 
-    Path file = FileSystems.getDefault().getPath("job_Submission.txt");
-    File jobTranscript = file.toFile();
+    Path file = FileSystems.getDefault().getPath("GUI/Transcripts/carRegistrationTranscript.txt");
+    File registrationTranscript = file.toFile();
 
-    public ClientSubmission() throws IOException {
-
+    public RegistrationFrame() {
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
         dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,7 +63,7 @@ public class ClientSubmission {
         dashboard.getContentPane().setBackground(new Color(41, 55, 77));
         dashboard.setLayout(null);
         // Setting up the title of the frame.
-        titlePanel.setBackground(new Color(50, 100, 100));
+        titlePanel.setBackground(new Color(249, 217, 126));
         titlePanel.setBounds(300, 20, 600, 150);
 
         registrationTitle.setForeground(Color.white);
@@ -74,38 +76,39 @@ public class ClientSubmission {
         returnPanel.setBounds(600, 500, 100, 50);
         carModelPanel.setBackground(Color.LIGHT_GRAY);
         carModelPanel.setBounds(50, 300, 200, 50);
+
         carMakePanel.setBackground(Color.LIGHT_GRAY);
         carMakePanel.setBounds(50, 350, 200, 50);
+
         carYearPanel.setBackground(Color.LIGHT_GRAY);
         carYearPanel.setBounds(50, 400, 200, 50);
         ownerIdPanel.setBackground(Color.LIGHT_GRAY);
         ownerIdPanel.setBounds(50, 200, 200, 50);
-
         durationOfRegistryPanel.setBackground(Color.LIGHT_GRAY);
         durationOfRegistryPanel.setBounds(50, 250, 200, 50);
 
-        approxJobDuration.setBounds(50, 300, 50, 50);
-        clientID.setBounds(50, 200, 50, 50);
-        jobType.setBounds(50, 250, 50, 50);
-        jobDeadline.setBounds(50, 350, 50, 50);
-        notes.setBounds(50, 400, 50, 50);
-        carModelPanel.add(approxJobDuration);
-        carMakePanel.add(jobDeadline);
-        carYearPanel.add(notes);
-        ownerIdPanel.add(clientID);
-        durationOfRegistryPanel.add(jobType);
+        carModel.setBounds(50, 300, 50, 50);
+        ownerID.setBounds(50, 200, 50, 50);
+        durationOfRegistry.setBounds(50, 250, 50, 50);
+        carMake.setBounds(50, 350, 50, 50);
+        carYear.setBounds(50, 400, 50, 50);
+        carModelPanel.add(carModel);
+        carMakePanel.add(carMake);
+        carYearPanel.add(carYear);
+        ownerIdPanel.add(ownerID);
+        durationOfRegistryPanel.add(durationOfRegistry);
 
         // Setting up the text fields.
-        clientIdInput = new JTextField();
-        clientIdInput.setBounds(300, 200, 200, 50);
-        jobTypeInput = new JTextField();
-        jobTypeInput.setBounds(300, 250, 200, 50);
-        approxInput = new JTextField();
-        approxInput.setBounds(300, 300, 200, 50);
-        jobDeadlineInput = new JTextField();
-        jobDeadlineInput.setBounds(300, 350, 200, 50);
-        notesInput = new JTextField();
-        notesInput.setBounds(300, 400, 200, 50);
+        ownerIdInput = new JTextField();
+        ownerIdInput.setBounds(300, 200, 200, 50);
+        durationOfRegistryInput = new JTextField();
+        durationOfRegistryInput.setBounds(300, 250, 200, 50);
+        carModelInput = new JTextField();
+        carModelInput.setBounds(300, 300, 200, 50);
+        carMakeInput = new JTextField();
+        carMakeInput.setBounds(300, 350, 200, 50);
+        carYearInput = new JTextField();
+        carYearInput.setBounds(300, 400, 200, 50);
 
         ActionListener goToDash = new submitButtonListener();
         submitButton.addActionListener(goToDash);
@@ -124,11 +127,11 @@ public class ClientSubmission {
         returnPanel.add(goBackButton);
         dashboard.add(returnPanel);
         dashboard.add(submitPanel);
-        dashboard.add(approxInput);
-        dashboard.add(jobDeadlineInput);
-        dashboard.add(notesInput);
-        dashboard.add(clientIdInput);
-        dashboard.add(jobTypeInput);
+        dashboard.add(carModelInput);
+        dashboard.add(carMakeInput);
+        dashboard.add(carYearInput);
+        dashboard.add(ownerIdInput);
+        dashboard.add(durationOfRegistryInput);
         dashboard.add(carModelPanel);
         dashboard.add(carMakePanel);
         dashboard.add(carYearPanel);
@@ -138,37 +141,39 @@ public class ClientSubmission {
     }
 
     class submitButtonListener implements ActionListener {
+        // Once the user signs in by clicking the button, the program will generate a
+        // file containing the time and date that the user logged in.
 
         public void actionPerformed(ActionEvent e) {
 
             String str = "";
             try {
-                str = readFile(jobTranscript, StandardCharsets.UTF_8);
+                str = readFile(registrationTranscript, StandardCharsets.UTF_8);
             } catch (IOException e2) {
                 e2.printStackTrace();
             }
 
-            DateTimeFormatter jobTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            DateTimeFormatter registrationTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
-            String date = "" + jobTimeAndDate.format(now);
-            String clientID = clientIdInput.getText();
-            String approxJobDuration = jobTypeInput.getText();
-            String jobType = approxInput.getText();
-            String jobDeadline = jobDeadlineInput.getText();
-            String notesOptional = notesInput.getText();
-            String info = "\n clientID: " + clientID + "\n Approximate job duration: " + approxJobDuration
-                    + "\n Job type: " + jobType + "\n Job Deadline: " + jobDeadline + "\n Notes: " + notesOptional + "";
+            String date = "" + registrationTimeAndDate.format(now);
+            String ownerID = ownerIdInput.getText();
+            String durationOfRegistry = durationOfRegistryInput.getText();
+            String carModel = carModelInput.getText();
+            String carMake = carMakeInput.getText();
+            String carYear = carYearInput.getText();
+            String info = "\n OwnerID: " + ownerID + "\n Duration of Registry: " + durationOfRegistry + "\n Car Model: "
+                    + carModel + "\n Car Make: " + carMake + "\n Car Year: " + carYear + "";
             try {
-                FileWriter regTranscript = new FileWriter(jobTranscript);
+                FileWriter regTranscript = new FileWriter(registrationTranscript);
                 regTranscript.write(date);
                 regTranscript.write(info + "\n");
                 regTranscript.write(str);
                 regTranscript.close();
             } catch (IOException e1) {
+
                 e1.printStackTrace();
             }
-
-            ClientDashboard goToDash = new ClientDashboard();
+            OwnerDashboard dashboard = new OwnerDashboard();
         }
     }
 

@@ -1,4 +1,7 @@
+package GUI.CloudControllerGUI;
+
 import javax.swing.*;
+import GUI.ButtonListeners.cloudControllerListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -11,7 +14,6 @@ public class PendingAppsFrame {
     JPanel ownerAppPanel = new JPanel();
     JPanel renterAppPanel = new JPanel();
     JPanel returnPanel = new JPanel();
-
 
     JLabel dashboardTitle = new JLabel("Pending Applications");
 
@@ -38,7 +40,6 @@ public class PendingAppsFrame {
         dashboardTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         titlePanel.add(dashboardTitle);
         dashboard.add(titlePanel);
-
 
         ownerAppTitlePanel.setBackground(Color.LIGHT_GRAY);
         ownerAppTitlePanel.setBounds(50, 200, 500, 50);

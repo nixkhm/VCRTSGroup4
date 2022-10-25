@@ -1,21 +1,56 @@
+package GUI.CloudControllerGUI;
+
 import javax.swing.*;
+import GUI.ClientGUI.JIPFrame;
+import GUI.Start.LogInFrame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.time.*;
+import java.time.format.*;
 
-class registerACarListener implements ActionListener {
-    // Once the user signs in by clicking the button, the program will generate a
-    // file containing the time and date that the user logged in.
+class logInListener implements ActionListener {
+    // Goes back to login Dashboard
     public void actionPerformed(ActionEvent e) {
-        RegistrationFrame registration = new RegistrationFrame();
+        LogInFrame logInDashboard = new LogInFrame();
+    }
+}
+
+class pendingAppsListener implements ActionListener {
+    // Returns pending applications
+    public void actionPerformed(ActionEvent e) {
+        PendingAppsFrame pendingAppsDashboard = new PendingAppsFrame();
+    }
+}
+
+class JIPListener implements ActionListener {
+    // Returns jobs in progress
+    public void actionPerformed(ActionEvent e) {
+        JIPFrame jipDashboard = new JIPFrame();
+    }
+}
+
+class historyListener implements ActionListener {
+    // Returns job history
+    public void actionPerformed(ActionEvent e) {
+        HistoryFrame historyDashboard = new HistoryFrame();
+    }
+}
+
+class userDataListener implements ActionListener {
+    // Returns user data
+    public void actionPerformed(ActionEvent e) {
 
     }
 }
 
-public class OwnerDashboard {
+public class CloudControllerDashboard {
+    // this is a template to go by to organize the Panels, variable names will be
+    // modified accordingly
 
     // The Frame that will hold the entire dashboard
-    JFrame dashboard = new JFrame("Owner Dashboard");
+    JFrame dashboard = new JFrame("Cloud Controller Dashboard");
 
     // Creating multiple panels that will represent options on a menu
     JPanel panel = new JPanel();
@@ -26,25 +61,20 @@ public class OwnerDashboard {
     JPanel panel6 = new JPanel();
     JPanel panel7 = new JPanel();
 
+    // Buttons
     JButton homeLabel = new JButton("Home");
-
-    JButton registerACar = new JButton("Register a Vehicle");
-
-    JButton JIPLabel = new JButton("View my Vehicles");
-
+    JButton pendingAppsLabel = new JButton("Pending Applications");
+    JButton JIPLabel = new JButton("Jobs in Progress");
     JButton historyLabel = new JButton("History");
-
-    JButton settingsLabel = new JButton("Settings");
-
+    JButton userDataLabel = new JButton("User Data");
     JButton userLabel = new JButton("Profile");
 
-    JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
-
+    // labels
+    JLabel logoLabel = new JLabel(new ImageIcon("GUI/Assets/logo.png"));
     JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
-
     JPanel greetingUserCard = new JPanel();
 
-    public OwnerDashboard() {
+    public CloudControllerDashboard() {
 
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
@@ -80,22 +110,23 @@ public class OwnerDashboard {
         homeLabel.setContentAreaFilled(false);
         homeLabel.setBorderPainted(false);
         panel2.add(homeLabel);
+
         ActionListener goToLogin = new logInListener();
         homeLabel.addActionListener(goToLogin);
         homeLabel.addActionListener(e -> {
             dashboard.dispose();
         });
 
-        // Label for "Submitting a Job" option
-        registerACar.setFont(new Font("Monospaced", Font.BOLD, 15));
-        registerACar.setOpaque(false);
-        registerACar.setContentAreaFilled(false);
-        registerACar.setBorderPainted(false);
-        panel3.add(registerACar);
+        // Label for "Pending Applications" option
+        pendingAppsLabel.setFont(new Font("Monospaced", Font.BOLD, 14));
+        pendingAppsLabel.setOpaque(false);
+        pendingAppsLabel.setContentAreaFilled(false);
+        pendingAppsLabel.setBorderPainted(false);
+        panel3.add(pendingAppsLabel);
 
-        ActionListener register = new registerACarListener();
-        registerACar.addActionListener(register);
-        registerACar.addActionListener(e -> {
+        ActionListener goToPendingApps = new pendingAppsListener();
+        pendingAppsLabel.addActionListener(goToPendingApps);
+        pendingAppsLabel.addActionListener(e -> {
             dashboard.dispose();
         });
 
@@ -106,6 +137,12 @@ public class OwnerDashboard {
         JIPLabel.setBorderPainted(false);
         panel4.add(JIPLabel);
 
+        ActionListener goToJIPS = new JIPListener();
+        JIPLabel.addActionListener(goToJIPS);
+        JIPLabel.addActionListener(e -> {
+            dashboard.dispose();
+        });
+
         // Label for "History" option
         historyLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
         historyLabel.setOpaque(false);
@@ -113,12 +150,18 @@ public class OwnerDashboard {
         historyLabel.setBorderPainted(false);
         panel5.add(historyLabel);
 
-        // Label for "Job History" option
-        settingsLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
-        settingsLabel.setOpaque(false);
-        settingsLabel.setContentAreaFilled(false);
-        settingsLabel.setBorderPainted(false);
-        panel6.add(settingsLabel);
+        ActionListener goToHistory = new JIPListener();
+        historyLabel.addActionListener(goToHistory);
+        historyLabel.addActionListener(e -> {
+            dashboard.dispose();
+        });
+
+        // Label for "User Data" option
+        userDataLabel.setFont(new Font("Monospaced", Font.BOLD, 32));
+        userDataLabel.setOpaque(false);
+        userDataLabel.setContentAreaFilled(false);
+        userDataLabel.setBorderPainted(false);
+        panel6.add(userDataLabel);
 
         // Label for "Profile" option
         userLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
@@ -133,7 +176,6 @@ public class OwnerDashboard {
         // Greeting card to greet users who signed in.
         greetingUser.setForeground(new Color(255, 255, 255));
         greetingUser.setFont(new Font("Monospaced", Font.BOLD, 25));
-
         greetingUserCard.add(greetingUser);
         greetingUserCard.setBounds(350, 50, 600, 100);
         greetingUserCard.setBackground(new Color(41, 55, 77));
@@ -149,5 +191,4 @@ public class OwnerDashboard {
         // setting the Frame to be visible for view
         dashboard.setVisible(true);
     }
-
 }

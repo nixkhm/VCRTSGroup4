@@ -1,4 +1,10 @@
+package GUI.Start;
+
+import GUI.ButtonListeners.cloudControllerListener;
+import GUI.ClientGUI.ClientDashboard;
+import GUI.OwnerGUI.OwnerDashboard;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +20,7 @@ public class LogInFrame {
     JFrame logInWindow = new JFrame("VCRTS");
 
     // Created JLabels to hold the Logo and text at top
-    ImageIcon img = new ImageIcon("logo.png");
+    ImageIcon img = new ImageIcon("GUI/Assets/logo.png");
     JLabel icon = new JLabel(img, JLabel.CENTER);
 
     JLabel logInText = new JLabel("VCRTS Log In");
@@ -88,7 +94,7 @@ class ClickListener implements ActionListener {
     // Once the user signs in by clicking the button, the program will generate a
     // file containing the time and date that the user logged in.
     public void actionPerformed(ActionEvent e) {
-        File transcript = new File("transcript.txt");
+        File transcript = new File("GUI/Transcripts/logInTranscript.txt");
         DateTimeFormatter logInTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         System.out.println(logInTimeAndDate.format(now));
@@ -118,14 +124,6 @@ class ownerListener implements ActionListener {
     // file containing the time and date that the user logged in.
     public void actionPerformed(ActionEvent e) {
         OwnerDashboard owner = new OwnerDashboard();
-    }
-}
-
-class cloudControllerListener implements ActionListener {
-    // Once the user signs in by clicking the button, the program will generate a
-    // file containing the time and date that the user logged in.
-    public void actionPerformed(ActionEvent e) {
-        CloudController cloudController = new CloudController();
     }
 }
 

@@ -1,26 +1,26 @@
+package GUI.ClientGUI;
+
+import GUI.ButtonListeners.cloudControllerListener;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class HistoryFrame {
-
-
+public class JIPFrame {
     JFrame dashboard = new JFrame("Pending Application Dashboard");
 
     JPanel titlePanel = new JPanel();
-    JPanel historyTitlePanel = new JPanel();
-    JPanel historyPanel = new JPanel();
+    JPanel JIPTitlePanel = new JPanel();
+    JPanel JIPPanel = new JPanel();
     JPanel returnPanel = new JPanel();
 
+    JLabel dashboardTitle = new JLabel("Jobs In Progress");
 
-    JLabel dashboardTitle = new JLabel("Job History");
-
-    JLabel historyTitle = new JLabel("Jobs History");
-    JLabel history = new JLabel("No Job History");
+    JLabel JIPTitle = new JLabel("Jobs In Progress");
+    JLabel JIPS = new JLabel("No Current Jobs");
 
     JButton returnButton = new JButton("Return");
 
-    public HistoryFrame() {
+    public JIPFrame() {
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
         dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -37,17 +37,16 @@ public class HistoryFrame {
         titlePanel.add(dashboardTitle);
         dashboard.add(titlePanel);
 
-        historyTitlePanel.setBackground(Color.LIGHT_GRAY);
-        historyTitlePanel.setBounds(225,200,750,50);
-        historyTitle.setBounds(550,200,50,50);
-        historyTitlePanel.add(historyTitle);
-        
-        historyPanel.setBackground(Color.LIGHT_GRAY);
-        historyPanel.setBounds(225,250,750,350);
-        history.setBounds(550,250,750,350);
-        historyPanel.add(history);
+        JIPTitlePanel.setBackground(Color.LIGHT_GRAY);
+        JIPTitlePanel.setBounds(225, 200, 750, 50);
+        JIPTitle.setBounds(550, 200, 50, 50);
+        JIPTitlePanel.add(JIPTitle);
 
-        
+        JIPPanel.setBackground(Color.LIGHT_GRAY);
+        JIPPanel.setBounds(225, 250, 750, 350);
+        JIPS.setBounds(550, 250, 750, 350);
+        JIPPanel.add(JIPS);
+
         returnPanel.setBounds(550, 650, 100, 50);
         ActionListener cloud = new cloudControllerListener();
         returnButton.addActionListener(cloud);
@@ -58,12 +57,9 @@ public class HistoryFrame {
 
         dashboard.add(titlePanel);
         dashboard.setVisible(true);
-        dashboard.add(historyTitlePanel);
-        dashboard.add(historyPanel);
+        dashboard.add(JIPTitlePanel);
+        dashboard.add(JIPPanel);
         dashboard.add(returnPanel);
     }
-    
+
 }
-
-    
-

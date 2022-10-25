@@ -1,5 +1,7 @@
+package BackEnd;
+
 public class RenterCreation {
-        
+
     private String renterName;
     private String renterMake;
     private String renterModel;

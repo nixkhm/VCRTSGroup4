@@ -1,4 +1,7 @@
+package GUI.ClientGUI;
+
 import javax.swing.*;
+import GUI.ButtonListeners.logInListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,7 +46,7 @@ public class ClientDashboard {
 
     JButton userLabel = new JButton("Profile");
 
-    JLabel logoLabel = new JLabel(new ImageIcon("logo.png"));
+    JLabel logoLabel = new JLabel(new ImageIcon("GUI/Assets/logo.png"));
 
     JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
 
