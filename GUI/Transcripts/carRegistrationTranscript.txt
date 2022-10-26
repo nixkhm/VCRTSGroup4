@@ -1,3 +1,21 @@
+2022/10/25 13:32:05
+ OwnerID: 
+ Duration of Registry: 
+ Car Model: 
+ Car Make: 
+ Car Year: 
+2022/10/25 13:31:53
+ OwnerID: 
+ Duration of Registry: 
+ Car Model: 
+ Car Make: 
+ Car Year: 
+2022/10/25 13:31:47
+ OwnerID: 
+ Duration of Registry: 
+ Car Model: 
+ Car Make: 
+ Car Year: 
 2022/10/25 13:22:49
  OwnerID: 456
  Duration of Registry: 456
