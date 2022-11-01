@@ -26,37 +26,30 @@ public class Job {
 
     public int getJobID() {
         return jobID;
-
     }
 
     public String getJobName() {
         return jobName;
-
     }
 
     public LocalTime getJobDuration() {
         return duration;
-
     }
 
     public int getJobDeadline() {
         return jobDeadline;
-
     }
 
     public String getJobNotes() {
         return notes;
-
     }
 
     public int getJobProgress() {
         return progress;
-
     }
 
     public Client getJobClient() {
         return client;
-
     }
 
 }

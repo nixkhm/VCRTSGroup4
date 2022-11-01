@@ -13,9 +13,10 @@ public class Vehicle {
     private int year;
     private int timeStart;
     private int timeEnd;
+    private boolean approved;
     private Owner owner;
 
-    public Vehicle(String makeIn, String modelIn, int yearIn, int startIn, int endIn, Owner ownerIn) {
+    public Vehicle(String makeIn, String modelIn, int yearIn, int startIn, int endIn) {
         vehicleID = new Random().nextInt(100);
         inUse = false;
         make = makeIn;
@@ -23,7 +24,7 @@ public class Vehicle {
         year = yearIn;
         timeStart = startIn;
         timeEnd = endIn;
-        owner = ownerIn;
+        approved = false;
     }
 
     public int getVehicleID() {
@@ -56,6 +57,10 @@ public class Vehicle {
 
     public Owner getOwner() {
         return owner;
+    }
+
+    public void approveVehicle() {
+        approved = true;
     }
 
 }

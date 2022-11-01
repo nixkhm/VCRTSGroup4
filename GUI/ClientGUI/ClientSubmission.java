@@ -51,7 +51,7 @@ public class ClientSubmission {
 
     JButton goBackButton = new JButton("Go Back");
 
-    Path file = FileSystems.getDefault().getPath("GUI/Transcripts/jobSubmissionTranscript.txt");
+    Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allJobsApps.txt");
     File jobTranscript = file.toFile();
 
     public ClientSubmission() throws IOException {

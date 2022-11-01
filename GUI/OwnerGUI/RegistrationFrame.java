@@ -2,6 +2,10 @@ package GUI.OwnerGUI;
 
 import javax.swing.*;
 
+import BackEnd.Vehicle;
+import BackEnd.Application.VehicleApplication;
+import BackEnd.Entities.CloudController;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +15,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.format.*;
-import java.time.*;
 
 public class RegistrationFrame {
 
@@ -35,25 +37,25 @@ public class RegistrationFrame {
 
     JPanel carYearPanel = new JPanel();
 
-    JPanel ownerIdPanel = new JPanel();
+    JPanel timeInPanel = new JPanel();
 
-    JPanel durationOfRegistryPanel = new JPanel();
+    JPanel timeOutPanel = new JPanel();
 
     // Labels for each text box.
-    JLabel ownerID = new JLabel("Owner ID");
-    JLabel durationOfRegistry = new JLabel("Duration of registry input");
-    JLabel carModel = new JLabel("Car Model");
     JLabel carMake = new JLabel("Car Make");
+    JLabel carModel = new JLabel("Car Model");
     JLabel carYear = new JLabel("Car Year");
+    JLabel timeIn = new JLabel("Time Start");
+    JLabel timeOut = new JLabel("Time End");
 
-    JTextField carModelInput, carMakeInput, carYearInput, ownerIdInput, durationOfRegistryInput;
+    JTextField carModelInput, carMakeInput, carYearInput, timeStartInput, timeEndInput;
 
     JButton submitButton = new JButton("Submit");
 
     JButton goBackButton = new JButton("Go Back");
 
-    Path file = FileSystems.getDefault().getPath("GUI/Transcripts/carRegistrationTranscript.txt");
-    File registrationTranscript = file.toFile();
+    Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allVehicleApps.txt");
+    File allVehiclesTranscript = file.toFile();
 
     public RegistrationFrame() {
         dashboard.setSize(1200, 800);
@@ -62,53 +64,63 @@ public class RegistrationFrame {
         dashboard.setResizable(false);
         dashboard.getContentPane().setBackground(new Color(41, 55, 77));
         dashboard.setLayout(null);
-        // Setting up the title of the frame.
+
+        // Setting up the titlePanel of the frame.
         titlePanel.setBackground(new Color(249, 217, 126));
         titlePanel.setBounds(300, 20, 600, 150);
-
         registrationTitle.setForeground(Color.white);
         registrationTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         titlePanel.add(registrationTitle);
         dashboard.add(titlePanel);
 
         // Panels that are supposed to include all the labels.
-        submitPanel.setBounds(400, 500, 100, 50);
-        returnPanel.setBounds(600, 500, 100, 50);
-        carModelPanel.setBackground(Color.LIGHT_GRAY);
-        carModelPanel.setBounds(50, 300, 200, 50);
-
         carMakePanel.setBackground(Color.LIGHT_GRAY);
-        carMakePanel.setBounds(50, 350, 200, 50);
+        carMakePanel.setBounds(50, 200, 200, 50);
+        carMake.setBounds(50, 200, 50, 50);
+        carMakePanel.add(carMake);
+
+        carModelPanel.setBackground(Color.LIGHT_GRAY);
+        carModelPanel.setBounds(50, 250, 200, 50);
+        carModel.setBounds(50, 250, 50, 50);
+        carModelPanel.add(carModel);
 
         carYearPanel.setBackground(Color.LIGHT_GRAY);
-        carYearPanel.setBounds(50, 400, 200, 50);
-        ownerIdPanel.setBackground(Color.LIGHT_GRAY);
-        ownerIdPanel.setBounds(50, 200, 200, 50);
-        durationOfRegistryPanel.setBackground(Color.LIGHT_GRAY);
-        durationOfRegistryPanel.setBounds(50, 250, 200, 50);
-
-        carModel.setBounds(50, 300, 50, 50);
-        ownerID.setBounds(50, 200, 50, 50);
-        durationOfRegistry.setBounds(50, 250, 50, 50);
-        carMake.setBounds(50, 350, 50, 50);
-        carYear.setBounds(50, 400, 50, 50);
-        carModelPanel.add(carModel);
-        carMakePanel.add(carMake);
+        carYearPanel.setBounds(50, 300, 200, 50);
+        carYear.setBounds(50, 300, 50, 50);
         carYearPanel.add(carYear);
-        ownerIdPanel.add(ownerID);
-        durationOfRegistryPanel.add(durationOfRegistry);
+
+        timeInPanel.setBackground(Color.LIGHT_GRAY);
+        timeInPanel.setBounds(50, 350, 200, 50);
+        timeIn.setBounds(50, 350, 50, 50);
+        timeInPanel.add(timeIn);
+
+        timeOutPanel.setBackground(Color.LIGHT_GRAY);
+        timeOutPanel.setBounds(50, 400, 200, 50);
+        timeOut.setBounds(50, 400, 50, 50);
+        timeOutPanel.add(timeOut);
+
+        submitPanel.setBounds(400, 500, 100, 50);
+        returnPanel.setBounds(600, 500, 100, 50);
+        submitPanel.add(submitButton);
+        returnPanel.add(goBackButton);
+        dashboard.add(returnPanel);
+        dashboard.add(submitPanel);
 
         // Setting up the text fields.
-        ownerIdInput = new JTextField();
-        ownerIdInput.setBounds(300, 200, 200, 50);
-        durationOfRegistryInput = new JTextField();
-        durationOfRegistryInput.setBounds(300, 250, 200, 50);
-        carModelInput = new JTextField();
-        carModelInput.setBounds(300, 300, 200, 50);
         carMakeInput = new JTextField();
-        carMakeInput.setBounds(300, 350, 200, 50);
+        carMakeInput.setBounds(300, 200, 200, 50);
+
+        carModelInput = new JTextField();
+        carModelInput.setBounds(300, 250, 200, 50);
+
         carYearInput = new JTextField();
-        carYearInput.setBounds(300, 400, 200, 50);
+        carYearInput.setBounds(300, 300, 200, 50);
+
+        timeStartInput = new JTextField();
+        timeStartInput.setBounds(300, 350, 200, 50);
+
+        timeEndInput = new JTextField();
+        timeEndInput.setBounds(300, 400, 200, 50);
 
         ActionListener goToDash = new submitButtonListener();
         submitButton.addActionListener(goToDash);
@@ -122,21 +134,16 @@ public class RegistrationFrame {
             dashboard.dispose();
         });
 
-        // Submit button
-        submitPanel.add(submitButton);
-        returnPanel.add(goBackButton);
-        dashboard.add(returnPanel);
-        dashboard.add(submitPanel);
         dashboard.add(carModelInput);
         dashboard.add(carMakeInput);
         dashboard.add(carYearInput);
-        dashboard.add(ownerIdInput);
-        dashboard.add(durationOfRegistryInput);
+        dashboard.add(timeStartInput);
+        dashboard.add(timeEndInput);
         dashboard.add(carModelPanel);
         dashboard.add(carMakePanel);
         dashboard.add(carYearPanel);
-        dashboard.add(ownerIdPanel);
-        dashboard.add(durationOfRegistryPanel);
+        dashboard.add(timeInPanel);
+        dashboard.add(timeOutPanel);
         dashboard.setVisible(true);
     }
 
@@ -148,24 +155,25 @@ public class RegistrationFrame {
 
             String str = "";
             try {
-                str = readFile(registrationTranscript, StandardCharsets.UTF_8);
+                str = readFile(allVehiclesTranscript, StandardCharsets.UTF_8);
             } catch (IOException e2) {
                 e2.printStackTrace();
             }
 
-            DateTimeFormatter registrationTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-            String date = "" + registrationTimeAndDate.format(now);
-            String ownerID = ownerIdInput.getText();
-            String durationOfRegistry = durationOfRegistryInput.getText();
-            String carModel = carModelInput.getText();
             String carMake = carMakeInput.getText();
-            String carYear = carYearInput.getText();
-            String info = "\n OwnerID: " + ownerID + "\n Duration of Registry: " + durationOfRegistry + "\n Car Model: "
-                    + carModel + "\n Car Make: " + carMake + "\n Car Year: " + carYear + "";
+            String carModel = carModelInput.getText();
+            String carYearStr = carYearInput.getText();
+            int carYear = Integer.parseInt(carYearStr);
+            String timeInStr = timeStartInput.getText();
+            int timeIn = Integer.parseInt(timeInStr);
+            String timeEndStr = timeEndInput.getText();
+            int timeEnd = Integer.parseInt(timeEndStr);
+
+            String info = carMake + "/" + carModel + "/"
+                    + carYear + "/" + timeIn + "/" + timeEnd + "/";
+
             try {
-                FileWriter regTranscript = new FileWriter(registrationTranscript);
-                regTranscript.write(date);
+                FileWriter regTranscript = new FileWriter(allVehiclesTranscript);
                 regTranscript.write(info + "\n");
                 regTranscript.write(str);
                 regTranscript.close();
@@ -173,6 +181,8 @@ public class RegistrationFrame {
 
                 e1.printStackTrace();
             }
+
+            CloudController cc = new CloudController();
             OwnerDashboard dashboard = new OwnerDashboard();
         }
     }

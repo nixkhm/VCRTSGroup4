@@ -8,7 +8,7 @@ public class JobApplication extends Application {
     private Job job;
 
     public void submitJobApplication() {
-          
+
     }
 
     public Job getJob() {

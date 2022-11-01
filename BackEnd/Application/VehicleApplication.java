@@ -7,8 +7,8 @@ public class VehicleApplication extends Application {
     private Application applicationInfo;
     private Vehicle vehicle;
 
-    public void submitRegApplication() {
-
+    public VehicleApplication(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public Vehicle getVehicle() {
