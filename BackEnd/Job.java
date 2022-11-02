@@ -30,6 +30,10 @@ public class Job {
         return jobName;
     }
 
+    public String getJobType() {
+        return jobType;
+    }
+
     public int getJobDuration() {
         return duration;
     }

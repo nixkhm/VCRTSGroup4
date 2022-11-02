@@ -62,8 +62,16 @@ public class CloudController {
             pendingVehicles.add(in);
       }
 
+      public void clearPendingVehicles(){
+            pendingVehicles.clear();
+      }
+
       public void addToPendingJobs(Job in) {
             pendingJobs.add(in);
+      }
+
+      public void clearPendingJobs(){
+            pendingJobs.clear();
       }
 
       public void approveVehicle(VehicleApplication application, Vehicle vehicle) {
@@ -88,6 +96,7 @@ public class CloudController {
 
       public ArrayList<Vehicle> getAllVehApps()
                   throws IOException {
+                  clearPendingVehicles();
                   Scanner s = new Scanner(new File("GUI/Transcripts/allVehicleApps.txt"));
                   ArrayList<String> list = new ArrayList<String>();
                   while (s.hasNext()) {
@@ -111,8 +120,9 @@ public class CloudController {
             return pendingVehicles;
       }
 
-      public void getAllJobApps()
+      public ArrayList<Job> getAllJobApps()
                   throws IOException {
+                  clearPendingJobs();
                   Scanner s = new Scanner(new File("GUI/Transcripts/allJobsApps.txt"));
                   ArrayList<String> list = new ArrayList<String>();
                   while (s.hasNext()) {
@@ -132,7 +142,7 @@ public class CloudController {
                         Job newJob = new Job(name, type, Integer.parseInt(duration), Integer.parseInt(deadline),
                                     notes);
                         addToPendingJobs(newJob);
-
             }
+            return pendingJobs;
       }
 }
