@@ -1,6 +1,6 @@
 package BackEnd.Application;
 
-import BackEnd.Job;
+import BackEnd.model.Job;
 
 public class JobApplication extends Application {
 

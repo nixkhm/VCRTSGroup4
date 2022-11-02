@@ -1,27 +1,25 @@
-package BackEnd;
+package BackEnd.model;
 
 import java.time.LocalTime;
 import java.util.Random;
-
-import BackEnd.Entities.Client;
 
 public class Job {
 
     private int jobID;
     private String jobName;
-    private String jobType;
-    private int duration;
+    private LocalTime duration;
     private int jobDeadline;
     private String notes;
     private int progress;
+    private Client client;
 
-    public Job(String jobNameIn, String jobTypeIn, int durationIn, int jobDeadlineIn, String notesIn) {
+    public Job(String jobNameIn, int jobDeadlineIn, String notesIn, Client clientIn) {
         jobID = new Random().nextInt(100);
         jobName = jobNameIn;
-        jobType = jobTypeIn;
-        duration = durationIn;
+        duration = LocalTime.now();
         jobDeadline = jobDeadlineIn;
         notes = notesIn;
+        client = clientIn;
     }
 
     public int getJobID() {
@@ -32,7 +30,7 @@ public class Job {
         return jobName;
     }
 
-    public int getJobDuration() {
+    public LocalTime getJobDuration() {
         return duration;
     }
 
@@ -48,8 +46,8 @@ public class Job {
         return progress;
     }
 
-    public String toString() {
-        return jobName + " " + jobType + " " + duration + " " + jobDeadline + " " + notes;
+    public Client getJobClient() {
+        return client;
     }
 
 }

@@ -1,6 +1,4 @@
-package BackEnd.Entities;
-
-import BackEnd.Vehicle;
+package BackEnd.model;
 
 public class Owner extends User {
 

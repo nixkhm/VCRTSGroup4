@@ -31,11 +31,11 @@ public class RegistrationFrame {
 
     JPanel returnPanel = new JPanel();
 
-    JPanel carModelPanel = new JPanel();
+    JPanel jobNamePanel = new JPanel();
 
-    JPanel carMakePanel = new JPanel();
+    JPanel jobDurationPanel = new JPanel();
 
-    JPanel carYearPanel = new JPanel();
+    JPanel jobDeadlinePanel = new JPanel();
 
     JPanel timeInPanel = new JPanel();
 
@@ -74,20 +74,20 @@ public class RegistrationFrame {
         dashboard.add(titlePanel);
 
         // Panels that are supposed to include all the labels.
-        carMakePanel.setBackground(Color.LIGHT_GRAY);
-        carMakePanel.setBounds(50, 200, 200, 50);
+        jobDurationPanel.setBackground(Color.LIGHT_GRAY);
+        jobDurationPanel.setBounds(50, 200, 200, 50);
         carMake.setBounds(50, 200, 50, 50);
-        carMakePanel.add(carMake);
+        jobDurationPanel.add(carMake);
 
-        carModelPanel.setBackground(Color.LIGHT_GRAY);
-        carModelPanel.setBounds(50, 250, 200, 50);
+        jobNamePanel.setBackground(Color.LIGHT_GRAY);
+        jobNamePanel.setBounds(50, 250, 200, 50);
         carModel.setBounds(50, 250, 50, 50);
-        carModelPanel.add(carModel);
+        jobNamePanel.add(carModel);
 
-        carYearPanel.setBackground(Color.LIGHT_GRAY);
-        carYearPanel.setBounds(50, 300, 200, 50);
+        jobDeadlinePanel.setBackground(Color.LIGHT_GRAY);
+        jobDeadlinePanel.setBounds(50, 300, 200, 50);
         carYear.setBounds(50, 300, 50, 50);
-        carYearPanel.add(carYear);
+        jobDeadlinePanel.add(carYear);
 
         timeInPanel.setBackground(Color.LIGHT_GRAY);
         timeInPanel.setBounds(50, 350, 200, 50);
@@ -139,9 +139,9 @@ public class RegistrationFrame {
         dashboard.add(carYearInput);
         dashboard.add(timeStartInput);
         dashboard.add(timeEndInput);
-        dashboard.add(carModelPanel);
-        dashboard.add(carMakePanel);
-        dashboard.add(carYearPanel);
+        dashboard.add(jobNamePanel);
+        dashboard.add(jobDurationPanel);
+        dashboard.add(jobDeadlinePanel);
         dashboard.add(timeInPanel);
         dashboard.add(timeOutPanel);
         dashboard.setVisible(true);

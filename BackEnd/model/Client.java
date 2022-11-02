@@ -1,8 +1,6 @@
-package BackEnd.Entities;
+package BackEnd.model;
 
 import java.util.Queue;
-
-import BackEnd.Job;
 
 public class Client extends User {
 

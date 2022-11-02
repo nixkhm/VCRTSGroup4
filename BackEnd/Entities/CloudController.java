@@ -14,24 +14,57 @@ import BackEnd.model.Job;
 public class CloudController {
 
       private ArrayList<Vehicle> pendingVehicles;
-      private ArrayList<Vehicle> approvedVehicles;
+      private ArrayList<Job> pendingJobs;
 
       private VehicularCloud currentVehicularCloud;
 
       public CloudController() {
-
             pendingVehicles = new ArrayList<Vehicle>();
+            pendingJobs = new ArrayList<Job>();
+
             try {
                   getAllVehApps();
             } catch (IOException e) {
                   // TODO Auto-generated catch block
                   e.printStackTrace();
             }
+
+            try {
+                  getAllJobApps("GUI/Transcripts/allVehicleApps.txt");
+            } catch (IOException e) {
+                  // TODO Auto-generated catch block
+                  e.printStackTrace();
+            }
+
+            display();
+
+      }
+
+      public void display() {
+            System.out.println("-------------------------------------------------------");
+            System.out.println("Vehicle Apps");
+            if (pendingVehicles.size() == 0) {
+                  System.out.println("none");
+            }
+            for (int i = 0; i < pendingVehicles.size(); i++) {
+                  System.out.println(pendingVehicles.get(i).toString());
+            }
+            System.out.println("Job Apps");
+            if (pendingJobs.size() == 0) {
+                  System.out.println("none");
+            }
+            for (int i = 0; i < pendingJobs.size(); i++) {
+                  System.out.println(pendingJobs.get(i).toString());
+            }
+            System.out.println("-------------------------------------------------------");
       }
 
       public void addToPendingVehicles(Vehicle in) {
             pendingVehicles.add(in);
-            System.out.println("Vehicle Added!");
+      }
+
+      public void addToPendingJobs(Job in) {
+            pendingJobs.add(in);
       }
 
       public void approveVehicle(VehicleApplication application, Vehicle vehicle) {
@@ -77,9 +110,32 @@ public class CloudController {
                         addToPendingVehicles(newVeh);
                   }
 
-            for (int i = 0; i < pendingVehicles.size(); i++) {
-                  System.out.println(pendingVehicles.get(i).toString());
             }
+      }
+
+      public void getAllJobApps(String filename)
+                  throws IOException {
+            try (Scanner in = new Scanner(new File(filename))) {
+                  Scanner s = new Scanner(new File("GUI/Transcripts/allJobsApps.txt"));
+                  ArrayList<String> list = new ArrayList<String>();
+                  while (s.hasNext()) {
+                        list.add(s.next());
+                  }
+                  s.close();
+                  for (int i = 0; i < list.size(); i++) {
+
+                        String pre = list.get(i);
+                        String[] split = pre.split("/");
+                        String name = split[0];
+                        String type = split[1];
+                        String duration = split[2];
+                        String deadline = split[3];
+                        String notes = split[4];
+
+                        Job newJob = new Job(name, type, Integer.parseInt(duration), Integer.parseInt(deadline),
+                                    notes);
+                        addToPendingJobs(newJob);
+                  }
 
             return pendingVehicles;
       }

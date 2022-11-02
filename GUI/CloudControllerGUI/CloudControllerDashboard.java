@@ -45,6 +45,18 @@ class userDataListener implements ActionListener {
     }
 }
 
+class vehicleListListener implements ActionListener {
+    // Returns job history
+    public void actionPerformed(ActionEvent e) {
+        try {
+            VehicleListFrame vehicleListDashboard = new VehicleListFrame();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+    }
+}
+
 public class CloudControllerDashboard {
     // this is a template to go by to organize the Panels, variable names will be
     // modified accordingly
@@ -60,6 +72,7 @@ public class CloudControllerDashboard {
     JPanel panel5 = new JPanel();
     JPanel panel6 = new JPanel();
     JPanel panel7 = new JPanel();
+    JPanel panel8 = new JPanel();
 
     // Buttons
     JButton homeLabel = new JButton("Home");
@@ -68,6 +81,7 @@ public class CloudControllerDashboard {
     JButton historyLabel = new JButton("History");
     JButton userDataLabel = new JButton("User Data");
     JButton userLabel = new JButton("Profile");
+    JButton vehicleListLabel = new JButton("List of Vehicles");
 
     // labels
     JLabel logoLabel = new JLabel(new ImageIcon("GUI/Assets/logo.png"));
@@ -91,6 +105,7 @@ public class CloudControllerDashboard {
         panel5.setBackground(new Color(205, 205, 205));
         panel6.setBackground(new Color(205, 205, 205));
         panel7.setBackground(new Color(205, 205, 205));
+        panel8.setBackground(new Color(205, 205, 205));
         // Logo Panel
         panel.setBounds(30, 20, 300, 150);
 
@@ -100,6 +115,7 @@ public class CloudControllerDashboard {
         panel4.setBounds(100, 460, 175, 50);
         panel5.setBounds(100, 560, 175, 50);
         panel6.setBounds(100, 660, 175, 50);
+        panel8.setBounds(300,260,175,50);
 
         // user Panel
         panel7.setBounds(1000, 30, 175, 50);
@@ -170,6 +186,19 @@ public class CloudControllerDashboard {
         userLabel.setBorderPainted(false);
         panel7.add(userLabel);
 
+        // Label for "List of Vehicles" option
+        vehicleListLabel.setFont(new Font("Monospaced", Font.BOLD, 17));
+        vehicleListLabel.setOpaque(false);
+        vehicleListLabel.setContentAreaFilled(false);
+        vehicleListLabel.setBorderPainted(false);
+        panel8.add(vehicleListLabel);
+
+        ActionListener goToVehicleList = new vehicleListListener();
+        vehicleListLabel.addActionListener(goToVehicleList);
+        vehicleListLabel.addActionListener(e -> {
+            dashboard.dispose();
+        });
+
         // Placing the logo on the logo panel
         panel.add(logoLabel);
 
@@ -187,6 +216,7 @@ public class CloudControllerDashboard {
         dashboard.add(panel5);
         dashboard.add(panel6);
         dashboard.add(panel7);
+        dashboard.add(panel8);
         dashboard.add(greetingUserCard);
         // setting the Frame to be visible for view
         dashboard.setVisible(true);

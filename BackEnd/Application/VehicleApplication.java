@@ -1,6 +1,6 @@
 package BackEnd.Application;
 
-import BackEnd.Vehicle;
+import BackEnd.model.Vehicle;
 
 public class VehicleApplication extends Application {
 

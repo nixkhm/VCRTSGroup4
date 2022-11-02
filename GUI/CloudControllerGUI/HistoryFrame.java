@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 
 public class HistoryFrame {
 
-    JFrame dashboard = new JFrame("Pending Application Dashboard");
+    JFrame dashboard = new JFrame("Job History Dashboard");
 
     JPanel titlePanel = new JPanel();
     JPanel historyTitlePanel = new JPanel();

@@ -1,8 +1,6 @@
-package BackEnd;
+package BackEnd.model;
 
 import java.util.Random;
-
-import BackEnd.model.Owner;
 
 public class Vehicle {
 
@@ -61,10 +59,6 @@ public class Vehicle {
 
     public void approveVehicle() {
         approved = true;
-    }
-
-    public String toString() {
-        return make + " " + model + " " + year + " " + timeStart + " " + timeEnd;
     }
 
 }

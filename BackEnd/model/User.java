@@ -1,4 +1,4 @@
-package BackEnd.Entities;
+package BackEnd.model;
 
 import java.util.Random;
 

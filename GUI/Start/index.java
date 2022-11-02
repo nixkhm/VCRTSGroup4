@@ -1,6 +1,6 @@
 package GUI.Start;
 
-import BackEnd.Entities.CloudController;
+import BackEnd.model.CloudController;
 
 public class index {
 
