@@ -5,6 +5,7 @@ import javax.swing.*;
 import BackEnd.Vehicle;
 import BackEnd.Application.VehicleApplication;
 import BackEnd.Entities.CloudController;
+import GUI.ClientGUI.ClientDashboard;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -128,7 +129,7 @@ public class RegistrationFrame {
             dashboard.dispose();
         });
 
-        ActionListener goToDash2 = new submitButtonListener();
+        ActionListener goToDash2 = new returnButtonListener();
         goBackButton.addActionListener(goToDash2);
         goBackButton.addActionListener(e -> {
             dashboard.dispose();
@@ -184,6 +185,14 @@ public class RegistrationFrame {
 
             CloudController cc = new CloudController();
             OwnerDashboard dashboard = new OwnerDashboard();
+        }
+    }
+
+    class returnButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+
+            ClientDashboard goToDash = new ClientDashboard();
         }
     }
 

@@ -27,7 +27,12 @@ class pendingAppsListener implements ActionListener {
 class JIPListener implements ActionListener {
     // Returns jobs in progress
     public void actionPerformed(ActionEvent e) {
-        JIPFrame jipDashboard = new JIPFrame();
+        try {
+            JobsInProgressFrame jipDashboard = new JobsInProgressFrame();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
     }
 }
 
