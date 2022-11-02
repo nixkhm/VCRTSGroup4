@@ -16,6 +16,9 @@ public class JobsInProgressFrame {
     JPanel JIPTitlePanel = new JPanel();
     JPanel JIPPanel = new JPanel();
     JPanel returnPanel = new JPanel();
+    JPanel jobDurationPanel = new JPanel();
+
+    
 
     JLabel dashboardTitle = new JLabel("Jobs In Progress");
 
@@ -47,6 +50,7 @@ public class JobsInProgressFrame {
 
         JIPPanel.setBackground(Color.LIGHT_GRAY);
         JIPPanel.setBounds(225, 250, 750, 350);
+        JIPPanel.setLayout(null);
         CloudController cloudController = new CloudController();
         final ArrayList<Job> listofJobs = cloudController.getAllJobApps();
         String headers[]= {"Name", "Type","Duration","Deadline","Notes"};
@@ -65,8 +69,15 @@ public class JobsInProgressFrame {
             JIP.setValueAt(listofJobs.get(i).getJobDeadline(),i+1,3);
             JIP.setValueAt(listofJobs.get(i).getJobNotes(),i+1,4);
         }
-        JIP.setBounds(550, 250, 750, 350);
+        JIP.setBounds(15, 15, 720, 175);
+        jobDurationPanel.setBounds(300, 200, 150, 50);
+        JLabel jobDurationLabel = new JLabel("Duration "+cloudController.getFullJobTime().toString());
+        jobDurationPanel.add(jobDurationLabel);
+        JIPPanel.add(jobDurationPanel);
         JIPPanel.add(JIP);
+
+        
+
 
         returnPanel.setBounds(550, 650, 100, 50);
         ActionListener cloud = new cloudControllerListener();
