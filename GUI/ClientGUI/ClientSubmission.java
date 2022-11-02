@@ -1,6 +1,9 @@
 package GUI.ClientGUI;
 
 import javax.swing.*;
+
+import BackEnd.Entities.CloudController;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,44 +31,42 @@ public class ClientSubmission {
 
     JPanel returnPanel = new JPanel();
 
-    JPanel carModelPanel = new JPanel();
+    JPanel jobNamePanel = new JPanel();
 
-    JPanel carMakePanel = new JPanel();
+    JPanel jobDurationPanel = new JPanel();
 
-    JPanel carYearPanel = new JPanel();
+    JPanel jobDeadlinePanel = new JPanel();
 
-    JPanel ownerIdPanel = new JPanel();
+    JPanel jobNotesPanel = new JPanel();
 
-    JPanel durationOfRegistryPanel = new JPanel();
+    JPanel jobTypePanel = new JPanel();
 
     // Labels for each text box.
-    JLabel clientID = new JLabel("Client ID");
+    JLabel jobName = new JLabel("Job Name");
     JLabel jobType = new JLabel("Job Type");
-    JLabel approxJobDuration = new JLabel("Approximate Job Duration");
+    JLabel jobDuration = new JLabel("Approximate Job Duration");
     JLabel jobDeadline = new JLabel("Job Deadline");
-    JLabel notes = new JLabel("Notes (Optional)");
+    JLabel jobNotes = new JLabel("Notes");
 
-    JTextField approxInput, jobDeadlineInput, notesInput, clientIdInput, jobTypeInput;
+    JTextField jobNameInput, jobTypeInput, jobDurationInput, jobDeadlineInput, jobNotesInput;
 
     JButton submitButton = new JButton("Submit");
-
     JButton goBackButton = new JButton("Go Back");
 
     Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allJobsApps.txt");
     File jobTranscript = file.toFile();
 
     public ClientSubmission() throws IOException {
-
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
         dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         dashboard.setResizable(false);
         dashboard.getContentPane().setBackground(new Color(41, 55, 77));
         dashboard.setLayout(null);
+
         // Setting up the title of the frame.
         titlePanel.setBackground(new Color(50, 100, 100));
         titlePanel.setBounds(300, 20, 600, 150);
-
         registrationTitle.setForeground(Color.white);
         registrationTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         titlePanel.add(registrationTitle);
@@ -74,40 +75,47 @@ public class ClientSubmission {
         // Panels that are supposed to include all the labels.
         submitPanel.setBounds(400, 500, 100, 50);
         returnPanel.setBounds(600, 500, 100, 50);
-        carModelPanel.setBackground(Color.LIGHT_GRAY);
-        carModelPanel.setBounds(50, 300, 200, 50);
-        carMakePanel.setBackground(Color.LIGHT_GRAY);
-        carMakePanel.setBounds(50, 350, 200, 50);
-        carYearPanel.setBackground(Color.LIGHT_GRAY);
-        carYearPanel.setBounds(50, 400, 200, 50);
-        ownerIdPanel.setBackground(Color.LIGHT_GRAY);
-        ownerIdPanel.setBounds(50, 200, 200, 50);
 
-        durationOfRegistryPanel.setBackground(Color.LIGHT_GRAY);
-        durationOfRegistryPanel.setBounds(50, 250, 200, 50);
+        jobNamePanel.setBackground(Color.LIGHT_GRAY);
+        jobNamePanel.setBounds(50, 200, 200, 50);
+        jobName.setBounds(50, 200, 50, 50);
+        jobNamePanel.add(jobName);
 
-        approxJobDuration.setBounds(50, 300, 50, 50);
-        clientID.setBounds(50, 200, 50, 50);
+        jobTypePanel.setBackground(Color.LIGHT_GRAY);
+        jobTypePanel.setBounds(50, 250, 200, 50);
         jobType.setBounds(50, 250, 50, 50);
+        jobTypePanel.add(jobType);
+
+        jobDurationPanel.setBackground(Color.LIGHT_GRAY);
+        jobDurationPanel.setBounds(50, 300, 200, 50);
+        jobDuration.setBounds(50, 300, 50, 50);
+        jobDurationPanel.add(jobDuration);
+
+        jobDeadlinePanel.setBackground(Color.LIGHT_GRAY);
+        jobDeadlinePanel.setBounds(50, 350, 200, 50);
         jobDeadline.setBounds(50, 350, 50, 50);
-        notes.setBounds(50, 400, 50, 50);
-        carModelPanel.add(approxJobDuration);
-        carMakePanel.add(jobDeadline);
-        carYearPanel.add(notes);
-        ownerIdPanel.add(clientID);
-        durationOfRegistryPanel.add(jobType);
+        jobDeadlinePanel.add(jobDeadline);
+
+        jobNotesPanel.setBackground(Color.LIGHT_GRAY);
+        jobNotesPanel.setBounds(50, 400, 200, 50);
+        jobNotes.setBounds(50, 400, 50, 50);
+        jobNotesPanel.add(jobNotes);
 
         // Setting up the text fields.
-        clientIdInput = new JTextField();
-        clientIdInput.setBounds(300, 200, 200, 50);
+        jobNameInput = new JTextField();
+        jobNameInput.setBounds(300, 200, 200, 50);
+
         jobTypeInput = new JTextField();
         jobTypeInput.setBounds(300, 250, 200, 50);
-        approxInput = new JTextField();
-        approxInput.setBounds(300, 300, 200, 50);
+
+        jobDurationInput = new JTextField();
+        jobDurationInput.setBounds(300, 300, 200, 50);
+
         jobDeadlineInput = new JTextField();
         jobDeadlineInput.setBounds(300, 350, 200, 50);
-        notesInput = new JTextField();
-        notesInput.setBounds(300, 400, 200, 50);
+
+        jobNotesInput = new JTextField();
+        jobNotesInput.setBounds(300, 400, 200, 50);
 
         ActionListener goToDash = new submitButtonListener();
         submitButton.addActionListener(goToDash);
@@ -121,21 +129,21 @@ public class ClientSubmission {
             dashboard.dispose();
         });
 
-        // Submit button
         submitPanel.add(submitButton);
         returnPanel.add(goBackButton);
         dashboard.add(returnPanel);
         dashboard.add(submitPanel);
-        dashboard.add(approxInput);
+
+        dashboard.add(jobDurationInput);
         dashboard.add(jobDeadlineInput);
-        dashboard.add(notesInput);
-        dashboard.add(clientIdInput);
+        dashboard.add(jobNotesInput);
+        dashboard.add(jobNameInput);
         dashboard.add(jobTypeInput);
-        dashboard.add(carModelPanel);
-        dashboard.add(carMakePanel);
-        dashboard.add(carYearPanel);
-        dashboard.add(ownerIdPanel);
-        dashboard.add(durationOfRegistryPanel);
+        dashboard.add(jobNamePanel);
+        dashboard.add(jobDurationPanel);
+        dashboard.add(jobDeadlinePanel);
+        dashboard.add(jobNotesPanel);
+        dashboard.add(jobTypePanel);
         dashboard.setVisible(true);
     }
 
@@ -150,19 +158,18 @@ public class ClientSubmission {
                 e2.printStackTrace();
             }
 
-            DateTimeFormatter jobTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-            String date = "" + jobTimeAndDate.format(now);
-            String clientID = clientIdInput.getText();
-            String approxJobDuration = jobTypeInput.getText();
-            String jobType = approxInput.getText();
-            String jobDeadline = jobDeadlineInput.getText();
-            String notesOptional = notesInput.getText();
-            String info = "\n clientID: " + clientID + "\n Approximate job duration: " + approxJobDuration
-                    + "\n Job type: " + jobType + "\n Job Deadline: " + jobDeadline + "\n Notes: " + notesOptional + "";
+            String jobName = jobNameInput.getText();
+            String jobType = jobTypeInput.getText();
+            String jobDurationStr = jobDurationInput.getText();
+            int jobDuration = Integer.parseInt(jobDurationStr);
+            String jobDeadlineStr = jobDeadlineInput.getText();
+            int jobDeadline = Integer.parseInt(jobDeadlineStr);
+            String jobNotes = jobNotesInput.getText();
+
+            String info = jobName + "/" + jobDuration
+                    + "/" + jobType + "/" + jobDeadline + "/" + jobNotes;
             try {
                 FileWriter regTranscript = new FileWriter(jobTranscript);
-                regTranscript.write(date);
                 regTranscript.write(info + "\n");
                 regTranscript.write(str);
                 regTranscript.close();
@@ -170,6 +177,7 @@ public class ClientSubmission {
                 e1.printStackTrace();
             }
 
+            CloudController cc = new CloudController();
             ClientDashboard goToDash = new ClientDashboard();
         }
     }

@@ -9,19 +9,19 @@ public class Job {
 
     private int jobID;
     private String jobName;
-    private LocalTime duration;
+    private String jobType;
+    private int duration;
     private int jobDeadline;
     private String notes;
     private int progress;
-    private Client client;
 
-    public Job(String jobNameIn, int jobDeadlineIn, String notesIn, Client clientIn) {
+    public Job(String jobNameIn, String jobTypeIn, int durationIn, int jobDeadlineIn, String notesIn) {
         jobID = new Random().nextInt(100);
         jobName = jobNameIn;
-        duration = LocalTime.now();
+        jobType = jobTypeIn;
+        duration = durationIn;
         jobDeadline = jobDeadlineIn;
         notes = notesIn;
-        client = clientIn;
     }
 
     public int getJobID() {
@@ -32,7 +32,7 @@ public class Job {
         return jobName;
     }
 
-    public LocalTime getJobDuration() {
+    public int getJobDuration() {
         return duration;
     }
 
@@ -48,8 +48,8 @@ public class Job {
         return progress;
     }
 
-    public Client getJobClient() {
-        return client;
+    public String toString() {
+        return jobName + " " + jobType + " " + duration + " " + jobDeadline + " " + notes;
     }
 
 }
