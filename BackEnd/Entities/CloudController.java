@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.util.*;
 import BackEnd.*;
 import BackEnd.Application.*;
-import BackEnd.model.Job;
 
 public class CloudController {
 
@@ -30,7 +29,7 @@ public class CloudController {
             }
 
             try {
-                  getAllJobApps("GUI/Transcripts/allVehicleApps.txt");
+                  getAllJobApps();
             } catch (IOException e) {
                   // TODO Auto-generated catch block
                   e.printStackTrace();
@@ -108,14 +107,12 @@ public class CloudController {
                         Vehicle newVeh = new Vehicle(make, model, Integer.parseInt(yearStr), Integer.parseInt(inStr),
                                     Integer.parseInt(outStr));
                         addToPendingVehicles(newVeh);
-                  }
-
             }
+            return pendingVehicles;
       }
 
-      public void getAllJobApps(String filename)
+      public void getAllJobApps()
                   throws IOException {
-            try (Scanner in = new Scanner(new File(filename))) {
                   Scanner s = new Scanner(new File("GUI/Transcripts/allJobsApps.txt"));
                   ArrayList<String> list = new ArrayList<String>();
                   while (s.hasNext()) {
@@ -135,8 +132,7 @@ public class CloudController {
                         Job newJob = new Job(name, type, Integer.parseInt(duration), Integer.parseInt(deadline),
                                     notes);
                         addToPendingJobs(newJob);
-                  }
 
-            return pendingVehicles;
+            }
       }
 }
