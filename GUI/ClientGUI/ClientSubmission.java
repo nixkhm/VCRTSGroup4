@@ -123,7 +123,7 @@ public class ClientSubmission {
             dashboard.dispose();
         });
 
-        ActionListener goToDash2 = new submitButtonListener();
+        ActionListener goToDash2 = new returnButtonListener();
         goBackButton.addActionListener(goToDash2);
         goBackButton.addActionListener(e -> {
             dashboard.dispose();
@@ -178,6 +178,14 @@ public class ClientSubmission {
             }
 
             CloudController cc = new CloudController();
+            ClientDashboard goToDash = new ClientDashboard();
+        }
+    }
+
+    class returnButtonListener implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+
             ClientDashboard goToDash = new ClientDashboard();
         }
     }
