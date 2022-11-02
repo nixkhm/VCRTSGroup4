@@ -9,22 +9,21 @@ import java.io.IOException;
 import BackEnd.*;
 import BackEnd.Entities.CloudController;
 
-public class VehicleListFrame {
-    JFrame dashboard = new JFrame("Vehicle List Dashboard");
+public class JobsInProgressFrame {
+    JFrame dashboard = new JFrame("Jobs in Progress Dashboard");
 
     JPanel titlePanel = new JPanel();
-    JPanel vehicleListTitlePanel = new JPanel();
-    JPanel vehiclePanel = new JPanel();
+    JPanel JIPTitlePanel = new JPanel();
+    JPanel JIPPanel = new JPanel();
     JPanel returnPanel = new JPanel();
 
-    JLabel dashboardTitle = new JLabel("Vehicle List");
+    JLabel dashboardTitle = new JLabel("Jobs In Progress");
 
-    JLabel vehicleTitle = new JLabel("Vehicle List");
+    JLabel JIPTitle = new JLabel("Jobs In Progress");
     
-
     JButton returnButton = new JButton("Return");
 
-    public VehicleListFrame() throws IOException {
+    public JobsInProgressFrame() throws IOException {
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
         dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -41,33 +40,33 @@ public class VehicleListFrame {
         titlePanel.add(dashboardTitle);
         dashboard.add(titlePanel);
 
-        vehicleListTitlePanel.setBackground(Color.LIGHT_GRAY);
-        vehicleListTitlePanel.setBounds(225, 200, 750, 50);
-        vehicleTitle.setBounds(550, 200, 50, 50);
-        vehicleListTitlePanel.add(vehicleTitle);
+        JIPTitlePanel.setBackground(Color.LIGHT_GRAY);
+        JIPTitlePanel.setBounds(225, 200, 750, 50);
+        JIPTitle.setBounds(550, 200, 50, 50);
+        JIPTitlePanel.add(JIPTitle);
 
-        vehiclePanel.setBackground(Color.LIGHT_GRAY);
-        vehiclePanel.setBounds(225, 250, 750, 350);
+        JIPPanel.setBackground(Color.LIGHT_GRAY);
+        JIPPanel.setBounds(225, 250, 750, 350);
         CloudController cloudController = new CloudController();
-        final ArrayList<Vehicle> listofVehicles = cloudController.getAllVehApps();
-        String headers[]= {"Make", "Model","Year","In","Out"};
-        JTable vehicleList = new JTable(11, 5);
+        final ArrayList<Job> listofJobs = cloudController.getAllJobApps();
+        String headers[]= {"Name", "Type","Duration","Deadline","Notes"};
+        JTable JIP = new JTable(11, 5);
         for (int i = 0; i < headers.length; i++){
-            vehicleList.setValueAt(headers[i],0, i);
+            JIP.setValueAt(headers[i],0, i);
         }
         int x = 10;
-        if (listofVehicles.size() < x){
-            x = listofVehicles.size();
+        if (listofJobs.size() < x){
+            x = listofJobs.size();
         }
         for (int i = 0; i < x; i++){
-            vehicleList.setValueAt(listofVehicles.get(i).getMake(),i+1,0);
-            vehicleList.setValueAt(listofVehicles.get(i).getModel(),i+1,1);
-            vehicleList.setValueAt(listofVehicles.get(i).getYear(),i+1,2);
-            vehicleList.setValueAt(listofVehicles.get(i).getTimeStart(),i+1,3);
-            vehicleList.setValueAt(listofVehicles.get(i).getTimeEnd(),i+1,4);
+            JIP.setValueAt(listofJobs.get(i).getJobName(),i+1,0);
+            JIP.setValueAt(listofJobs.get(i).getJobType(),i+1,1);
+            JIP.setValueAt(listofJobs.get(i).getJobDuration(),i+1,2);
+            JIP.setValueAt(listofJobs.get(i).getJobDeadline(),i+1,3);
+            JIP.setValueAt(listofJobs.get(i).getJobNotes(),i+1,4);
         }
-        vehicleList.setBounds(550, 250, 750, 350);
-        vehiclePanel.add(vehicleList);
+        JIP.setBounds(550, 250, 750, 350);
+        JIPPanel.add(JIP);
 
         returnPanel.setBounds(550, 650, 100, 50);
         ActionListener cloud = new cloudControllerListener();
@@ -79,8 +78,10 @@ public class VehicleListFrame {
 
         dashboard.add(titlePanel);
         dashboard.setVisible(true);
-        dashboard.add(vehicleListTitlePanel);
-        dashboard.add(vehiclePanel);
+        dashboard.add(JIPTitlePanel);
+        dashboard.add(JIPPanel);
         dashboard.add(returnPanel);
     }
-}
+    }
+    
+
