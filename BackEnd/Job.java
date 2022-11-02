@@ -3,8 +3,6 @@ package BackEnd;
 import java.time.LocalTime;
 import java.util.Random;
 
-import BackEnd.Entities.Client;
-
 public class Job {
 
     private int jobID;
