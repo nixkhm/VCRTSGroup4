@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.util.*;
 import BackEnd.*;
 import BackEnd.Application.*;
+import BackEnd.model.Job;
 
 public class CloudController {
 
@@ -21,7 +22,7 @@ public class CloudController {
 
             pendingVehicles = new ArrayList<Vehicle>();
             try {
-                  getAllVehApps("GUI/Transcripts/allVehicleApps.txt");
+                  getAllVehApps();
             } catch (IOException e) {
                   // TODO Auto-generated catch block
                   e.printStackTrace();
@@ -53,9 +54,8 @@ public class CloudController {
             return currentVehicularCloud;
       }
 
-      public ArrayList<Vehicle> getAllVehApps(String filename)
+      public ArrayList<Vehicle> getAllVehApps()
                   throws IOException {
-            try (Scanner in = new Scanner(new File(filename))) {
                   Scanner s = new Scanner(new File("GUI/Transcripts/allVehicleApps.txt"));
                   ArrayList<String> list = new ArrayList<String>();
                   while (s.hasNext()) {
@@ -76,8 +76,6 @@ public class CloudController {
                                     Integer.parseInt(outStr));
                         addToPendingVehicles(newVeh);
                   }
-
-            }
 
             for (int i = 0; i < pendingVehicles.size(); i++) {
                   System.out.println(pendingVehicles.get(i).toString());
