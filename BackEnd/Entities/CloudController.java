@@ -3,6 +3,7 @@ package BackEnd.Entities;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -92,6 +93,17 @@ public class CloudController {
 
       public VehicularCloud getVehicularCloud() {
             return currentVehicularCloud;
+      }
+
+      public String getFullJobTime() {
+            int[] jobTimes = new int[pendingJobs.size()];
+            jobTimes[0] = pendingJobs.get(0).getJobDuration();
+            for (int i = 1; i < pendingJobs.size(); i++){
+                  jobTimes[i] = jobTimes[i-1] + pendingJobs.get(i).getJobDuration();
+            }
+            System.out.println(Arrays.toString(jobTimes));
+            String fullJobTime = Arrays.toString(jobTimes);
+            return fullJobTime;
       }
 
       public ArrayList<Vehicle> getAllVehApps()

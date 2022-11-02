@@ -170,8 +170,8 @@ public class ClientSubmission {
                     + "/" + jobType + "/" + jobDeadline + "/" + jobNotes;
             try {
                 FileWriter regTranscript = new FileWriter(jobTranscript);
-                regTranscript.write(info + "\n");
                 regTranscript.write(str);
+                regTranscript.write(info + "\n");
                 regTranscript.close();
             } catch (IOException e1) {
                 e1.printStackTrace();

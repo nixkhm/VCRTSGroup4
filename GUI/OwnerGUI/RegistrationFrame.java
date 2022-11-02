@@ -174,8 +174,8 @@ public class RegistrationFrame {
 
             try {
                 FileWriter regTranscript = new FileWriter(allVehiclesTranscript);
-                regTranscript.write(info + "\n");
                 regTranscript.write(str);
+                regTranscript.write(info + "\n");
                 regTranscript.close();
             } catch (IOException e1) {
 
