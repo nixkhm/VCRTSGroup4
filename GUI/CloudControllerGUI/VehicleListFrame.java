@@ -69,7 +69,7 @@ public class VehicleListFrame {
         vehicleList.setBounds(550, 250, 750, 350);
         vehiclePanel.add(vehicleList);
 
-        returnPanel.setBounds(550, 650, 100, 50);
+        returnPanel.setBounds(550, 600, 100, 50);
         ActionListener cloud = new cloudControllerListener();
         returnButton.addActionListener(cloud);
         returnButton.addActionListener(e -> {

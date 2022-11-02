@@ -64,7 +64,8 @@ public class Vehicle {
     }
 
     public String toString() {
-        return make + " " + model + " " + year + " " + timeStart + " " + timeEnd;
+        return "Make: " + make + " / Model:" + model + " / Year:" + year + " / Time Start:" + timeStart + " / Time End:"
+                + timeEnd;
     }
 
 }
