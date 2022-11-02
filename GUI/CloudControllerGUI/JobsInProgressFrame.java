@@ -79,7 +79,7 @@ public class JobsInProgressFrame {
         
 
 
-        returnPanel.setBounds(550, 650, 100, 50);
+        returnPanel.setBounds(550, 600, 100, 50);
         ActionListener cloud = new cloudControllerListener();
         returnButton.addActionListener(cloud);
         returnButton.addActionListener(e -> {
