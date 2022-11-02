@@ -166,8 +166,8 @@ public class ClientSubmission {
             int jobDeadline = Integer.parseInt(jobDeadlineStr);
             String jobNotes = jobNotesInput.getText();
 
-            String info = jobName + "/" + jobDuration
-                    + "/" + jobType + "/" + jobDeadline + "/" + jobNotes;
+            String info = jobName + "/" + jobType
+                    + "/" + jobDuration + "/" + jobDeadline + "/" + jobNotes;
             try {
                 FileWriter regTranscript = new FileWriter(jobTranscript);
                 regTranscript.write(str);

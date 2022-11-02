@@ -51,7 +51,8 @@ public class Job {
     }
 
     public String toString() {
-        return jobName + " " + jobType + " " + duration + " " + jobDeadline + " " + notes;
+        return "Job Name:" + jobName + " / Job Type:" + jobType + " / Job Duration:" + duration + " / Job Deadline:"
+                + jobDeadline + " / Job Notes:" + notes;
     }
 
 }
