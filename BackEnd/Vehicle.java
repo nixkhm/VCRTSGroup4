@@ -63,4 +63,8 @@ public class Vehicle {
         approved = true;
     }
 
+    public String toString() {
+        return make + " " + model + " " + year + " " + timeStart + " " + timeEnd;
+    }
+
 }

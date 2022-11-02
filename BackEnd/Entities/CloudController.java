@@ -12,12 +12,14 @@ import BackEnd.Application.*;
 
 public class CloudController {
 
-      static ArrayList<Vehicle> pendingVehicles;
-      ArrayList<Vehicle> approvedVehicles;
+      private ArrayList<Vehicle> pendingVehicles;
+      private ArrayList<Vehicle> approvedVehicles;
 
-      VehicularCloud currentVehicularCloud;
+      private VehicularCloud currentVehicularCloud;
 
       public CloudController() {
+
+            pendingVehicles = new ArrayList<Vehicle>();
             try {
                   getAllVehApps("GUI/Transcripts/allVehicleApps.txt");
             } catch (IOException e) {
@@ -26,10 +28,9 @@ public class CloudController {
             }
       }
 
-      public static void addToPendingVehicles(Vehicle in) {
+      public void addToPendingVehicles(Vehicle in) {
             pendingVehicles.add(in);
             System.out.println("Vehicle Added!");
-
       }
 
       public void approveVehicle(VehicleApplication application, Vehicle vehicle) {
@@ -52,7 +53,7 @@ public class CloudController {
             return currentVehicularCloud;
       }
 
-      public void getAllVehApps(String filename)
+      public ArrayList<Vehicle> getAllVehApps(String filename)
                   throws IOException {
             try (Scanner in = new Scanner(new File(filename))) {
                   Scanner s = new Scanner(new File("GUI/Transcripts/allVehicleApps.txt"));
@@ -62,9 +63,26 @@ public class CloudController {
                   }
                   s.close();
                   for (int i = 0; i < list.size(); i++) {
-                        System.out.println(list.get(i));
+
+                        String pre = list.get(i);
+                        String[] split = pre.split("/");
+                        String make = split[0];
+                        String model = split[1];
+                        String yearStr = split[2];
+                        String inStr = split[3];
+                        String outStr = split[4];
+
+                        Vehicle newVeh = new Vehicle(make, model, Integer.parseInt(yearStr), Integer.parseInt(inStr),
+                                    Integer.parseInt(outStr));
+                        addToPendingVehicles(newVeh);
                   }
 
             }
+
+            for (int i = 0; i < pendingVehicles.size(); i++) {
+                  System.out.println(pendingVehicles.get(i).toString());
+            }
+
+            return pendingVehicles;
       }
 }
