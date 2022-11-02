@@ -53,8 +53,8 @@ public class JobsInProgressFrame {
         JIPPanel.setLayout(null);
         CloudController cloudController = new CloudController();
         final ArrayList<Job> listofJobs = cloudController.getAllJobApps();
-        String headers[]= {"Name", "Type","Duration","Deadline","Notes"};
-        JTable JIP = new JTable(11, 5);
+        String headers[]= {"Job ID", "Name", "Type","Duration","Deadline","Notes"};
+        JTable JIP = new JTable(11, 6);
         for (int i = 0; i < headers.length; i++){
             JIP.setValueAt(headers[i],0, i);
         }
@@ -63,11 +63,12 @@ public class JobsInProgressFrame {
             x = listofJobs.size();
         }
         for (int i = 0; i < x; i++){
-            JIP.setValueAt(listofJobs.get(i).getJobName(),i+1,0);
-            JIP.setValueAt(listofJobs.get(i).getJobType(),i+1,1);
-            JIP.setValueAt(listofJobs.get(i).getJobDuration(),i+1,2);
-            JIP.setValueAt(listofJobs.get(i).getJobDeadline(),i+1,3);
-            JIP.setValueAt(listofJobs.get(i).getJobNotes(),i+1,4);
+            JIP.setValueAt(listofJobs.get(i).getJobID(), i+1, 0);
+            JIP.setValueAt(listofJobs.get(i).getJobName(),i+1,1);
+            JIP.setValueAt(listofJobs.get(i).getJobType(),i+1,2);
+            JIP.setValueAt(listofJobs.get(i).getJobDuration(),i+1,3);
+            JIP.setValueAt(listofJobs.get(i).getJobDeadline(),i+1,4);
+            JIP.setValueAt(listofJobs.get(i).getJobNotes(),i+1,5);
         }
         JIP.setBounds(15, 15, 720, 175);
         jobDurationPanel.setBounds(300, 200, 150, 50);
