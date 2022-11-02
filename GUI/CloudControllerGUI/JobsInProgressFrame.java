@@ -18,8 +18,6 @@ public class JobsInProgressFrame {
     JPanel returnPanel = new JPanel();
     JPanel jobDurationPanel = new JPanel();
 
-    
-
     JLabel dashboardTitle = new JLabel("Jobs In Progress");
 
     JLabel JIPTitle = new JLabel("Jobs In Progress");
@@ -71,8 +69,10 @@ public class JobsInProgressFrame {
             JIP.setValueAt(listofJobs.get(i).getJobNotes(),i+1,5);
         }
         JIP.setBounds(15, 15, 720, 175);
-        jobDurationPanel.setBounds(300, 200, 150, 50);
+        jobDurationPanel.setBounds(300, 200, 150, 150);
+        JLabel jobIDLabel = new JLabel("IDs "+cloudController.getAllJobIds().toString());
         JLabel jobDurationLabel = new JLabel("Duration "+cloudController.getFullJobTime().toString());
+        jobDurationPanel.add(jobIDLabel);
         jobDurationPanel.add(jobDurationLabel);
         JIPPanel.add(jobDurationPanel);
         JIPPanel.add(JIP);

@@ -101,9 +101,17 @@ public class CloudController {
             for (int i = 1; i < pendingJobs.size(); i++){
                   jobTimes[i] = jobTimes[i-1] + pendingJobs.get(i).getJobDuration();
             }
-            System.out.println(Arrays.toString(jobTimes));
             String fullJobTime = Arrays.toString(jobTimes);
             return fullJobTime;
+      }
+
+      public String getAllJobIds() {
+            int[] jobIds = new int[pendingJobs.size()];
+            for (int i = 0; i < pendingJobs.size(); i++){
+                  jobIds[i] = pendingJobs.get(i).getJobID();
+            }
+            String allJobIds = Arrays.toString(jobIds);
+            return allJobIds;
       }
 
       public ArrayList<Vehicle> getAllVehApps()
