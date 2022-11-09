@@ -18,7 +18,7 @@ public class CloudController {
       private ArrayList<Job> pendingJobs;
 
       private VehicularCloud currentVehicularCloud;
-
+      
       public CloudController() {
             pendingVehicles = new ArrayList<Vehicle>();
             pendingJobs = new ArrayList<Job>();
@@ -166,4 +166,5 @@ public class CloudController {
             }
             return pendingJobs;
       }
+     
 }

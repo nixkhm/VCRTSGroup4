@@ -10,7 +10,9 @@ public class VehicleApplication extends Application {
     public VehicleApplication(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
-
+    public void submitVehicleApplication(){
+        
+    }
     public Vehicle getVehicle() {
         return vehicle;
     }

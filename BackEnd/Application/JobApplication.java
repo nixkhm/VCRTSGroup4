@@ -7,8 +7,8 @@ public class JobApplication extends Application {
     private Application applicationInfo;
     private Job job;
 
-    public void submitJobApplication() {
-
+    public void submitJobApplication(Job j) {
+        
     }
 
     public Job getJob() {
