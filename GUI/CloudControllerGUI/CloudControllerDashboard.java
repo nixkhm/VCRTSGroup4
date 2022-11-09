@@ -1,6 +1,8 @@
 package GUI.CloudControllerGUI;
 
 import javax.swing.*;
+
+import BackEnd.Entities.CloudController;
 import GUI.ClientGUI.JIPFrame;
 import GUI.Start.LogInFrame;
 import java.awt.*;
@@ -120,7 +122,7 @@ public class CloudControllerDashboard {
         panel4.setBounds(100, 460, 175, 50);
         panel5.setBounds(100, 560, 175, 50);
         panel6.setBounds(100, 660, 175, 50);
-        panel8.setBounds(300,260,175,50);
+        panel8.setBounds(300, 260, 175, 50);
 
         // user Panel
         panel7.setBounds(1000, 30, 175, 50);

@@ -21,7 +21,7 @@ public class JobsInProgressFrame {
     JLabel dashboardTitle = new JLabel("Jobs In Progress");
 
     JLabel JIPTitle = new JLabel("Jobs In Progress");
-    
+
     JButton returnButton = new JButton("Return");
 
     public JobsInProgressFrame() throws IOException {
@@ -51,34 +51,30 @@ public class JobsInProgressFrame {
         JIPPanel.setLayout(null);
         CloudController cloudController = new CloudController();
         final ArrayList<Job> listofJobs = cloudController.getAllJobApps();
-        String headers[]= {"Job ID", "Name", "Type","Duration","Deadline","Notes"};
-        JTable JIP = new JTable(11, 6);
-        for (int i = 0; i < headers.length; i++){
-            JIP.setValueAt(headers[i],0, i);
+        String headers[] = { "Job ID", "Name", "Type", "Duration", "Deadline" };
+        JTable JIP = new JTable(11, 5);
+        for (int i = 0; i < headers.length; i++) {
+            JIP.setValueAt(headers[i], 0, i);
         }
         int x = 10;
-        if (listofJobs.size() < x){
+        if (listofJobs.size() < x) {
             x = listofJobs.size();
         }
-        for (int i = 0; i < x; i++){
-            JIP.setValueAt(listofJobs.get(i).getJobID(), i+1, 0);
-            JIP.setValueAt(listofJobs.get(i).getJobName(),i+1,1);
-            JIP.setValueAt(listofJobs.get(i).getJobType(),i+1,2);
-            JIP.setValueAt(listofJobs.get(i).getJobDuration(),i+1,3);
-            JIP.setValueAt(listofJobs.get(i).getJobDeadline(),i+1,4);
-            JIP.setValueAt(listofJobs.get(i).getJobNotes(),i+1,5);
+        for (int i = 0; i < x; i++) {
+            JIP.setValueAt(listofJobs.get(i).getJobID(), i + 1, 0);
+            JIP.setValueAt(listofJobs.get(i).getJobName(), i + 1, 1);
+            JIP.setValueAt(listofJobs.get(i).getJobType(), i + 1, 2);
+            JIP.setValueAt(listofJobs.get(i).getJobDuration(), i + 1, 3);
+            JIP.setValueAt(listofJobs.get(i).getJobDeadline(), i + 1, 4);
         }
         JIP.setBounds(15, 15, 720, 175);
         jobDurationPanel.setBounds(300, 200, 150, 150);
-        JLabel jobIDLabel = new JLabel("IDs "+cloudController.getAllJobIds().toString());
-        JLabel jobDurationLabel = new JLabel("Duration in hours" +cloudController.getFullJobTime().toString());
+        JLabel jobIDLabel = new JLabel("IDs " + cloudController.getAllJobIds().toString());
+        JLabel jobDurationLabel = new JLabel("Duration in hours" + cloudController.getFullJobTime().toString());
         jobDurationPanel.add(jobIDLabel);
         jobDurationPanel.add(jobDurationLabel);
         JIPPanel.add(jobDurationPanel);
         JIPPanel.add(JIP);
-
-        
-
 
         returnPanel.setBounds(550, 600, 100, 50);
         ActionListener cloud = new cloudControllerListener();
@@ -94,6 +90,4 @@ public class JobsInProgressFrame {
         dashboard.add(JIPPanel);
         dashboard.add(returnPanel);
     }
-    }
-    
-
+}
