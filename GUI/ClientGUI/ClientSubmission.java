@@ -149,51 +149,52 @@ public class ClientSubmission {
 
     class submitButtonListener implements ActionListener {
 
-            public void actionPerformed(ActionEvent e) {
-                JPanel responsePanel = new JPanel();
-                responsePanel.setBackground(Color.LIGHT_GRAY);
-                responsePanel.setBounds(300, 550, 250, 75);
-                JLabel response = new JLabel("Registration Info");
-               
-                if(jobNameInput.getText().isEmpty() || jobTypeInput.getText().isEmpty() || jobDurationInput.getText().isEmpty() || jobDeadlineInput.getText().isEmpty() || jobNotesInput.getText().isEmpty()){                 
-                     response.setText("All text fields must be completed");
-                     responsePanel.add(response);
-                     dashboard.add(responsePanel);
-                     dashboard.setVisible(true);
-    }  
-              else{
-            String str = "";
-            try {
-                str = readFile(jobTranscript, StandardCharsets.UTF_8);
-            } catch (IOException e2) {
-                e2.printStackTrace();
+        public void actionPerformed(ActionEvent e) {
+            JPanel responsePanel = new JPanel();
+            responsePanel.setBackground(Color.LIGHT_GRAY);
+            responsePanel.setBounds(300, 550, 250, 75);
+            JLabel response = new JLabel("Registration Info");
+
+            if (jobNameInput.getText().isEmpty() || jobTypeInput.getText().isEmpty()
+                    || jobDurationInput.getText().isEmpty() || jobDeadlineInput.getText().isEmpty()
+                    || jobIDInput.getText().isEmpty()) {
+                response.setText("All text fields must be completed");
+                responsePanel.add(response);
+                dashboard.add(responsePanel);
+                dashboard.setVisible(true);
+            } else {
+                String str = "";
+                try {
+                    str = readFile(jobTranscript, StandardCharsets.UTF_8);
+                } catch (IOException e2) {
+                    e2.printStackTrace();
+                }
+
+                String jobName = jobNameInput.getText();
+                String jobType = jobTypeInput.getText();
+                String jobDurationStr = jobDurationInput.getText();
+                int jobDuration = Integer.parseInt(jobDurationStr);
+                String jobDeadlineStr = jobDeadlineInput.getText();
+                int jobDeadline = Integer.parseInt(jobDeadlineStr);
+                String jobIDStr = jobIDInput.getText();
+                int jobID = Integer.parseInt(jobIDStr);
+
+                String info = jobName + "/" + jobType
+                        + "/" + jobDuration + "/" + jobDeadline + "/" + jobID;
+                try {
+                    FileWriter regTranscript = new FileWriter(jobTranscript);
+                    regTranscript.write(str);
+                    regTranscript.write(info + "\n");
+                    regTranscript.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+                CloudController cc = new CloudController();
+                ClientDashboard goToDash = new ClientDashboard();
+                dashboard.dispose();
             }
-
-            String jobName = jobNameInput.getText();
-            String jobType = jobTypeInput.getText();
-            String jobDurationStr = jobDurationInput.getText();
-            int jobDuration = Integer.parseInt(jobDurationStr);
-            String jobDeadlineStr = jobDeadlineInput.getText();
-            int jobDeadline = Integer.parseInt(jobDeadlineStr);
-            String jobIDStr = jobIDInput.getText();
-            int jobID = Integer.parseInt(jobIDStr);
-
-            String info = jobName + "/" + jobType
-                    + "/" + jobDuration + "/" + jobDeadline + "/" + jobID;
-            try {
-                FileWriter regTranscript = new FileWriter(jobTranscript);
-                regTranscript.write(str);
-                regTranscript.write(info + "\n");
-                regTranscript.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-
-            CloudController cc = new CloudController();
-            ClientDashboard goToDash = new ClientDashboard();
-            dashboard.dispose();
         }
-    }
     }
 
     class returnButtonListener implements ActionListener {
