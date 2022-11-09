@@ -149,8 +149,19 @@ public class ClientSubmission {
 
     class submitButtonListener implements ActionListener {
 
-        public void actionPerformed(ActionEvent e) {
-
+            public void actionPerformed(ActionEvent e) {
+                JPanel responsePanel = new JPanel();
+                responsePanel.setBackground(Color.LIGHT_GRAY);
+                responsePanel.setBounds(300, 550, 250, 75);
+                JLabel response = new JLabel("Registration Info");
+               
+                if(jobNameInput.getText().isEmpty() || jobTypeInput.getText().isEmpty() || jobDurationInput.getText().isEmpty() || jobDeadlineInput.getText().isEmpty() || jobNotesInput.getText().isEmpty()){                 
+                     response.setText("All text fields must be completed");
+                     responsePanel.add(response);
+                     dashboard.add(responsePanel);
+                     dashboard.setVisible(true);
+    }  
+              else{
             String str = "";
             try {
                 str = readFile(jobTranscript, StandardCharsets.UTF_8);
@@ -180,7 +191,9 @@ public class ClientSubmission {
 
             CloudController cc = new CloudController();
             ClientDashboard goToDash = new ClientDashboard();
+            dashboard.dispose();
         }
+    }
     }
 
     class returnButtonListener implements ActionListener {
