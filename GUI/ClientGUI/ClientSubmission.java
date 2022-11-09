@@ -37,7 +37,7 @@ public class ClientSubmission {
 
     JPanel jobDeadlinePanel = new JPanel();
 
-    JPanel jobNotesPanel = new JPanel();
+    JPanel jobIDPanel = new JPanel();
 
     JPanel jobTypePanel = new JPanel();
 
@@ -46,9 +46,9 @@ public class ClientSubmission {
     JLabel jobType = new JLabel("Job Type");
     JLabel jobDuration = new JLabel("Approximate Job Duration");
     JLabel jobDeadline = new JLabel("Job Deadline");
-    JLabel jobNotes = new JLabel("Notes");
+    JLabel jobID = new JLabel("Job ID");
 
-    JTextField jobNameInput, jobTypeInput, jobDurationInput, jobDeadlineInput, jobNotesInput;
+    JTextField jobNameInput, jobTypeInput, jobDurationInput, jobDeadlineInput, jobIDInput;
 
     JButton submitButton = new JButton("Submit");
     JButton goBackButton = new JButton("Go Back");
@@ -96,10 +96,10 @@ public class ClientSubmission {
         jobDeadline.setBounds(50, 350, 50, 50);
         jobDeadlinePanel.add(jobDeadline);
 
-        jobNotesPanel.setBackground(Color.LIGHT_GRAY);
-        jobNotesPanel.setBounds(50, 400, 200, 50);
-        jobNotes.setBounds(50, 400, 50, 50);
-        jobNotesPanel.add(jobNotes);
+        jobIDPanel.setBackground(Color.LIGHT_GRAY);
+        jobIDPanel.setBounds(50, 400, 200, 50);
+        jobID.setBounds(50, 400, 50, 50);
+        jobIDPanel.add(jobID);
 
         // Setting up the text fields.
         jobNameInput = new JTextField();
@@ -114,8 +114,8 @@ public class ClientSubmission {
         jobDeadlineInput = new JTextField();
         jobDeadlineInput.setBounds(300, 350, 200, 50);
 
-        jobNotesInput = new JTextField();
-        jobNotesInput.setBounds(300, 400, 200, 50);
+        jobIDInput = new JTextField();
+        jobIDInput.setBounds(300, 400, 200, 50);
 
         ActionListener goToDash = new submitButtonListener();
         submitButton.addActionListener(goToDash);
@@ -136,13 +136,13 @@ public class ClientSubmission {
 
         dashboard.add(jobDurationInput);
         dashboard.add(jobDeadlineInput);
-        dashboard.add(jobNotesInput);
+        dashboard.add(jobIDInput);
         dashboard.add(jobNameInput);
         dashboard.add(jobTypeInput);
         dashboard.add(jobNamePanel);
         dashboard.add(jobDurationPanel);
         dashboard.add(jobDeadlinePanel);
-        dashboard.add(jobNotesPanel);
+        dashboard.add(jobIDPanel);
         dashboard.add(jobTypePanel);
         dashboard.setVisible(true);
     }
@@ -164,10 +164,11 @@ public class ClientSubmission {
             int jobDuration = Integer.parseInt(jobDurationStr);
             String jobDeadlineStr = jobDeadlineInput.getText();
             int jobDeadline = Integer.parseInt(jobDeadlineStr);
-            String jobNotes = jobNotesInput.getText();
+            String jobIDStr = jobIDInput.getText();
+            int jobID = Integer.parseInt(jobIDStr);
 
             String info = jobName + "/" + jobType
-                    + "/" + jobDuration + "/" + jobDeadline + "/" + jobNotes;
+                    + "/" + jobDuration + "/" + jobDeadline + "/" + jobID;
             try {
                 FileWriter regTranscript = new FileWriter(jobTranscript);
                 regTranscript.write(str);

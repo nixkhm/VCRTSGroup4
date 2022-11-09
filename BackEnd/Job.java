@@ -13,13 +13,13 @@ public class Job {
     private String notes;
     private int progress;
 
-    public Job(String jobNameIn, String jobTypeIn, int durationIn, int jobDeadlineIn, String notesIn) {
+    public Job(String jobNameIn, String jobTypeIn, int durationIn, int jobDeadlineIn, int jobIDIn) {
         jobID = new Random().nextInt(100);
         jobName = jobNameIn;
         jobType = jobTypeIn;
         duration = durationIn;
         jobDeadline = jobDeadlineIn;
-        notes = notesIn;
+        jobID = jobIDIn;
     }
 
     public int getJobID() {
@@ -52,7 +52,7 @@ public class Job {
 
     public String toString() {
         return "Job Name:" + jobName + " / Job Type:" + jobType + " / Job Duration:" + duration + " / Job Deadline:"
-                + jobDeadline + " / Job Notes:" + notes;
+                + jobDeadline + " / Job ID:" + jobID;
     }
 
 }

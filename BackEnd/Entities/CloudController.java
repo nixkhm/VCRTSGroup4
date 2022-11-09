@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
@@ -63,7 +64,7 @@ public class CloudController {
             pendingVehicles.add(in);
       }
 
-      public void clearPendingVehicles(){
+      public void clearPendingVehicles() {
             pendingVehicles.clear();
       }
 
@@ -71,7 +72,7 @@ public class CloudController {
             pendingJobs.add(in);
       }
 
-      public void clearPendingJobs(){
+      public void clearPendingJobs() {
             pendingJobs.clear();
       }
 
@@ -98,8 +99,8 @@ public class CloudController {
       public String getFullJobTime() {
             int[] jobTimes = new int[pendingJobs.size()];
             jobTimes[0] = pendingJobs.get(0).getJobDuration();
-            for (int i = 1; i < pendingJobs.size(); i++){
-                  jobTimes[i] = jobTimes[i-1] + pendingJobs.get(i).getJobDuration();
+            for (int i = 1; i < pendingJobs.size(); i++) {
+                  jobTimes[i] = jobTimes[i - 1] + pendingJobs.get(i).getJobDuration();
             }
             String fullJobTime = Arrays.toString(jobTimes);
             return fullJobTime;
@@ -107,7 +108,7 @@ public class CloudController {
 
       public String getAllJobIds() {
             int[] jobIds = new int[pendingJobs.size()];
-            for (int i = 0; i < pendingJobs.size(); i++){
+            for (int i = 0; i < pendingJobs.size(); i++) {
                   jobIds[i] = pendingJobs.get(i).getJobID();
             }
             String allJobIds = Arrays.toString(jobIds);
@@ -116,52 +117,52 @@ public class CloudController {
 
       public ArrayList<Vehicle> getAllVehApps()
                   throws IOException {
-                  clearPendingVehicles();
-                  Scanner s = new Scanner(new File("GUI/Transcripts/allVehicleApps.txt"));
-                  ArrayList<String> list = new ArrayList<String>();
-                  while (s.hasNext()) {
-                        list.add(s.next());
-                  }
-                  s.close();
-                  for (int i = 0; i < list.size(); i++) {
+            clearPendingVehicles();
+            Scanner s = new Scanner(new File("GUI/Transcripts/allVehicleApps.txt"));
+            ArrayList<String> list = new ArrayList<String>();
+            while (s.hasNext()) {
+                  list.add(s.next());
+            }
+            s.close();
+            for (int i = 0; i < list.size(); i++) {
 
-                        String pre = list.get(i);
-                        String[] split = pre.split("/");
-                        String make = split[0];
-                        String model = split[1];
-                        String yearStr = split[2];
-                        String inStr = split[3];
-                        String outStr = split[4];
+                  String pre = list.get(i);
+                  String[] split = pre.split("/");
+                  String make = split[0];
+                  String model = split[1];
+                  String yearStr = split[2];
+                  String inStr = split[3];
+                  String outStr = split[4];
 
-                        Vehicle newVeh = new Vehicle(make, model, Integer.parseInt(yearStr), Integer.parseInt(inStr),
-                                    Integer.parseInt(outStr));
-                        addToPendingVehicles(newVeh);
+                  Vehicle newVeh = new Vehicle(make, model, Integer.parseInt(yearStr), Integer.parseInt(inStr),
+                              Integer.parseInt(outStr));
+                  addToPendingVehicles(newVeh);
             }
             return pendingVehicles;
       }
 
       public ArrayList<Job> getAllJobApps()
                   throws IOException {
-                  clearPendingJobs();
-                  Scanner s = new Scanner(new File("GUI/Transcripts/allJobsApps.txt"));
-                  ArrayList<String> list = new ArrayList<String>();
-                  while (s.hasNext()) {
-                        list.add(s.next());
-                  }
-                  s.close();
-                  for (int i = 0; i < list.size(); i++) {
+            clearPendingJobs();
+            Scanner s = new Scanner(new File("GUI/Transcripts/allJobsApps.txt"));
+            ArrayList<String> list = new ArrayList<String>();
+            while (s.hasNext()) {
+                  list.add(s.next());
+            }
+            s.close();
+            for (int i = 0; i < list.size(); i++) {
 
-                        String pre = list.get(i);
-                        String[] split = pre.split("/");
-                        String name = split[0];
-                        String type = split[1];
-                        String duration = split[2];
-                        String deadline = split[3];
-                        String notes = split[4];
+                  String pre = list.get(i);
+                  String[] split = pre.split("/");
+                  String name = split[0];
+                  String type = split[1];
+                  String duration = split[2];
+                  String deadline = split[3];
+                  String ID = split[4];
 
-                        Job newJob = new Job(name, type, Integer.parseInt(duration), Integer.parseInt(deadline),
-                                    notes);
-                        addToPendingJobs(newJob);
+                  Job newJob = new Job(name, type, Integer.parseInt(duration), Integer.parseInt(deadline),
+                              Integer.parseInt(ID));
+                  addToPendingJobs(newJob);
             }
             return pendingJobs;
       }
