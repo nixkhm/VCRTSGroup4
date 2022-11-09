@@ -18,7 +18,7 @@ public class Server {
 
         try {
 
-            System.out.println("----------$$$ This is server side $$$--------");
+            System.out.println("This is the server of of VCRTS");
             System.out.println("wating for client to connect...");
             // creating the server
             serverSocket = new ServerSocket(8000);
