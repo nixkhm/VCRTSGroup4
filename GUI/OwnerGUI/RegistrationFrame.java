@@ -205,7 +205,7 @@ public class RegistrationFrame {
 
         public void actionPerformed(ActionEvent e) {
 
-            ClientDashboard goToDash = new ClientDashboard();
+            OwnerDashboard goToDash = new OwnerDashboard();
         }
     }
 
