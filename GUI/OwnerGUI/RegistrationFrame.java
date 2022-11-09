@@ -153,7 +153,18 @@ public class RegistrationFrame {
         // file containing the time and date that the user logged in.
 
         public void actionPerformed(ActionEvent e) {
-
+            JPanel responsePanel = new JPanel();
+            responsePanel.setBackground(Color.LIGHT_GRAY);
+            responsePanel.setBounds(300, 550, 250, 75);
+            JLabel response = new JLabel("Registration Info");
+           
+            if(carYearInput.getText().isEmpty() || carModelInput.getText().isEmpty() || carMakeInput.getText().isEmpty() || timeStartInput.getText().isEmpty() || timeEndInput.getText().isEmpty()){                 
+                 response.setText("All text fields must be completed");
+                 responsePanel.add(response);
+                 dashboard.add(responsePanel);
+                 dashboard.setVisible(true);
+}  
+          else{
             String str = "";
             try {
                 str = readFile(allVehiclesTranscript, StandardCharsets.UTF_8);
@@ -175,8 +186,8 @@ public class RegistrationFrame {
 
             try {
                 FileWriter regTranscript = new FileWriter(allVehiclesTranscript);
-                regTranscript.write(str);
                 regTranscript.write(info + "\n");
+                regTranscript.write(str);
                 regTranscript.close();
             } catch (IOException e1) {
 
@@ -184,7 +195,9 @@ public class RegistrationFrame {
             }
 
             CloudController cc = new CloudController();
-            OwnerDashboard dashboard = new OwnerDashboard();
+            OwnerDashboard dashboard1 = new OwnerDashboard();
+            dashboard.dispose();
+        }
         }
     }
 
