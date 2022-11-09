@@ -48,6 +48,7 @@ public class VehicleListFrame {
 
         vehiclePanel.setBackground(Color.LIGHT_GRAY);
         vehiclePanel.setBounds(225, 250, 750, 350);
+        
         CloudController cloudController = new CloudController();
         final ArrayList<Vehicle> listofVehicles = cloudController.getAllVehApps();
         String headers[]= {"Make", "Model","Year","In","Out"};

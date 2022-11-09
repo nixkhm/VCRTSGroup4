@@ -13,6 +13,7 @@ public class index {
         LogInFrame logIn = new LogInFrame();
 
         try {
+            
             System.out.println("The application has connected to the Server");
             System.out.println("client started!");
             // connect the client socket to server
