@@ -77,7 +77,7 @@ public class CloudController {
       }
 
       public void approveVehicle(VehicleApplication application, Vehicle vehicle) {
-
+               
       }
 
       public void denyVehicle(VehicleApplication application, Vehicle vehicle) {
@@ -118,7 +118,7 @@ public class CloudController {
       public ArrayList<Vehicle> getAllVehApps()
                   throws IOException {
             clearPendingVehicles();
-            Scanner s = new Scanner(new File("GUI/Transcripts/allVehicleApps.txt"));
+            Scanner s = new Scanner(new File("GUI/Transcripts/allPendingVehicleApps.txt"));
             ArrayList<String> list = new ArrayList<String>();
             while (s.hasNext()) {
                   list.add(s.next());
@@ -144,7 +144,7 @@ public class CloudController {
       public ArrayList<Job> getAllJobApps()
                   throws IOException {
             clearPendingJobs();
-            Scanner s = new Scanner(new File("GUI/Transcripts/allJobsApps.txt"));
+            Scanner s = new Scanner(new File("GUI/Transcripts/allPendingJobsApps.txt"));
             ArrayList<String> list = new ArrayList<String>();
             while (s.hasNext()) {
                   list.add(s.next());

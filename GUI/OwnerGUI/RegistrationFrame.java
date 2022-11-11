@@ -55,7 +55,7 @@ public class RegistrationFrame {
 
     JButton goBackButton = new JButton("Go Back");
 
-    Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allVehicleApps.txt");
+    Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingVehicleApps.txt");
     File allVehiclesTranscript = file.toFile();
 
     public RegistrationFrame() {

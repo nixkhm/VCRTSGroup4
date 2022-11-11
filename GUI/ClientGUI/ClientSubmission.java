@@ -53,7 +53,7 @@ public class ClientSubmission {
     JButton submitButton = new JButton("Submit");
     JButton goBackButton = new JButton("Go Back");
 
-    Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allJobsApps.txt");
+    Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingJobsApps.txt");
     File jobTranscript = file.toFile();
 
     public ClientSubmission() throws IOException {
