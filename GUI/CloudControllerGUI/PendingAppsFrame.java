@@ -1,6 +1,8 @@
 package GUI.CloudControllerGUI;
 
 import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
+
 import GUI.ButtonListeners.cloudControllerListener;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -14,191 +16,221 @@ import java.net.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.io.*;
-class AcceptJobAppListener {
-    public void acceptApp(int ID){
-        //First, the file with all pending apps is opened.
-        //----------------------------------------------------------------------------------------//
 
-        Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingJobApps.txt");      
+class AcceptJobAppListener {
+    public void acceptApp(int ID) {
+        // First, the file with all pending apps is opened.
+        // ----------------------------------------------------------------------------------------//
+
+        Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingJobApps.txt");
         File allPendingJobTranscript = file.toFile();
         PrintWriter pendingJobTranscriptClear;
         try {
-            //Deletes all the content from the text file so that it can then be refilled again without the approved submission.
-            //----------------------------------------------------------------------------------------//
+            // Deletes all the content from the text file so that it can then be refilled
+            // again without the approved submission.
+            // ----------------------------------------------------------------------------------------//
 
             pendingJobTranscriptClear = new PrintWriter(allPendingJobTranscript);
             pendingJobTranscriptClear.close();
         } catch (FileNotFoundException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
-        }    
-        //Then, the file that contains all the approved submissions are opened. This is where the pending apps will be resubmitted. 
-        //----------------------------------------------------------------------------------------//
+        }
+        // Then, the file that contains all the approved submissions are opened. This is
+        // where the pending apps will be resubmitted.
+        // ----------------------------------------------------------------------------------------//
         Path toApprovedJobFile = FileSystems.getDefault().getPath("GUI/Transcripts/allJobsApps.txt");
         File allApprovedJobsFile = toApprovedJobFile.toFile();
         Scanner read;
         try {
             read = new Scanner(allPendingJobTranscript);
-        
-        FileWriter approve;
-        FileWriter insertBackIntoFile; 
-        CloudController newAppList = new CloudController();
-        try {
-            approve = new FileWriter(allApprovedJobsFile);
-            insertBackIntoFile = new FileWriter(allPendingJobTranscript);
-            final ArrayList<Job> listofPendingJobApps = newAppList.getAllJobApps();
-            for(int i = 0; i < listofPendingJobApps.size(); i++){
-                //Remove the submission that was approved and transfer it to its proper file.
-                  if(listofPendingJobApps.get(i).getJobID() == ID){
+
+            FileWriter approve;
+            FileWriter insertBackIntoFile;
+            CloudController newAppList = new CloudController();
+            try {
+                approve = new FileWriter(allApprovedJobsFile);
+                insertBackIntoFile = new FileWriter(allPendingJobTranscript);
+                final ArrayList<Job> listofPendingJobApps = newAppList.getAllJobApps();
+                for (int i = 0; i < listofPendingJobApps.size(); i++) {
+                    // Remove the submission that was approved and transfer it to its proper file.
+                    if (listofPendingJobApps.get(i).getJobID() == ID) {
                         listofPendingJobApps.remove(i);
-                        approve.write(listofPendingJobApps.get(i).getJobID()+"/"+listofPendingJobApps.get(i).getJobName()+"/"+listofPendingJobApps.get(i).getJobType()+"/"+listofPendingJobApps.get(i).getJobDuration()+"/"+listofPendingJobApps.get(i).getJobDeadline()+"/"+listofPendingJobApps.get(i).getJobNotes()+"/");
-                  }
-                  else{
-                        insertBackIntoFile.write(listofPendingJobApps.get(i).getJobID()+"/"+listofPendingJobApps.get(i).getJobName()+"/"+listofPendingJobApps.get(i).getJobType()+"/"+listofPendingJobApps.get(i).getJobDuration()+"/"+listofPendingJobApps.get(i).getJobDeadline()+"/"+listofPendingJobApps.get(i).getJobNotes()+"/");
-                                             
-                  }
+                        approve.write(
+                                listofPendingJobApps.get(i).getJobID() + "/" + listofPendingJobApps.get(i).getJobName()
+                                        + "/" + listofPendingJobApps.get(i).getJobType() + "/"
+                                        + listofPendingJobApps.get(i).getJobDuration() + "/"
+                                        + listofPendingJobApps.get(i).getJobDeadline() + "/"
+                                        + listofPendingJobApps.get(i).getJobNotes() + "/");
+                    } else {
+                        insertBackIntoFile.write(
+                                listofPendingJobApps.get(i).getJobID() + "/" + listofPendingJobApps.get(i).getJobName()
+                                        + "/" + listofPendingJobApps.get(i).getJobType() + "/"
+                                        + listofPendingJobApps.get(i).getJobDuration() + "/"
+                                        + listofPendingJobApps.get(i).getJobDeadline() + "/"
+                                        + listofPendingJobApps.get(i).getJobNotes() + "/");
+
+                    }
+                }
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-        } catch (IOException e) {
+        } catch (FileNotFoundException e1) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            e1.printStackTrace();
         }
-    } catch (FileNotFoundException e1) {
-        // TODO Auto-generated catch block
-        e1.printStackTrace();
-    }
     }
 }
 
 class rejectJobAppListener {
-    public void rejectApp(int ID){
-        //First, the file with all pending apps is opened.
-        //----------------------------------------------------------------------------------------//
+    public void rejectApp(int ID) {
+        // First, the file with all pending apps is opened.
+        // ----------------------------------------------------------------------------------------//
 
-        Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingJobApps.txt");      
+        Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingJobApps.txt");
         File allPendingJobTranscript = file.toFile();
         PrintWriter pendingJobTranscriptClear;
         try {
-            //Deletes all the content from the text file so that it can then be refilled again without the approved submission.
-            //----------------------------------------------------------------------------------------//
+            // Deletes all the content from the text file so that it can then be refilled
+            // again without the approved submission.
+            // ----------------------------------------------------------------------------------------//
 
             pendingJobTranscriptClear = new PrintWriter(allPendingJobTranscript);
             pendingJobTranscriptClear.close();
         } catch (FileNotFoundException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
-        }    
-        //Then, the file that contains all the approved submissions are opened. This is where the pending apps will be resubmitted. 
-        //----------------------------------------------------------------------------------------//
-        
-              
-        FileWriter insertBackIntoFile; 
+        }
+        // Then, the file that contains all the approved submissions are opened. This is
+        // where the pending apps will be resubmitted.
+        // ----------------------------------------------------------------------------------------//
+
+        FileWriter insertBackIntoFile;
         CloudController newAppList = new CloudController();
         try {
-            
+
             insertBackIntoFile = new FileWriter(allPendingJobTranscript);
             final ArrayList<Job> listofPendingJobApps = newAppList.getAllJobApps();
-            for(int i = 0; i < listofPendingJobApps.size(); i++){
-                //Remove the submission that was approved and transfer it to its proper file.
-                  if(listofPendingJobApps.get(i).getJobID() == ID){
-                        listofPendingJobApps.remove(i);
-                        
-                  }
-                  else{
-                        insertBackIntoFile.write(listofPendingJobApps.get(i).getJobID()+"/"+listofPendingJobApps.get(i).getJobName()+"/"+listofPendingJobApps.get(i).getJobType()+"/"+listofPendingJobApps.get(i).getJobDuration()+"/"+listofPendingJobApps.get(i).getJobDeadline()+"/"+listofPendingJobApps.get(i).getJobNotes()+"/");
-                                             
-                  }
+            for (int i = 0; i < listofPendingJobApps.size(); i++) {
+                // Remove the submission that was approved and transfer it to its proper file.
+                if (listofPendingJobApps.get(i).getJobID() == ID) {
+                    listofPendingJobApps.remove(i);
+
+                } else {
+                    insertBackIntoFile.write(listofPendingJobApps.get(i).getJobID() + "/"
+                            + listofPendingJobApps.get(i).getJobName() + "/" + listofPendingJobApps.get(i).getJobType()
+                            + "/" + listofPendingJobApps.get(i).getJobDuration() + "/"
+                            + listofPendingJobApps.get(i).getJobDeadline() + "/"
+                            + listofPendingJobApps.get(i).getJobNotes() + "/");
+
+                }
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    } 
     }
+}
 
-
-class AcceptVehicleAppListener{
-    public void acceptApp(int ID) throws FileNotFoundException{
-        Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingVehicleApps.txt");      
+class AcceptVehicleAppListener {
+    public void acceptApp(int ID) throws FileNotFoundException {
+        Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingVehicleApps.txt");
         File allPendingVehicleTranscript = file.toFile();
         PrintWriter pendingVehicleTranscriptClear;
         try {
-            //Deletes all the content from the text file so that it can then be refilled again without the approved submission.
-            //----------------------------------------------------------------------------------------//
+            // Deletes all the content from the text file so that it can then be refilled
+            // again without the approved submission.
+            // ----------------------------------------------------------------------------------------//
 
             pendingVehicleTranscriptClear = new PrintWriter(allPendingVehicleTranscript);
             pendingVehicleTranscriptClear.close();
         } catch (FileNotFoundException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
-        }    
-        //Then, the file that contains all the approved submissions are opened. This is where the pending apps will be resubmitted. 
-        //----------------------------------------------------------------------------------------//
+        }
+        // Then, the file that contains all the approved submissions are opened. This is
+        // where the pending apps will be resubmitted.
+        // ----------------------------------------------------------------------------------------//
         Path toApprovedVehicleFile = FileSystems.getDefault().getPath("GUI/Transcripts/allVehicleApps.txt");
-        File allApprovedVehicleFile = toApprovedVehicleFile.toFile();       
+        File allApprovedVehicleFile = toApprovedVehicleFile.toFile();
         FileWriter approve;
-        
-        FileWriter insertBackIntoFile; 
+
+        FileWriter insertBackIntoFile;
         CloudController newAppList = new CloudController();
         try {
             approve = new FileWriter(allApprovedVehicleFile);
             insertBackIntoFile = new FileWriter(allPendingVehicleTranscript);
             final ArrayList<Job> listofPendingVehicleApps = newAppList.getAllJobApps();
-            for(int i = 0; i < listofPendingVehicleApps.size(); i++){
-                //Remove the submission that was approved and transfer it to its proper file.
-                  if(listofPendingVehicleApps.get(i).getJobID() == ID){
+            for (int i = 0; i < listofPendingVehicleApps.size(); i++) {
+                // Remove the submission that was approved and transfer it to its proper file.
+                if (listofPendingVehicleApps.get(i).getJobID() == ID) {
                     listofPendingVehicleApps.remove(i);
-                    approve.write(listofPendingVehicleApps.get(i).getJobID()+"/"+listofPendingVehicleApps.get(i).getJobName()+"/"+listofPendingVehicleApps.get(i).getJobType()+"/"+listofPendingVehicleApps.get(i).getJobDuration()+"/"+listofPendingVehicleApps.get(i).getJobDeadline()+"/"+listofPendingVehicleApps.get(i).getJobNotes()+"/");
-                  }
-                  else{
-                    //Reinsert all the other pending applications into the file. 
-                        insertBackIntoFile.write(listofPendingVehicleApps.get(i).getJobID()+"/"+listofPendingVehicleApps.get(i).getJobName()+"/"+listofPendingVehicleApps.get(i).getJobType()+"/"+listofPendingVehicleApps.get(i).getJobDuration()+"/"+listofPendingVehicleApps.get(i).getJobDeadline()+"/"+listofPendingVehicleApps.get(i).getJobNotes()+"/");
-                                             
-                  }
+                    approve.write(listofPendingVehicleApps.get(i).getJobID() + "/"
+                            + listofPendingVehicleApps.get(i).getJobName() + "/"
+                            + listofPendingVehicleApps.get(i).getJobType() + "/"
+                            + listofPendingVehicleApps.get(i).getJobDuration() + "/"
+                            + listofPendingVehicleApps.get(i).getJobDeadline() + "/"
+                            + listofPendingVehicleApps.get(i).getJobNotes() + "/");
+                } else {
+                    // Reinsert all the other pending applications into the file.
+                    insertBackIntoFile.write(listofPendingVehicleApps.get(i).getJobID() + "/"
+                            + listofPendingVehicleApps.get(i).getJobName() + "/"
+                            + listofPendingVehicleApps.get(i).getJobType() + "/"
+                            + listofPendingVehicleApps.get(i).getJobDuration() + "/"
+                            + listofPendingVehicleApps.get(i).getJobDeadline() + "/"
+                            + listofPendingVehicleApps.get(i).getJobNotes() + "/");
+
+                }
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    
+
+    }
 }
-}
-class RejectVehicleAppListener{
-    public void rejectApp(int ID){
-        Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingVehicleApps.txt");      
+
+class RejectVehicleAppListener {
+    public void rejectApp(int ID) {
+        Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingVehicleApps.txt");
         File allPendingVehicleTranscript = file.toFile();
         PrintWriter pendingVehicleTranscriptClear;
         try {
-            //Deletes all the content from the text file so that it can then be refilled again without the approved submission.
-            //----------------------------------------------------------------------------------------//
+            // Deletes all the content from the text file so that it can then be refilled
+            // again without the approved submission.
+            // ----------------------------------------------------------------------------------------//
 
             pendingVehicleTranscriptClear = new PrintWriter(allPendingVehicleTranscript);
             pendingVehicleTranscriptClear.close();
         } catch (FileNotFoundException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
-        }    
-        //Then, the file that contains all the approved submissions are opened. This is where the pending apps will be resubmitted. 
-        //----------------------------------------------------------------------------------------//
-       
-           
-        
-        
-        FileWriter insertBackIntoFile; 
+        }
+        // Then, the file that contains all the approved submissions are opened. This is
+        // where the pending apps will be resubmitted.
+        // ----------------------------------------------------------------------------------------//
+
+        FileWriter insertBackIntoFile;
         CloudController newAppList = new CloudController();
         try {
-            
+
             insertBackIntoFile = new FileWriter(allPendingVehicleTranscript);
             final ArrayList<Job> listofPendingVehicleApps = newAppList.getAllJobApps();
-            for(int i = 0; i < listofPendingVehicleApps.size(); i++){
-                //Remove the submission that was approved and transfer it to its proper file.
-                  if(listofPendingVehicleApps.get(i).getJobID() == ID){
+            for (int i = 0; i < listofPendingVehicleApps.size(); i++) {
+                // Remove the submission that was approved and transfer it to its proper file.
+                if (listofPendingVehicleApps.get(i).getJobID() == ID) {
                     listofPendingVehicleApps.remove(i);
-                        
-                  }
-                  else{
-                        insertBackIntoFile.write(listofPendingVehicleApps.get(i).getJobID()+"/"+listofPendingVehicleApps.get(i).getJobName()+"/"+listofPendingVehicleApps.get(i).getJobType()+"/"+listofPendingVehicleApps.get(i).getJobDuration()+"/"+listofPendingVehicleApps.get(i).getJobDeadline()+"/"+listofPendingVehicleApps.get(i).getJobNotes()+"/");
-                                             
-                  }
+
+                } else {
+                    insertBackIntoFile.write(listofPendingVehicleApps.get(i).getJobID() + "/"
+                            + listofPendingVehicleApps.get(i).getJobName() + "/"
+                            + listofPendingVehicleApps.get(i).getJobType() + "/"
+                            + listofPendingVehicleApps.get(i).getJobDuration() + "/"
+                            + listofPendingVehicleApps.get(i).getJobDeadline() + "/"
+                            + listofPendingVehicleApps.get(i).getJobNotes() + "/");
+
+                }
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -206,7 +238,6 @@ class RejectVehicleAppListener{
         }
     }
 }
-    
 
 public class PendingAppsFrame {
     JFrame dashboard = new JFrame("Pending Application Dashboard");
@@ -245,21 +276,21 @@ public class PendingAppsFrame {
         dashboard.add(titlePanel);
 
         ownerAppTitlePanel.setBackground(Color.LIGHT_GRAY);
-        ownerAppTitlePanel.setBounds(50, 200, 500, 50);
+        ownerAppTitlePanel.setBounds(50, 200, 550, 50);
         ownerAppTitle.setBounds(50, 200, 50, 50);
         ownerAppTitlePanel.add(ownerAppTitle);
 
         ownerAppPanel.setBackground(Color.LIGHT_GRAY);
-        ownerAppPanel.setBounds(50, 250, 500, 300);
+        ownerAppPanel.setBounds(50, 250, 550, 300);
         ownerApplications.setBounds(50, 250, 500, 300);
 
         renterAppTitlePanel.setBackground(Color.LIGHT_GRAY);
-        renterAppTitlePanel.setBounds(650, 200, 500, 50);
+        renterAppTitlePanel.setBounds(650, 200, 550, 50);
         renterAppTitle.setBounds(650, 200, 50, 50);
         renterAppTitlePanel.add(renterAppTitle);
 
         renterAppPanel.setBackground(Color.LIGHT_GRAY);
-        renterAppPanel.setBounds(650, 250, 500, 300);
+        renterAppPanel.setBounds(650, 250, 550, 300);
         renterApplications.setBounds(650, 250, 500, 300);
 
         returnPanel.setBounds(550, 600, 100, 50);
@@ -283,8 +314,8 @@ public class PendingAppsFrame {
                 // Table for pending Job applications
                 // -----------------------------------------------------------------------------//
 
-                JTable pendingJobApps = new JTable(11, 5);
-                String headers[] = { "Job ID", "Name", "Type", "Duration", "Deadline" };
+                JTable pendingJobApps = new JTable(11, 7);
+                String headers[] = { "Job ID", "Name", "Type", "Duration", "Deadline", "Accept", "Decline" };
                 for (int i = 0; i < headers.length; i++) {
                     pendingJobApps.setValueAt(headers[i], 0, i);
 
@@ -299,8 +330,15 @@ public class PendingAppsFrame {
                     pendingJobApps.setValueAt(listofPendingJobApps.get(i).getJobType(), i + 1, 2);
                     pendingJobApps.setValueAt(listofPendingJobApps.get(i).getJobDuration(), i + 1, 3);
                     pendingJobApps.setValueAt(listofPendingJobApps.get(i).getJobDeadline(), i + 1, 4);
+
+                    pendingJobApps.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
+                    pendingJobApps.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JTextField()));
+
+                    pendingJobApps.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
+                    pendingJobApps.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JTextField()));
+
                 }
-                pendingJobApps.setBounds(15, 15, 720, 175);
+                pendingJobApps.setBounds(15, 15, 800, 175);
                 renterAppPanel.add(pendingJobApps);
 
             }
@@ -309,8 +347,8 @@ public class PendingAppsFrame {
             } else {
                 // Table for pending vehicle applications
                 // -----------------------------------------------------------------------------//
-                JTable pendingVehicleApps = new JTable(11, 5);
-                String vehHeaders[] = { "Make", "Model", "Year", "In", "Out" };
+                JTable pendingVehicleApps = new JTable(11, 7);
+                String vehHeaders[] = { "Make", "Model", "Year", "In", "Out", "Accept", "Decline" };
                 for (int i = 0; i < vehHeaders.length; i++) {
                     pendingVehicleApps.setValueAt(vehHeaders[i], 0, i);
                 }
@@ -324,8 +362,14 @@ public class PendingAppsFrame {
                     pendingVehicleApps.setValueAt(listOfPendingVehicleApps.get(i).getYear(), i + 1, 2);
                     pendingVehicleApps.setValueAt(listOfPendingVehicleApps.get(i).getTimeStart(), i + 1, 3);
                     pendingVehicleApps.setValueAt(listOfPendingVehicleApps.get(i).getTimeEnd(), i + 1, 4);
+
+                    pendingVehicleApps.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
+                    pendingVehicleApps.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JTextField()));
+
+                    pendingVehicleApps.getColumnModel().getColumn(6).setCellRenderer(new ButtonRenderer());
+                    pendingVehicleApps.getColumnModel().getColumn(6).setCellEditor(new ButtonEditor(new JTextField()));
                 }
-                pendingVehicleApps.setBounds(75, 15, 720, 175);
+                pendingVehicleApps.setBounds(75, 100, 720, 175);
                 ownerAppPanel.add(pendingVehicleApps);
                 JButton accButton = new JButton();
                 AcceptJobAppListener accept = new AcceptJobAppListener();
@@ -350,5 +394,89 @@ public class PendingAppsFrame {
         dashboard.add(returnPanel);
     }
 
-    
+}
+
+// BUTTON RENDERER CLASS
+class ButtonRenderer extends JButton implements TableCellRenderer {
+
+    // CONSTRUCTOR
+    public ButtonRenderer() {
+        // SET BUTTON PROPERTIES
+        setOpaque(true);
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object obj,
+            boolean selected, boolean focused, int row, int col) {
+
+        // SET PASSED OBJECT AS BUTTON TEXT
+        setText((obj == null) ? "" : obj.toString());
+
+        return this;
+    }
+
+}
+
+// BUTTON EDITOR CLASS
+class ButtonEditor extends DefaultCellEditor {
+
+    protected JButton btn;
+    private String lbl;
+    private Boolean clicked;
+
+    public ButtonEditor(JTextField txt) {
+        super(txt);
+
+        btn = new JButton();
+        btn.setOpaque(true);
+
+        // WHEN BUTTON IS CLICKED
+        btn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                fireEditingStopped();
+            }
+        });
+    }
+
+    // OVERRIDE A COUPLE OF METHODS
+    @Override
+    public Component getTableCellEditorComponent(JTable table, Object obj,
+            boolean selected, int row, int col) {
+
+        // SET TEXT TO BUTTON,SET CLICKED TO TRUE,THEN RETURN THE BTN OBJECT
+        lbl = (obj == null) ? "" : obj.toString();
+        btn.setText(lbl);
+        clicked = true;
+        return btn;
+    }
+
+    // IF BUTTON CELL VALUE CHNAGES,IF CLICKED THAT IS
+    @Override
+    public Object getCellEditorValue() {
+
+        if (clicked) {
+            // SHOW US SOME MESSAGE
+            JOptionPane.showMessageDialog(btn, "Button Clicked");
+        }
+        // SET IT TO FALSE NOW THAT ITS CLICKED
+        clicked = false;
+        return new String(lbl);
+    }
+
+    @Override
+    public boolean stopCellEditing() {
+
+        // SET CLICKED TO FALSE FIRST
+        clicked = true;
+        return super.stopCellEditing();
+    }
+
+    @Override
+    protected void fireEditingStopped() {
+        // TODO Auto-generated method stub
+        super.fireEditingStopped();
+    }
 }
