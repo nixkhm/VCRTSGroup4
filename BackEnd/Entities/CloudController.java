@@ -21,6 +21,7 @@ public class CloudController {
 
       private ArrayList<Vehicle> pendingVehicles;
       private ArrayList<Job> pendingJobs;
+      private ArrayList<Vehicle> approvedVehicles;
 
       private VehicularCloud currentVehicularCloud;
 
@@ -72,6 +73,10 @@ public class CloudController {
       public void clearPendingVehicles() {
             pendingVehicles.clear();
       }
+      
+      public void clearApprovedVehicles() {
+            approvedVehicles.clear();
+      }
 
       public void addToPendingJobs(Job in) {
             pendingJobs.add(in);
@@ -81,12 +86,14 @@ public class CloudController {
             pendingJobs.clear();
       }
 
-      public void approveVehicle(VehicleApplication application, Vehicle vehicle) {
-
+      public void approveVehicle(Vehicle vehicle) {
+            approvedVehicles.add(vehicle);
+            pendingVehicles.remove(vehicle);
+            
       }
 
       public void denyVehicle(VehicleApplication application, Vehicle vehicle) {
-
+            pendingVehicles.remove(vehicle);
       }
 
       public void assignJobToVehicle(JobApplication jApplication, Job job, Vehicle vehicle) {
@@ -122,8 +129,33 @@ public class CloudController {
 
       public ArrayList<Vehicle> getAllVehicles()
                   throws IOException {
-            clearPendingVehicles();
             Scanner s = new Scanner(new File("GUI/Transcripts/allVehicles.txt"));
+            ArrayList<String> list = new ArrayList<String>();
+            while (s.hasNext()) {
+                  list.add(s.next());
+            }
+            s.close();
+            for (int i = 0; i < list.size(); i++) {
+
+                  String pre = list.get(i);
+                  String[] split = pre.split("/");
+                  String make = split[0];
+                  String model = split[1];
+                  String yearStr = split[2];
+                  String inStr = split[3];
+                  String outStr = split[4];
+
+                  Vehicle newVeh = new Vehicle(make, model, Integer.parseInt(yearStr), Integer.parseInt(inStr),
+                              Integer.parseInt(outStr));
+                  approveVehicle(newVeh);
+            }
+            return approvedVehicles;
+      }
+
+      public ArrayList<Vehicle> getAllPendingVehicles()
+                  throws IOException {
+            clearPendingVehicles();
+            Scanner s = new Scanner(new File("GUI/Transcripts/allPendingVehicleApps.txt"));
             ArrayList<String> list = new ArrayList<String>();
             while (s.hasNext()) {
                   list.add(s.next());
@@ -146,10 +178,10 @@ public class CloudController {
             return pendingVehicles;
       }
 
-      public ArrayList<Vehicle> getAllPendingVehicles()
+      public ArrayList<Vehicle> getAllApprovedVehicles()
                   throws IOException {
             clearPendingVehicles();
-            Scanner s = new Scanner(new File("GUI/Transcripts/allPendingVehicleApps.txt"));
+            Scanner s = new Scanner(new File("GUI/Transcripts/allApprovedVehicles.txt"));
             ArrayList<String> list = new ArrayList<String>();
             while (s.hasNext()) {
                   list.add(s.next());
@@ -227,7 +259,7 @@ public class CloudController {
                               System.out.println("I/O error: " + e);
                         }
 
-                        socket = serverSocket.accept();
+                        
 
                         inputStream = new DataInputStream(socket.getInputStream());
                         // outputStream = new DataOutputStream(socket.getOutputStream());
