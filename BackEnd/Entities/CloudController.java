@@ -218,7 +218,6 @@ public class CloudController {
 
                         System.out.println("This is the server of of VCRTS");
                         System.out.println("wating for client to connect...");
-
                         try {
                               serverSocket = new ServerSocket(8000);
                         } catch (IOException e) {
