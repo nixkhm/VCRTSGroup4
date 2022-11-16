@@ -173,7 +173,6 @@ public class RegistrationFrame {
                 dashboard.add(responsePanel);
                 dashboard.setVisible(true);
             } else {
-
                 String carMake = carMakeInput.getText();
                 String carModel = carModelInput.getText();
                 String carYearStr = carYearInput.getText();
@@ -221,27 +220,6 @@ public class RegistrationFrame {
                 CloudController cc = new CloudController();
                 OwnerDashboard dashboard1 = new OwnerDashboard();
                 dashboard.dispose();
-
-                /*
-                 * String str = "";
-                 * try {
-                 * str = readFile(allVehiclesTranscript, StandardCharsets.UTF_8);
-                 * } catch (IOException e2) {
-                 * e2.printStackTrace();
-                 * }
-                 */
-
-                /*
-                 * try {
-                 * FileWriter regTranscript = new FileWriter(allVehiclesTranscript);
-                 * regTranscript.write(str);
-                 * regTranscript.write(info + "\n");
-                 * regTranscript.close();
-                 * } catch (IOException e1) {
-                 * 
-                 * e1.printStackTrace();
-                 * }
-                 */
             }
         }
     }

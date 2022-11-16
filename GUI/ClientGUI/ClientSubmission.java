@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
@@ -55,6 +57,11 @@ public class ClientSubmission {
 
     Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingJobsApps.txt");
     File jobTranscript = file.toFile();
+
+    static ServerSocket serverSocket;
+    static Socket socket;
+    static DataInputStream inputStream;
+    static DataOutputStream outputStream;
 
     public ClientSubmission() throws IOException {
         dashboard.setSize(1200, 800);
@@ -180,14 +187,38 @@ public class ClientSubmission {
                 int jobID = Integer.parseInt(jobIDStr);
 
                 String info = jobName + "/" + jobType
-                        + "/" + jobDuration + "/" + jobDeadline + "/" + jobID;
+                        + "/" + jobDuration + "/" + jobDeadline + "/" + jobID + "/";
+
+                String messageIn = "";
+                String messageOut = "";
+
                 try {
-                    FileWriter regTranscript = new FileWriter(jobTranscript);
-                    regTranscript.write(str);
-                    regTranscript.write(info + "\n");
-                    regTranscript.close();
-                } catch (IOException e1) {
+                    System.out.println("----------*** This is client side ***--------");
+                    System.out.println("client started!");
+                    // connect the client socket to server
+                    Socket socket2 = new Socket("localhost", 1000);
+
+                    // client reads a message from Server
+                    inputStream = new DataInputStream(socket2.getInputStream());
+                    outputStream = new DataOutputStream(socket2.getOutputStream());
+
+                    // client reads a message from keyboard
+                    System.out.println("Enter a message you want to send to server side: ");
+                    // server sends the message to client
+                    boolean sent = false;
+
+                    while (!sent) {
+                        messageOut = info;
+                        outputStream.writeUTF(messageOut);
+                        System.out.println("Message Sent!");
+                        sent = true;
+                    }
+                    sent = false;
+
+                } catch (Exception e1) {
+
                     e1.printStackTrace();
+
                 }
 
                 CloudController cc = new CloudController();

@@ -25,6 +25,7 @@ public class JobsInProgressFrame {
     JButton returnButton = new JButton("Return");
 
     public JobsInProgressFrame() throws IOException {
+
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
         dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -50,7 +51,7 @@ public class JobsInProgressFrame {
         JIPPanel.setBounds(225, 250, 750, 350);
         JIPPanel.setLayout(null);
         CloudController cloudController = new CloudController();
-        final ArrayList<Job> listofJobs = cloudController.getAllJobApps();
+        final ArrayList<Job> listofJobs = cloudController.getAllPendingJobApps();
         String headers[] = { "Job ID", "Name", "Type", "Duration", "Deadline" };
         JTable JIP = new JTable(11, 5);
         for (int i = 0; i < headers.length; i++) {
