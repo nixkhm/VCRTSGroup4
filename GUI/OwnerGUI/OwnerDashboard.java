@@ -1,12 +1,11 @@
 package GUI.OwnerGUI;
 
 import javax.swing.*;
-
 import GUI.ButtonListeners.logInListener;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 class registerACarListener implements ActionListener {
     // Once the user signs in by clicking the button, the program will generate a
@@ -14,6 +13,18 @@ class registerACarListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         RegistrationFrame registration = new RegistrationFrame();
 
+    }
+}
+
+class JIPListener implements ActionListener {
+    // Returns jobs in progress
+    public void actionPerformed(ActionEvent e) {
+        try {
+            ViewVehicleFrame jipDashboard = new ViewVehicleFrame();
+        } catch (IOException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
     }
 }
 
@@ -110,6 +121,12 @@ public class OwnerDashboard {
         JIPLabel.setContentAreaFilled(false);
         JIPLabel.setBorderPainted(false);
         panel4.add(JIPLabel);
+        
+        ActionListener goToJIPS = new JIPListener();
+        JIPLabel.addActionListener(goToJIPS);
+        JIPLabel.addActionListener(e -> {
+            dashboard.dispose();
+        });
 
         // Label for "History" option
         historyLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
