@@ -305,7 +305,7 @@ public class PendingAppsFrame {
 
         try {
             final ArrayList<Job> listofPendingJobApps = cc.getAllJobApps();
-            final ArrayList<Vehicle> listOfPendingVehicleApps = cc.getAllVehApps();
+            final ArrayList<Vehicle> listOfPendingVehicleApps = cc.getAllPendingVehicles();
             if (listofPendingJobApps.size() == 0) {
                 renterAppPanel.add(renterApplications);
             }
