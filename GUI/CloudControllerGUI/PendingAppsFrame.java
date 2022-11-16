@@ -51,7 +51,7 @@ class AcceptJobAppListener {
             try {
                 approve = new FileWriter(allApprovedJobsFile);
                 insertBackIntoFile = new FileWriter(allPendingJobTranscript);
-                final ArrayList<Job> listofPendingJobApps = newAppList.getAllJobApps();
+                final ArrayList<Job> listofPendingJobApps = newAppList.getAllPendingJobApps();
                 for (int i = 0; i < listofPendingJobApps.size(); i++) {
                     // Remove the submission that was approved and transfer it to its proper file.
                     if (listofPendingJobApps.get(i).getJobID() == ID) {
@@ -111,7 +111,7 @@ class rejectJobAppListener {
         try {
 
             insertBackIntoFile = new FileWriter(allPendingJobTranscript);
-            final ArrayList<Job> listofPendingJobApps = newAppList.getAllJobApps();
+            final ArrayList<Job> listofPendingJobApps = newAppList.getAllPendingJobApps();
             for (int i = 0; i < listofPendingJobApps.size(); i++) {
                 // Remove the submission that was approved and transfer it to its proper file.
                 if (listofPendingJobApps.get(i).getJobID() == ID) {
@@ -161,7 +161,7 @@ class AcceptVehicleAppListener {
         try {
             approve = new FileWriter(allApprovedVehicleFile);
             insertBackIntoFile = new FileWriter(allPendingVehicleTranscript);
-            final ArrayList<Job> listofPendingVehicleApps = newAppList.getAllJobApps();
+            final ArrayList<Job> listofPendingVehicleApps = newAppList.getAllPendingJobApps();
             for (int i = 0; i < listofPendingVehicleApps.size(); i++) {
                 // Remove the submission that was approved and transfer it to its proper file.
                 if (listofPendingVehicleApps.get(i).getJobID() == ID) {
@@ -216,7 +216,7 @@ class RejectVehicleAppListener {
         try {
 
             insertBackIntoFile = new FileWriter(allPendingVehicleTranscript);
-            final ArrayList<Job> listofPendingVehicleApps = newAppList.getAllJobApps();
+            final ArrayList<Job> listofPendingVehicleApps = newAppList.getAllPendingJobApps();
             for (int i = 0; i < listofPendingVehicleApps.size(); i++) {
                 // Remove the submission that was approved and transfer it to its proper file.
                 if (listofPendingVehicleApps.get(i).getJobID() == ID) {
@@ -304,13 +304,18 @@ public class PendingAppsFrame {
         CloudController cc = new CloudController();
 
         try {
-            final ArrayList<Job> listofPendingJobApps = cc.getAllJobApps();
+            final ArrayList<Job> listofPendingJobApps = cc.getAllPendingJobApps();
             final ArrayList<Vehicle> listOfPendingVehicleApps = cc.getAllPendingVehicles();
+
+            for (Job j : listofPendingJobApps)
+                System.out.println(j);
+
             if (listofPendingJobApps.size() == 0) {
                 renterAppPanel.add(renterApplications);
             }
 
             else {
+
                 // Table for pending Job applications
                 // -----------------------------------------------------------------------------//
 

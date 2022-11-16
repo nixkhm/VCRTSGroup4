@@ -29,14 +29,14 @@ public class CloudController {
             pendingJobs = new ArrayList<Job>();
 
             try {
-                  getAllVehicles();
+                  getAllPendingVehicles();
             } catch (IOException e) {
                   // TODO Auto-generated catch block
                   e.printStackTrace();
             }
 
             try {
-                  getAllJobApps();
+                  getAllPendingJobApps();
             } catch (IOException e) {
                   // TODO Auto-generated catch block
                   e.printStackTrace();
@@ -169,13 +169,15 @@ public class CloudController {
                               Integer.parseInt(outStr));
                   addToPendingVehicles(newVeh);
             }
+            for (Vehicle v : pendingVehicles)
+                  System.out.println(v);
             return pendingVehicles;
       }
 
-      public ArrayList<Job> getAllJobApps()
+      public ArrayList<Job> getAllPendingJobApps()
                   throws IOException {
             clearPendingJobs();
-            Scanner s = new Scanner(new File("GUI/Transcripts/allPendingJobsApps.txt"));
+            Scanner s = new Scanner(new File("GUI/Transcripts/allPendingJobApps.txt"));
             ArrayList<String> list = new ArrayList<String>();
             while (s.hasNext()) {
                   list.add(s.next());
@@ -195,7 +197,10 @@ public class CloudController {
                               Integer.parseInt(ID));
                   addToPendingJobs(newJob);
             }
+            for (Job j : pendingJobs)
+                  System.out.println(j);
             return pendingJobs;
+
       }
 
       static ServerSocket serverSocket;
@@ -205,62 +210,58 @@ public class CloudController {
 
       public static void main(String[] args) {
 
-            String messageIn = "";
-            String messageOut = "";
+            while (true) {
 
-            CloudController cc = new CloudController();
+                  String messageIn = "";
 
-            try {
-
-                  System.out.println("This is the server of of VCRTS");
-                  System.out.println("wating for client to connect...");
-                  // creating the server
                   try {
-                        serverSocket = new ServerSocket(8000);
-                  } catch (IOException e) {
+
+                        System.out.println("This is the server of of VCRTS");
+                        System.out.println("wating for client to connect...");
+
+                        try {
+                              serverSocket = new ServerSocket(8000);
+                        } catch (IOException e) {
+                              e.printStackTrace();
+                        }
+                        while (true) {
+                              try {
+                                    socket = serverSocket.accept();
+                              } catch (IOException e) {
+                                    System.out.println("I/O error: " + e);
+                              }
+
+                              inputStream = new DataInputStream(socket.getInputStream());
+
+                              messageIn = inputStream.readUTF();
+
+                              System.out.println(messageIn);
+
+                              String infoToBeAdded = messageIn;
+                              Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingVehicleApps.txt");
+                              File allVehiclesTranscript = file.toFile();
+
+                              String str = "";
+                              try {
+                                    str = readFile(allVehiclesTranscript, StandardCharsets.UTF_8);
+                              } catch (IOException e2) {
+                                    e2.printStackTrace();
+                              }
+
+                              try {
+                                    FileWriter regTranscript = new FileWriter(allVehiclesTranscript);
+                                    regTranscript.write(str);
+                                    regTranscript.write(infoToBeAdded + "\n");
+                                    regTranscript.close();
+                              } catch (IOException e1) {
+                                    e1.printStackTrace();
+                              }
+                        }
+                  } catch (Exception e) {
+
                         e.printStackTrace();
                   }
-                  while (true) {
-                        try {
-                              socket = serverSocket.accept();
-                        } catch (IOException e) {
-                              System.out.println("I/O error: " + e);
-                        }
-
-                        socket = serverSocket.accept();
-
-                        inputStream = new DataInputStream(socket.getInputStream());
-                        // outputStream = new DataOutputStream(socket.getOutputStream());
-
-                        messageIn = inputStream.readUTF();
-
-                        System.out.println(messageIn);
-
-                        String infoToBeAdded = messageIn;
-                        Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingVehicleApps.txt");
-                        File allVehiclesTranscript = file.toFile();
-
-                        String str = "";
-                        try {
-                              str = readFile(allVehiclesTranscript, StandardCharsets.UTF_8);
-                        } catch (IOException e2) {
-                              e2.printStackTrace();
-                        }
-
-                        try {
-                              FileWriter regTranscript = new FileWriter(allVehiclesTranscript);
-                              regTranscript.write(str);
-                              regTranscript.write(infoToBeAdded + "\n");
-                              regTranscript.close();
-                        } catch (IOException e1) {
-                              e1.printStackTrace();
-                        }
-                  }
-            } catch (Exception e) {
-
-                  e.printStackTrace();
             }
-
       }
 
       public static String readFile(File file, Charset charset) throws IOException {
