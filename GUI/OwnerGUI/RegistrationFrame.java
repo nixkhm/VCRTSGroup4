@@ -11,6 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
@@ -57,6 +59,11 @@ public class RegistrationFrame {
 
     Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingVehicleApps.txt");
     File allVehiclesTranscript = file.toFile();
+
+    static ServerSocket serverSocket;
+    static Socket socket;
+    static DataInputStream inputStream;
+    static DataOutputStream outputStream;
 
     public RegistrationFrame() {
         dashboard.setSize(1200, 800);
@@ -157,47 +164,85 @@ public class RegistrationFrame {
             responsePanel.setBackground(Color.LIGHT_GRAY);
             responsePanel.setBounds(300, 550, 250, 75);
             JLabel response = new JLabel("Registration Info");
-           
-            if(carYearInput.getText().isEmpty() || carModelInput.getText().isEmpty() || carMakeInput.getText().isEmpty() || timeStartInput.getText().isEmpty() || timeEndInput.getText().isEmpty()){                 
-                 response.setText("All text fields must be completed");
-                 responsePanel.add(response);
-                 dashboard.add(responsePanel);
-                 dashboard.setVisible(true);
-}  
-          else{
-            String str = "";
-            try {
-                str = readFile(allVehiclesTranscript, StandardCharsets.UTF_8);
-            } catch (IOException e2) {
-                e2.printStackTrace();
+
+            if (carYearInput.getText().isEmpty() || carModelInput.getText().isEmpty()
+                    || carMakeInput.getText().isEmpty() || timeStartInput.getText().isEmpty()
+                    || timeEndInput.getText().isEmpty()) {
+                response.setText("All text fields must be completed");
+                responsePanel.add(response);
+                dashboard.add(responsePanel);
+                dashboard.setVisible(true);
+            } else {
+
+                String carMake = carMakeInput.getText();
+                String carModel = carModelInput.getText();
+                String carYearStr = carYearInput.getText();
+                int carYear = Integer.parseInt(carYearStr);
+                String timeInStr = timeStartInput.getText();
+                int timeIn = Integer.parseInt(timeInStr);
+                String timeEndStr = timeEndInput.getText();
+                int timeEnd = Integer.parseInt(timeEndStr);
+
+                String info = carMake + "/" + carModel + "/"
+                        + carYear + "/" + timeIn + "/" + timeEnd + "/";
+
+                String messageIn = "";
+                String messageOut = "";
+
+                try {
+                    System.out.println("----------*** This is client side ***--------");
+                    System.out.println("client started!");
+                    // connect the client socket to server
+                    Socket socket = new Socket("localhost", 8000);
+
+                    // client reads a message from Server
+                    inputStream = new DataInputStream(socket.getInputStream());
+                    outputStream = new DataOutputStream(socket.getOutputStream());
+
+                    // client reads a message from keyboard
+                    System.out.println("Enter a message you want to send to server side: ");
+                    // server sends the message to client
+                    boolean sent = false;
+
+                    while (!sent) {
+                        messageOut = info;
+                        outputStream.writeUTF(messageOut);
+                        System.out.println("Message Sent!");
+                        sent = true;
+                    }
+                    sent = false;
+
+                } catch (Exception e1) {
+
+                    e1.printStackTrace();
+
+                }
+
+                CloudController cc = new CloudController();
+                OwnerDashboard dashboard1 = new OwnerDashboard();
+                dashboard.dispose();
+
+                /*
+                 * String str = "";
+                 * try {
+                 * str = readFile(allVehiclesTranscript, StandardCharsets.UTF_8);
+                 * } catch (IOException e2) {
+                 * e2.printStackTrace();
+                 * }
+                 */
+
+                /*
+                 * try {
+                 * FileWriter regTranscript = new FileWriter(allVehiclesTranscript);
+                 * regTranscript.write(str);
+                 * regTranscript.write(info + "\n");
+                 * regTranscript.close();
+                 * } catch (IOException e1) {
+                 * 
+                 * e1.printStackTrace();
+                 * }
+                 */
             }
-
-            String carMake = carMakeInput.getText();
-            String carModel = carModelInput.getText();
-            String carYearStr = carYearInput.getText();
-            int carYear = Integer.parseInt(carYearStr);
-            String timeInStr = timeStartInput.getText();
-            int timeIn = Integer.parseInt(timeInStr);
-            String timeEndStr = timeEndInput.getText();
-            int timeEnd = Integer.parseInt(timeEndStr);
-
-            String info = carMake + "/" + carModel + "/"
-                    + carYear + "/" + timeIn + "/" + timeEnd + "/";
-
-            try {
-                FileWriter regTranscript = new FileWriter(allVehiclesTranscript);
-                regTranscript.write(info + "\n");
-                regTranscript.write(str);
-                regTranscript.close();
-            } catch (IOException e1) {
-
-                e1.printStackTrace();
-            }
-
-            CloudController cc = new CloudController();
-            OwnerDashboard dashboard1 = new OwnerDashboard();
-            dashboard.dispose();
-        }
         }
     }
 

@@ -1,12 +1,17 @@
 package BackEnd.Entities;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import BackEnd.*;
@@ -16,15 +21,16 @@ public class CloudController {
 
       private ArrayList<Vehicle> pendingVehicles;
       private ArrayList<Job> pendingJobs;
+      private ArrayList<Vehicle> approvedVehicles;
 
       private VehicularCloud currentVehicularCloud;
-      
+
       public CloudController() {
             pendingVehicles = new ArrayList<Vehicle>();
             pendingJobs = new ArrayList<Job>();
 
             try {
-                  getAllVehApps();
+                  getAllVehicles();
             } catch (IOException e) {
                   // TODO Auto-generated catch block
                   e.printStackTrace();
@@ -67,6 +73,10 @@ public class CloudController {
       public void clearPendingVehicles() {
             pendingVehicles.clear();
       }
+      
+      public void clearApprovedVehicles() {
+            approvedVehicles.clear();
+      }
 
       public void addToPendingJobs(Job in) {
             pendingJobs.add(in);
@@ -76,12 +86,14 @@ public class CloudController {
             pendingJobs.clear();
       }
 
-      public void approveVehicle(VehicleApplication application, Vehicle vehicle) {
-               
+      public void approveVehicle(Vehicle vehicle) {
+            approvedVehicles.add(vehicle);
+            pendingVehicles.remove(vehicle);
+            
       }
 
       public void denyVehicle(VehicleApplication application, Vehicle vehicle) {
-
+            pendingVehicles.remove(vehicle);
       }
 
       public void assignJobToVehicle(JobApplication jApplication, Job job, Vehicle vehicle) {
@@ -115,10 +127,61 @@ public class CloudController {
             return allJobIds;
       }
 
-      public ArrayList<Vehicle> getAllVehApps()
+      public ArrayList<Vehicle> getAllVehicles()
+                  throws IOException {
+            Scanner s = new Scanner(new File("GUI/Transcripts/allVehicles.txt"));
+            ArrayList<String> list = new ArrayList<String>();
+            while (s.hasNext()) {
+                  list.add(s.next());
+            }
+            s.close();
+            for (int i = 0; i < list.size(); i++) {
+
+                  String pre = list.get(i);
+                  String[] split = pre.split("/");
+                  String make = split[0];
+                  String model = split[1];
+                  String yearStr = split[2];
+                  String inStr = split[3];
+                  String outStr = split[4];
+
+                  Vehicle newVeh = new Vehicle(make, model, Integer.parseInt(yearStr), Integer.parseInt(inStr),
+                              Integer.parseInt(outStr));
+                  approveVehicle(newVeh);
+            }
+            return approvedVehicles;
+      }
+
+      public ArrayList<Vehicle> getAllPendingVehicles()
                   throws IOException {
             clearPendingVehicles();
             Scanner s = new Scanner(new File("GUI/Transcripts/allPendingVehicleApps.txt"));
+            ArrayList<String> list = new ArrayList<String>();
+            while (s.hasNext()) {
+                  list.add(s.next());
+            }
+            s.close();
+            for (int i = 0; i < list.size(); i++) {
+
+                  String pre = list.get(i);
+                  String[] split = pre.split("/");
+                  String make = split[0];
+                  String model = split[1];
+                  String yearStr = split[2];
+                  String inStr = split[3];
+                  String outStr = split[4];
+
+                  Vehicle newVeh = new Vehicle(make, model, Integer.parseInt(yearStr), Integer.parseInt(inStr),
+                              Integer.parseInt(outStr));
+                  addToPendingVehicles(newVeh);
+            }
+            return pendingVehicles;
+      }
+
+      public ArrayList<Vehicle> getAllApprovedVehicles()
+                  throws IOException {
+            clearPendingVehicles();
+            Scanner s = new Scanner(new File("GUI/Transcripts/allApprovedVehicles.txt"));
             ArrayList<String> list = new ArrayList<String>();
             while (s.hasNext()) {
                   list.add(s.next());
@@ -166,5 +229,74 @@ public class CloudController {
             }
             return pendingJobs;
       }
-     
+
+      static ServerSocket serverSocket;
+      static Socket socket;
+      static DataInputStream inputStream;
+      static DataOutputStream outputStream;
+
+      public static void main(String[] args) {
+
+            String messageIn = "";
+            String messageOut = "";
+
+            CloudController cc = new CloudController();
+
+            try {
+
+                  System.out.println("This is the server of of VCRTS");
+                  System.out.println("wating for client to connect...");
+                  // creating the server
+                  try {
+                        serverSocket = new ServerSocket(8000);
+                  } catch (IOException e) {
+                        e.printStackTrace();
+                  }
+                  while (true) {
+                        try {
+                              socket = serverSocket.accept();
+                        } catch (IOException e) {
+                              System.out.println("I/O error: " + e);
+                        }
+
+                        
+
+                        inputStream = new DataInputStream(socket.getInputStream());
+                        // outputStream = new DataOutputStream(socket.getOutputStream());
+
+                        messageIn = inputStream.readUTF();
+
+                        System.out.println(messageIn);
+
+                        String infoToBeAdded = messageIn;
+                        Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingVehicleApps.txt");
+                        File allVehiclesTranscript = file.toFile();
+
+                        String str = "";
+                        try {
+                              str = readFile(allVehiclesTranscript, StandardCharsets.UTF_8);
+                        } catch (IOException e2) {
+                              e2.printStackTrace();
+                        }
+
+                        try {
+                              FileWriter regTranscript = new FileWriter(allVehiclesTranscript);
+                              regTranscript.write(str);
+                              regTranscript.write(infoToBeAdded + "\n");
+                              regTranscript.close();
+                        } catch (IOException e1) {
+                              e1.printStackTrace();
+                        }
+                  }
+            } catch (Exception e) {
+
+                  e.printStackTrace();
+            }
+
+      }
+
+      public static String readFile(File file, Charset charset) throws IOException {
+            return new String(Files.readAllBytes(file.toPath()), charset);
+      }
+
 }

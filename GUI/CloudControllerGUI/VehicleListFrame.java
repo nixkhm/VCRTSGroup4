@@ -20,7 +20,6 @@ public class VehicleListFrame {
     JLabel dashboardTitle = new JLabel("Vehicle List");
 
     JLabel vehicleTitle = new JLabel("Vehicle List");
-    
 
     JButton returnButton = new JButton("Return");
 
@@ -48,24 +47,24 @@ public class VehicleListFrame {
 
         vehiclePanel.setBackground(Color.LIGHT_GRAY);
         vehiclePanel.setBounds(225, 250, 750, 350);
-        
+
         CloudController cloudController = new CloudController();
-        final ArrayList<Vehicle> listofVehicles = cloudController.getAllVehApps();
-        String headers[]= {"Make", "Model","Year","In","Out"};
+        final ArrayList<Vehicle> listofVehicles = cloudController.getAllVehicles();
+        String headers[] = { "Make", "Model", "Year", "In", "Out" };
         JTable vehicleList = new JTable(11, 5);
-        for (int i = 0; i < headers.length; i++){
-            vehicleList.setValueAt(headers[i],0, i);
+        for (int i = 0; i < headers.length; i++) {
+            vehicleList.setValueAt(headers[i], 0, i);
         }
         int x = 10;
-        if (listofVehicles.size() < x){
+        if (listofVehicles.size() < x) {
             x = listofVehicles.size();
         }
-        for (int i = 0; i < x; i++){
-            vehicleList.setValueAt(listofVehicles.get(i).getMake(),i+1,0);
-            vehicleList.setValueAt(listofVehicles.get(i).getModel(),i+1,1);
-            vehicleList.setValueAt(listofVehicles.get(i).getYear(),i+1,2);
-            vehicleList.setValueAt(listofVehicles.get(i).getTimeStart(),i+1,3);
-            vehicleList.setValueAt(listofVehicles.get(i).getTimeEnd(),i+1,4);
+        for (int i = 0; i < x; i++) {
+            vehicleList.setValueAt(listofVehicles.get(i).getMake(), i + 1, 0);
+            vehicleList.setValueAt(listofVehicles.get(i).getModel(), i + 1, 1);
+            vehicleList.setValueAt(listofVehicles.get(i).getYear(), i + 1, 2);
+            vehicleList.setValueAt(listofVehicles.get(i).getTimeStart(), i + 1, 3);
+            vehicleList.setValueAt(listofVehicles.get(i).getTimeEnd(), i + 1, 4);
         }
         vehicleList.setBounds(550, 250, 750, 350);
         vehiclePanel.add(vehicleList);
