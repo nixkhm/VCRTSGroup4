@@ -7,61 +7,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-class registerACarListener implements ActionListener {
-    // Once the user signs in by clicking the button, the program will generate a
-    // file containing the time and date that the user logged in.
-    public void actionPerformed(ActionEvent e) {
-        RegistrationFrame registration = new RegistrationFrame();
-
-    }
-}
-
-class JIPListener implements ActionListener {
-    // Returns jobs in progress
-    public void actionPerformed(ActionEvent e) {
-        try {
-            ViewVehicleFrame jipDashboard = new ViewVehicleFrame();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-    }
-}
-
 public class OwnerDashboard {
 
     // The Frame that will hold the entire dashboard
     JFrame dashboard = new JFrame("Owner Dashboard");
 
     // Creating multiple panels that will represent options on a menu
-    JPanel panel = new JPanel();
-    JPanel panel2 = new JPanel();
-    JPanel panel3 = new JPanel();
-    JPanel panel4 = new JPanel();
-    JPanel panel5 = new JPanel();
-    JPanel panel6 = new JPanel();
-    JPanel panel7 = new JPanel();
+    JPanel logoPanel = new JPanel();
+    JPanel homePanel = new JPanel();
+    JPanel registerCarPanel = new JPanel();
+    JPanel viewVehiclesPanel = new JPanel();
+    JPanel historyPanel = new JPanel();
+    JPanel settingsPanel = new JPanel();
+    JPanel profilePanel = new JPanel();
 
-    JButton homeLabel = new JButton("Home");
+    JButton homeButton = new JButton("Home");
+    JButton registerCarButton = new JButton("Register a Vehicle");
+    JButton viewVehiclesButton = new JButton("View my Vehicles");
+    JButton historyButton = new JButton("History");
+    JButton settingsButton = new JButton("Settings");
+    JButton profileButton = new JButton("Profile");
 
-    JButton registerACar = new JButton("Register a Vehicle");
-
-    JButton JIPLabel = new JButton("View my Vehicles");
-
-    JButton historyLabel = new JButton("History");
-
-    JButton settingsLabel = new JButton("Settings");
-
-    JButton userLabel = new JButton("Profile");
-
-    JLabel logoLabel = new JLabel(new ImageIcon("GUI/Assets/logo.png"));
-
-    JLabel greetingUser = new JLabel("Hello, [username_goes_here]!");
-
-    JPanel greetingUserCard = new JPanel();
+    JLabel logo = new JLabel(new ImageIcon("GUI/Assets/logo.png"));
 
     public OwnerDashboard() {
 
+        // dimensions and features of the dashboard
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
         dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,107 +40,112 @@ public class OwnerDashboard {
         dashboard.getContentPane().setBackground(new Color(41, 55, 77));
         dashboard.setLayout(null);
 
-        // Setting background of the panels
-        panel.setBackground(new Color(41, 55, 77));
-        panel2.setBackground(new Color(205, 205, 205));
-        panel3.setBackground(new Color(205, 205, 205));
-        panel4.setBackground(new Color(205, 205, 205));
-        panel5.setBackground(new Color(205, 205, 205));
-        panel6.setBackground(new Color(205, 205, 205));
-        panel7.setBackground(new Color(205, 205, 205));
-        // Logo Panel
-        panel.setBounds(30, 20, 300, 150);
+        // adding the logo to the dashboard
+        logoPanel.add(logo);
 
-        // Options Panel
-        panel2.setBounds(100, 260, 175, 50);
-        panel3.setBounds(100, 360, 175, 50);
-        panel4.setBounds(100, 460, 175, 50);
-        panel5.setBounds(100, 560, 175, 50);
-        panel6.setBounds(100, 660, 175, 50);
+        // setting background of the panels
+        logoPanel.setBackground(new Color(41, 55, 77));
+        logoPanel.setBounds(30, 20, 300, 150);
 
-        // user Panel
-        panel7.setBounds(1000, 30, 175, 50);
+        homePanel.setBackground(new Color(205, 205, 205));
+        homePanel.setBounds(100, 260, 175, 50);
 
-        // Label for "Home" option
-        homeLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
-        homeLabel.setOpaque(false);
-        homeLabel.setContentAreaFilled(false);
-        homeLabel.setBorderPainted(false);
-        panel2.add(homeLabel);
+        registerCarPanel.setBackground(new Color(205, 205, 205));
+        registerCarPanel.setBounds(100, 360, 175, 50);
+
+        viewVehiclesPanel.setBackground(new Color(205, 205, 205));
+        viewVehiclesPanel.setBounds(100, 460, 175, 50);
+
+        historyPanel.setBackground(new Color(205, 205, 205));
+        historyPanel.setBounds(100, 560, 175, 50);
+
+        settingsPanel.setBackground(new Color(205, 205, 205));
+        settingsPanel.setBounds(100, 660, 175, 50);
+
+        profilePanel.setBackground(new Color(205, 205, 205));
+        profilePanel.setBounds(1000, 30, 175, 50);
+
+        homeButton.setFont(new Font("Monospaced", Font.BOLD, 35));
+        homeButton.setOpaque(false);
+        homeButton.setContentAreaFilled(false);
+        homeButton.setBorderPainted(false);
+        homePanel.add(homeButton);
+
+        registerCarButton.setFont(new Font("Monospaced", Font.BOLD, 15));
+        registerCarButton.setOpaque(false);
+        registerCarButton.setContentAreaFilled(false);
+        registerCarButton.setBorderPainted(false);
+        registerCarPanel.add(registerCarButton);
+
+        viewVehiclesButton.setFont(new Font("Monospaced", Font.BOLD, 17));
+        viewVehiclesButton.setOpaque(false);
+        viewVehiclesButton.setContentAreaFilled(false);
+        viewVehiclesButton.setBorderPainted(false);
+        viewVehiclesPanel.add(viewVehiclesButton);
+
+        historyButton.setFont(new Font("Monospaced", Font.BOLD, 35));
+        historyButton.setOpaque(false);
+        historyButton.setContentAreaFilled(false);
+        historyButton.setBorderPainted(false);
+        historyPanel.add(historyButton);
+
+        settingsButton.setFont(new Font("Monospaced", Font.BOLD, 35));
+        settingsButton.setOpaque(false);
+        settingsButton.setContentAreaFilled(false);
+        settingsButton.setBorderPainted(false);
+        settingsPanel.add(settingsButton);
+
+        profileButton.setFont(new Font("Monospaced", Font.BOLD, 35));
+        profileButton.setOpaque(false);
+        profileButton.setContentAreaFilled(false);
+        profileButton.setBorderPainted(false);
+        profilePanel.add(profileButton);
+
         ActionListener goToLogin = new logInListener();
-        homeLabel.addActionListener(goToLogin);
-        homeLabel.addActionListener(e -> {
+        homeButton.addActionListener(goToLogin);
+        homeButton.addActionListener(e -> {
             dashboard.dispose();
         });
-
-        // Label for "Submitting a Job" option
-        registerACar.setFont(new Font("Monospaced", Font.BOLD, 15));
-        registerACar.setOpaque(false);
-        registerACar.setContentAreaFilled(false);
-        registerACar.setBorderPainted(false);
-        panel3.add(registerACar);
 
         ActionListener register = new registerACarListener();
-        registerACar.addActionListener(register);
-        registerACar.addActionListener(e -> {
+        registerCarButton.addActionListener(register);
+        registerCarButton.addActionListener(e -> {
             dashboard.dispose();
         });
 
-        // Label for "Jobs in Progress" option
-        JIPLabel.setFont(new Font("Monospaced", Font.BOLD, 17));
-        JIPLabel.setOpaque(false);
-        JIPLabel.setContentAreaFilled(false);
-        JIPLabel.setBorderPainted(false);
-        panel4.add(JIPLabel);
-        
-        ActionListener goToJIPS = new JIPListener();
-        JIPLabel.addActionListener(goToJIPS);
-        JIPLabel.addActionListener(e -> {
+        ActionListener goToVehicles = new viewMyVehicles();
+        viewVehiclesButton.addActionListener(goToVehicles);
+        viewVehiclesButton.addActionListener(e -> {
             dashboard.dispose();
         });
 
-        // Label for "History" option
-        historyLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
-        historyLabel.setOpaque(false);
-        historyLabel.setContentAreaFilled(false);
-        historyLabel.setBorderPainted(false);
-        panel5.add(historyLabel);
-
-        // Label for "Job History" option
-        settingsLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
-        settingsLabel.setOpaque(false);
-        settingsLabel.setContentAreaFilled(false);
-        settingsLabel.setBorderPainted(false);
-        panel6.add(settingsLabel);
-
-        // Label for "Profile" option
-        userLabel.setFont(new Font("Monospaced", Font.BOLD, 35));
-        userLabel.setOpaque(false);
-        userLabel.setContentAreaFilled(false);
-        userLabel.setBorderPainted(false);
-        panel7.add(userLabel);
-
-        // Placing the logo on the logo panel
-        panel.add(logoLabel);
-
-        // Greeting card to greet users who signed in.
-        greetingUser.setForeground(new Color(255, 255, 255));
-        greetingUser.setFont(new Font("Monospaced", Font.BOLD, 25));
-
-        greetingUserCard.add(greetingUser);
-        greetingUserCard.setBounds(350, 50, 600, 100);
-        greetingUserCard.setBackground(new Color(41, 55, 77));
         // adding the multiple panels onto the dashboard
-        dashboard.add(panel);
-        dashboard.add(panel2);
-        dashboard.add(panel3);
-        dashboard.add(panel4);
-        dashboard.add(panel5);
-        dashboard.add(panel6);
-        dashboard.add(panel7);
-        dashboard.add(greetingUserCard);
-        // setting the Frame to be visible for view
+        dashboard.add(logoPanel);
+        dashboard.add(homePanel);
+        dashboard.add(registerCarPanel);
+        dashboard.add(viewVehiclesPanel);
+        dashboard.add(historyPanel);
+        dashboard.add(settingsPanel);
+        dashboard.add(profilePanel);
+
         dashboard.setVisible(true);
     }
+}
 
+// Register a Vehicle Button
+class registerACarListener implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+        RegistrationFrame registration = new RegistrationFrame();
+    }
+}
+
+// View my Vehicles Button
+class viewMyVehicles implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+        try {
+            ViewVehicleFrame viewVehicles = new ViewVehicleFrame();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
 }

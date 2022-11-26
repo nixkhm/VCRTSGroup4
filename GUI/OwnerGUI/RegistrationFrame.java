@@ -2,10 +2,7 @@ package GUI.OwnerGUI;
 
 import javax.swing.*;
 
-import BackEnd.Vehicle;
-import BackEnd.Application.VehicleApplication;
 import BackEnd.Entities.CloudController;
-import GUI.ClientGUI.ClientDashboard;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,47 +11,41 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/*
+ * This will be the frame where the owners can register their vehicle to be added to the VC
+ */
+
 public class RegistrationFrame {
 
-    // This frame will display the car registration form which will ask the user to
-    // input details such as car make, model and year. The inputs will then be
-    // received by the backend and added to the registry.
     JFrame dashboard = new JFrame("Car Registration");
-
-    JPanel titlePanel = new JPanel();
-
     JLabel registrationTitle = new JLabel("Car Registration");
 
+    JPanel carRegistrationPanel = new JPanel();
+    JPanel carModelPanel = new JPanel();
+    JPanel carMakePanel = new JPanel();
+    JPanel carYearPanel = new JPanel();
+    JPanel timeStartPanel = new JPanel();
+    JPanel timeEndPanel = new JPanel();
     JPanel submitPanel = new JPanel();
-
     JPanel returnPanel = new JPanel();
 
-    JPanel jobNamePanel = new JPanel();
+    JLabel carMakeLabel = new JLabel("Car Make");
+    JLabel carModelLabel = new JLabel("Car Model");
+    JLabel carYearLabel = new JLabel("Car Year");
+    JLabel timeInLabel = new JLabel("Time Start");
+    JLabel timeOutLabel = new JLabel("Time End");
 
-    JPanel jobDurationPanel = new JPanel();
-
-    JPanel jobDeadlinePanel = new JPanel();
-
-    JPanel timeInPanel = new JPanel();
-
-    JPanel timeOutPanel = new JPanel();
-
-    // Labels for each text box.
-    JLabel carMake = new JLabel("Car Make");
-    JLabel carModel = new JLabel("Car Model");
-    JLabel carYear = new JLabel("Car Year");
-    JLabel timeIn = new JLabel("Time Start");
-    JLabel timeOut = new JLabel("Time End");
-
-    JTextField carModelInput, carMakeInput, carYearInput, timeStartInput, timeEndInput;
+    JTextField carModelInput = new JTextField();
+    JTextField carMakeInput = new JTextField();
+    JTextField carYearInput = new JTextField();
+    JTextField timeStartInput = new JTextField();
+    JTextField timeEndInput = new JTextField();
 
     JButton submitButton = new JButton("Submit");
-
     JButton goBackButton = new JButton("Go Back");
 
     Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingVehicleApps.txt");
@@ -66,6 +57,8 @@ public class RegistrationFrame {
     static DataOutputStream outputStream;
 
     public RegistrationFrame() {
+
+        // dimensions and features of the dashboard
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
         dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,93 +66,91 @@ public class RegistrationFrame {
         dashboard.getContentPane().setBackground(new Color(41, 55, 77));
         dashboard.setLayout(null);
 
-        // Setting up the titlePanel of the frame.
-        titlePanel.setBackground(new Color(249, 217, 126));
-        titlePanel.setBounds(300, 20, 600, 150);
+        carRegistrationPanel.setBackground(new Color(249, 217, 126));
+        carRegistrationPanel.setBounds(300, 20, 600, 150);
         registrationTitle.setForeground(Color.white);
         registrationTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
-        titlePanel.add(registrationTitle);
-        dashboard.add(titlePanel);
+        carRegistrationPanel.add(registrationTitle);
 
-        // Panels that are supposed to include all the labels.
-        jobDurationPanel.setBackground(Color.LIGHT_GRAY);
-        jobDurationPanel.setBounds(50, 200, 200, 50);
-        carMake.setBounds(50, 200, 50, 50);
-        jobDurationPanel.add(carMake);
+        // panels
+        carMakePanel.setBackground(Color.LIGHT_GRAY);
+        carMakePanel.setBounds(50, 200, 200, 50);
 
-        jobNamePanel.setBackground(Color.LIGHT_GRAY);
-        jobNamePanel.setBounds(50, 250, 200, 50);
-        carModel.setBounds(50, 250, 50, 50);
-        jobNamePanel.add(carModel);
+        carModelPanel.setBackground(Color.LIGHT_GRAY);
+        carModelPanel.setBounds(50, 250, 200, 50);
 
-        jobDeadlinePanel.setBackground(Color.LIGHT_GRAY);
-        jobDeadlinePanel.setBounds(50, 300, 200, 50);
-        carYear.setBounds(50, 300, 50, 50);
-        jobDeadlinePanel.add(carYear);
+        carYearPanel.setBackground(Color.LIGHT_GRAY);
+        carYearPanel.setBounds(50, 300, 200, 50);
 
-        timeInPanel.setBackground(Color.LIGHT_GRAY);
-        timeInPanel.setBounds(50, 350, 200, 50);
-        timeIn.setBounds(50, 350, 50, 50);
-        timeInPanel.add(timeIn);
+        timeStartPanel.setBackground(Color.LIGHT_GRAY);
+        timeStartPanel.setBounds(50, 350, 200, 50);
 
-        timeOutPanel.setBackground(Color.LIGHT_GRAY);
-        timeOutPanel.setBounds(50, 400, 200, 50);
-        timeOut.setBounds(50, 400, 50, 50);
-        timeOutPanel.add(timeOut);
+        timeEndPanel.setBackground(Color.LIGHT_GRAY);
+        timeEndPanel.setBounds(50, 400, 200, 50);
 
         submitPanel.setBounds(400, 500, 100, 50);
-        returnPanel.setBounds(600, 500, 100, 50);
         submitPanel.add(submitButton);
+
+        returnPanel.setBounds(600, 500, 100, 50);
         returnPanel.add(goBackButton);
-        dashboard.add(returnPanel);
-        dashboard.add(submitPanel);
 
-        // Setting up the text fields.
-        carMakeInput = new JTextField();
+        // labels
+        carMakeLabel.setBounds(50, 200, 50, 50);
+        carMakePanel.add(carMakeLabel);
+
+        carModelLabel.setBounds(50, 250, 50, 50);
+        carModelPanel.add(carModelLabel);
+
+        carYearLabel.setBounds(50, 300, 50, 50);
+        carYearPanel.add(carYearLabel);
+
+        timeInLabel.setBounds(50, 350, 50, 50);
+        timeStartPanel.add(timeInLabel);
+
+        timeOutLabel.setBounds(50, 400, 50, 50);
+        timeEndPanel.add(timeOutLabel);
+
+        // text fields
         carMakeInput.setBounds(300, 200, 200, 50);
-
-        carModelInput = new JTextField();
         carModelInput.setBounds(300, 250, 200, 50);
-
-        carYearInput = new JTextField();
         carYearInput.setBounds(300, 300, 200, 50);
-
-        timeStartInput = new JTextField();
         timeStartInput.setBounds(300, 350, 200, 50);
-
-        timeEndInput = new JTextField();
         timeEndInput.setBounds(300, 400, 200, 50);
 
-        ActionListener goToDash = new submitButtonListener();
-        submitButton.addActionListener(goToDash);
+        // button listeners
+        ActionListener submit = new submitButtonListener();
+        submitButton.addActionListener(submit);
         submitButton.addActionListener(e -> {
             dashboard.dispose();
         });
 
-        ActionListener goToDash2 = new returnButtonListener();
-        goBackButton.addActionListener(goToDash2);
+        ActionListener goBack = new returnButtonListener();
+        goBackButton.addActionListener(goBack);
         goBackButton.addActionListener(e -> {
             dashboard.dispose();
         });
 
+        dashboard.add(carRegistrationPanel);
         dashboard.add(carModelInput);
         dashboard.add(carMakeInput);
         dashboard.add(carYearInput);
         dashboard.add(timeStartInput);
         dashboard.add(timeEndInput);
-        dashboard.add(jobNamePanel);
-        dashboard.add(jobDurationPanel);
-        dashboard.add(jobDeadlinePanel);
-        dashboard.add(timeInPanel);
-        dashboard.add(timeOutPanel);
+        dashboard.add(carModelPanel);
+        dashboard.add(carMakePanel);
+        dashboard.add(carYearPanel);
+        dashboard.add(timeStartPanel);
+        dashboard.add(timeEndPanel);
+        dashboard.add(returnPanel);
+        dashboard.add(submitPanel);
+
         dashboard.setVisible(true);
     }
 
+    // submitting vehicle info to pending vehicle database
     class submitButtonListener implements ActionListener {
-        // Once the user signs in by clicking the button, the program will generate a
-        // file containing the time and date that the user logged in.
-
         public void actionPerformed(ActionEvent e) {
+
             JPanel responsePanel = new JPanel();
             responsePanel.setBackground(Color.LIGHT_GRAY);
             responsePanel.setBounds(300, 550, 250, 75);
@@ -225,9 +216,7 @@ public class RegistrationFrame {
     }
 
     class returnButtonListener implements ActionListener {
-
         public void actionPerformed(ActionEvent e) {
-
             OwnerDashboard goToDash = new OwnerDashboard();
         }
     }

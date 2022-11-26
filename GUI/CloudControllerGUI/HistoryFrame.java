@@ -17,7 +17,6 @@ public class HistoryFrame {
     JPanel returnPanel = new JPanel();
 
     JLabel dashboardTitle = new JLabel("Job History");
-
     JLabel historyTitle = new JLabel("Jobs History");
     JLabel history = new JLabel("No Job History");
 
@@ -51,6 +50,7 @@ public class HistoryFrame {
         historyPanel.add(history);
 
         returnPanel.setBounds(550, 650, 100, 50);
+
         ActionListener cloud = new cloudControllerListener();
         returnButton.addActionListener(cloud);
         returnButton.addActionListener(e -> {

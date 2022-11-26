@@ -3,6 +3,7 @@ package GUI.ClientGUI;
 import GUI.ButtonListeners.cloudControllerListener;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class JIPFrame {
@@ -14,7 +15,6 @@ public class JIPFrame {
     JPanel returnPanel = new JPanel();
 
     JLabel dashboardTitle = new JLabel("Jobs In Progress");
-
     JLabel JIPTitle = new JLabel("Jobs In Progress");
     JLabel JIPS = new JLabel("No Current Jobs");
 
@@ -31,7 +31,6 @@ public class JIPFrame {
         // Setting up the title of the frame.
         titlePanel.setBackground(new Color(249, 217, 126));
         titlePanel.setBounds(300, 20, 600, 150);
-
         dashboardTitle.setForeground(Color.white);
         dashboardTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         titlePanel.add(dashboardTitle);
@@ -48,18 +47,27 @@ public class JIPFrame {
         JIPPanel.add(JIPS);
 
         returnPanel.setBounds(550, 650, 100, 50);
-        ActionListener cloud = new cloudControllerListener();
-        returnButton.addActionListener(cloud);
+
+        ActionListener client = new clientDashboardListener();
+        returnButton.addActionListener(client);
         returnButton.addActionListener(e -> {
             dashboard.dispose();
         });
         returnPanel.add(returnButton);
 
         dashboard.add(titlePanel);
-        dashboard.setVisible(true);
         dashboard.add(JIPTitlePanel);
         dashboard.add(JIPPanel);
         dashboard.add(returnPanel);
+
+        dashboard.setVisible(true);
+
     }
 
+}
+
+class clientDashboardListener implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+        ClientDashboard clientDash = new ClientDashboard();
+    }
 }

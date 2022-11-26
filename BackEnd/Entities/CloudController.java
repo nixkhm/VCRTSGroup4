@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
+
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
@@ -15,14 +15,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 import BackEnd.*;
-import BackEnd.Application.*;
 
 public class CloudController {
 
       private ArrayList<Vehicle> pendingVehicles;
       private ArrayList<Job> pendingJobs;
-
-      private VehicularCloud currentVehicularCloud;
 
       public CloudController() {
             pendingVehicles = new ArrayList<Vehicle>();
@@ -31,14 +28,12 @@ public class CloudController {
             try {
                   getAllPendingVehicles();
             } catch (IOException e) {
-                  // TODO Auto-generated catch block
                   e.printStackTrace();
             }
 
             try {
                   getAllPendingJobApps();
             } catch (IOException e) {
-                  // TODO Auto-generated catch block
                   e.printStackTrace();
             }
 
@@ -79,26 +74,6 @@ public class CloudController {
 
       public void clearPendingJobs() {
             pendingJobs.clear();
-      }
-
-      public void approveVehicle(VehicleApplication application, Vehicle vehicle) {
-
-      }
-
-      public void denyVehicle(VehicleApplication application, Vehicle vehicle) {
-
-      }
-
-      public void assignJobToVehicle(JobApplication jApplication, Job job, Vehicle vehicle) {
-
-      }
-
-      public void denyJob(JobApplication job) {
-
-      }
-
-      public VehicularCloud getVehicularCloud() {
-            return currentVehicularCloud;
       }
 
       public String getFullJobTime() {

@@ -15,32 +15,19 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.time.format.*;
-import java.time.*;
 
 public class ClientSubmission {
 
-    // This frame will display the car registration form which will ask the user to
-    // input details such as car make, model and year. The inputs will then be
-    // received by the backend and added to the registry.
     JFrame dashboard = new JFrame("Submit a Job");
-
-    JPanel titlePanel = new JPanel();
-
     JLabel registrationTitle = new JLabel("Submit a Job");
 
+    JPanel titlePanel = new JPanel();
     JPanel submitPanel = new JPanel();
-
     JPanel returnPanel = new JPanel();
-
     JPanel jobNamePanel = new JPanel();
-
     JPanel jobDurationPanel = new JPanel();
-
     JPanel jobDeadlinePanel = new JPanel();
-
     JPanel jobIDPanel = new JPanel();
-
     JPanel jobTypePanel = new JPanel();
 
     // Labels for each text box.
@@ -50,7 +37,11 @@ public class ClientSubmission {
     JLabel jobDeadline = new JLabel("Job Deadline");
     JLabel jobID = new JLabel("Job ID");
 
-    JTextField jobNameInput, jobTypeInput, jobDurationInput, jobDeadlineInput, jobIDInput;
+    JTextField jobNameInput = new JTextField();
+    JTextField jobTypeInput = new JTextField();
+    JTextField jobDurationInput = new JTextField();
+    JTextField jobDeadlineInput = new JTextField();
+    JTextField jobIDInput = new JTextField();
 
     JButton submitButton = new JButton("Submit");
     JButton goBackButton = new JButton("Go Back");
@@ -64,6 +55,8 @@ public class ClientSubmission {
     static DataOutputStream outputStream;
 
     public ClientSubmission() throws IOException {
+
+        // dimensions and features of frame
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
         dashboard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,13 +64,12 @@ public class ClientSubmission {
         dashboard.getContentPane().setBackground(new Color(41, 55, 77));
         dashboard.setLayout(null);
 
-        // Setting up the title of the frame.
+        // title of the frame
         titlePanel.setBackground(new Color(50, 100, 100));
         titlePanel.setBounds(300, 20, 600, 150);
         registrationTitle.setForeground(Color.white);
         registrationTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         titlePanel.add(registrationTitle);
-        dashboard.add(titlePanel);
 
         // Panels that are supposed to include all the labels.
         submitPanel.setBounds(400, 500, 100, 50);
@@ -109,19 +101,10 @@ public class ClientSubmission {
         jobIDPanel.add(jobID);
 
         // Setting up the text fields.
-        jobNameInput = new JTextField();
         jobNameInput.setBounds(300, 200, 200, 50);
-
-        jobTypeInput = new JTextField();
         jobTypeInput.setBounds(300, 250, 200, 50);
-
-        jobDurationInput = new JTextField();
         jobDurationInput.setBounds(300, 300, 200, 50);
-
-        jobDeadlineInput = new JTextField();
         jobDeadlineInput.setBounds(300, 350, 200, 50);
-
-        jobIDInput = new JTextField();
         jobIDInput.setBounds(300, 400, 200, 50);
 
         ActionListener goToDash = new submitButtonListener();
@@ -130,17 +113,18 @@ public class ClientSubmission {
             dashboard.dispose();
         });
 
-        ActionListener goToDash2 = new returnButtonListener();
-        goBackButton.addActionListener(goToDash2);
+        ActionListener goBack = new returnButtonListener();
+        goBackButton.addActionListener(goBack);
         goBackButton.addActionListener(e -> {
             dashboard.dispose();
         });
 
         submitPanel.add(submitButton);
         returnPanel.add(goBackButton);
+
+        dashboard.add(titlePanel);
         dashboard.add(returnPanel);
         dashboard.add(submitPanel);
-
         dashboard.add(jobDurationInput);
         dashboard.add(jobDeadlineInput);
         dashboard.add(jobIDInput);
@@ -151,12 +135,14 @@ public class ClientSubmission {
         dashboard.add(jobDeadlinePanel);
         dashboard.add(jobIDPanel);
         dashboard.add(jobTypePanel);
+
         dashboard.setVisible(true);
     }
 
     class submitButtonListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
+
             JPanel responsePanel = new JPanel();
             responsePanel.setBackground(Color.LIGHT_GRAY);
             responsePanel.setBounds(300, 550, 250, 75);

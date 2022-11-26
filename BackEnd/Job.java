@@ -14,7 +14,6 @@ public class Job {
     private int progress;
 
     public Job(String jobNameIn, String jobTypeIn, int durationIn, int jobDeadlineIn, int jobIDIn) {
-        jobID = new Random().nextInt(100);
         jobName = jobNameIn;
         jobType = jobTypeIn;
         duration = durationIn;

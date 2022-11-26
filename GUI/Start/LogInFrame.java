@@ -14,28 +14,27 @@ import java.time.format.*;
 
 public class LogInFrame {
 
-    ActionListener goToDashboard = new ClickListener();
-
     // The frame that will hold the entire Log-In screen
     JFrame logInWindow = new JFrame("VCRTS");
 
-    // Created JLabels to hold the Logo and text at top
-    ImageIcon img = new ImageIcon("GUI/Assets/logo.png");
-    JLabel icon = new JLabel(img, JLabel.CENTER);
+    JPanel dashboard = new JPanel();
 
     JLabel logInText = new JLabel("VCRTS Log In");
-
     JLabel signIn = new JLabel("Who is signing in?");
+    JLabel placeHolder = new JLabel("                      ");
+
+    ImageIcon img = new ImageIcon("GUI/Assets/logo.png");
+    JLabel icon = new JLabel(img, JLabel.CENTER);
 
     JButton ownerButton = new JButton("Owner");
     JButton cloudControlButton = new JButton("Cloud Controller");
     JButton clientButton = new JButton("Client");
 
-    JLabel placeHolder = new JLabel("                      ");
-
-    JPanel panel = new JPanel();
+    ActionListener goToDashboard = new ClickListener();
 
     public LogInFrame() {
+
+        // defining the attributes of the frame
         logInWindow.setSize(300, 400);
         logInWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         logInWindow.setLocationRelativeTo(null);
@@ -44,10 +43,9 @@ public class LogInFrame {
         logInText.setFont(new Font("Monospaced", Font.BOLD, 24));
         logInText.setForeground(new Color(249, 217, 126));
 
-        // Created buttons for register & sign-in (Will not use Text-Field for
-        // implementation). These three buttons will each lead to their own dashboards.
         signIn.setForeground(Color.white);
 
+        // owner button config
         ownerButton.addActionListener(goToDashboard);
         ActionListener owner = new ownerListener();
         ownerButton.addActionListener(owner);
@@ -55,6 +53,7 @@ public class LogInFrame {
             logInWindow.dispose();
         });
 
+        // cloudcontroller button config
         cloudControlButton.addActionListener(goToDashboard);
         ActionListener cloud = new cloudControllerListener();
         cloudControlButton.addActionListener(cloud);
@@ -62,6 +61,7 @@ public class LogInFrame {
             logInWindow.dispose();
         });
 
+        // client button config
         clientButton.addActionListener(goToDashboard);
         ActionListener client = new clientListener();
         clientButton.addActionListener(client);
@@ -69,22 +69,19 @@ public class LogInFrame {
             logInWindow.dispose();
         });
 
-        // setting the background of the Panel to match the background of the logo
-        panel.setBackground(new Color(41, 55, 77));
+        dashboard.setBackground(new Color(41, 55, 77));
 
         // adding all the components into the Panel
-        panel.add(logInText);
-        panel.add(placeHolder);
-        panel.add(signIn);
-        panel.add(ownerButton);
-        panel.add(cloudControlButton);
-        panel.add(clientButton);
-        panel.add(icon);
+        dashboard.add(logInText);
+        dashboard.add(placeHolder);
+        dashboard.add(signIn);
+        dashboard.add(ownerButton);
+        dashboard.add(cloudControlButton);
+        dashboard.add(clientButton);
+        dashboard.add(icon);
 
-        // adding the Panel to the frame
-        logInWindow.add(panel);
+        logInWindow.add(dashboard);
 
-        // setting the Frame to be visible for view
         logInWindow.setVisible(true);
     }
 }
@@ -97,8 +94,10 @@ class ClickListener implements ActionListener {
         File transcript = new File("GUI/Transcripts/logInTranscript.txt");
         DateTimeFormatter logInTimeAndDate = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
+
         System.out.println(logInTimeAndDate.format(now));
         String date = "" + logInTimeAndDate.format(now);
+
         try {
             transcript.createNewFile();
             FileWriter logInTranscript = new FileWriter(transcript);
