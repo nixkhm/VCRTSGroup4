@@ -46,9 +46,6 @@ public class ClientSubmission {
     JButton submitButton = new JButton("Submit");
     JButton goBackButton = new JButton("Go Back");
 
-    Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingJobsApps.txt");
-    File jobTranscript = file.toFile();
-
     static ServerSocket serverSocket;
     static Socket socket;
     static DataInputStream inputStream;
@@ -72,42 +69,43 @@ public class ClientSubmission {
         titlePanel.add(registrationTitle);
 
         // Panels that are supposed to include all the labels.
-        submitPanel.setBounds(400, 500, 100, 50);
-        returnPanel.setBounds(600, 500, 100, 50);
+
+        jobIDPanel.setBackground(Color.LIGHT_GRAY);
+        jobIDPanel.setBounds(50, 200, 200, 50);
+        jobID.setBounds(50, 200, 50, 50);
+        jobIDPanel.add(jobID);
 
         jobNamePanel.setBackground(Color.LIGHT_GRAY);
-        jobNamePanel.setBounds(50, 200, 200, 50);
-        jobName.setBounds(50, 200, 50, 50);
+        jobNamePanel.setBounds(50, 250, 200, 50);
+        jobName.setBounds(50, 250, 50, 50);
         jobNamePanel.add(jobName);
 
         jobTypePanel.setBackground(Color.LIGHT_GRAY);
-        jobTypePanel.setBounds(50, 250, 200, 50);
-        jobType.setBounds(50, 250, 50, 50);
+        jobTypePanel.setBounds(50, 300, 200, 50);
+        jobType.setBounds(50, 300, 50, 50);
         jobTypePanel.add(jobType);
 
         jobDurationPanel.setBackground(Color.LIGHT_GRAY);
-        jobDurationPanel.setBounds(50, 300, 200, 50);
-        jobDuration.setBounds(50, 300, 50, 50);
+        jobDurationPanel.setBounds(50, 350, 200, 50);
+        jobDuration.setBounds(50, 350, 50, 50);
         jobDurationPanel.add(jobDuration);
 
         jobDeadlinePanel.setBackground(Color.LIGHT_GRAY);
-        jobDeadlinePanel.setBounds(50, 350, 200, 50);
-        jobDeadline.setBounds(50, 350, 50, 50);
+        jobDeadlinePanel.setBounds(50, 400, 200, 50);
+        jobDeadline.setBounds(50, 400, 50, 50);
         jobDeadlinePanel.add(jobDeadline);
 
-        jobIDPanel.setBackground(Color.LIGHT_GRAY);
-        jobIDPanel.setBounds(50, 400, 200, 50);
-        jobID.setBounds(50, 400, 50, 50);
-        jobIDPanel.add(jobID);
+        submitPanel.setBounds(400, 500, 100, 50);
+        returnPanel.setBounds(600, 500, 100, 50);
 
         // Setting up the text fields.
-        jobNameInput.setBounds(300, 200, 200, 50);
-        jobTypeInput.setBounds(300, 250, 200, 50);
-        jobDurationInput.setBounds(300, 300, 200, 50);
-        jobDeadlineInput.setBounds(300, 350, 200, 50);
-        jobIDInput.setBounds(300, 400, 200, 50);
+        jobIDInput.setBounds(300, 200, 200, 50);
+        jobNameInput.setBounds(300, 250, 200, 50);
+        jobTypeInput.setBounds(300, 300, 200, 50);
+        jobDurationInput.setBounds(300, 350, 200, 50);
+        jobDeadlineInput.setBounds(300, 400, 200, 50);
 
-        ActionListener goToDash = new submitButtonListener();
+        ActionListener goToDash = new submitPendingJob();
         submitButton.addActionListener(goToDash);
         submitButton.addActionListener(e -> {
             dashboard.dispose();
@@ -139,7 +137,7 @@ public class ClientSubmission {
         dashboard.setVisible(true);
     }
 
-    class submitButtonListener implements ActionListener {
+    class submitPendingJob implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
 
@@ -156,23 +154,21 @@ public class ClientSubmission {
                 dashboard.add(responsePanel);
                 dashboard.setVisible(true);
             } else {
-                String str = "";
-                try {
-                    str = readFile(jobTranscript, StandardCharsets.UTF_8);
-                } catch (IOException e2) {
-                    e2.printStackTrace();
-                }
 
-                String jobName = jobNameInput.getText();
-                String jobType = jobTypeInput.getText();
-                String jobDurationStr = jobDurationInput.getText();
-                int jobDuration = Integer.parseInt(jobDurationStr);
-                String jobDeadlineStr = jobDeadlineInput.getText();
-                int jobDeadline = Integer.parseInt(jobDeadlineStr);
                 String jobIDStr = jobIDInput.getText();
                 int jobID = Integer.parseInt(jobIDStr);
 
-                String info = jobName + "/" + jobType
+                String jobName = jobNameInput.getText();
+
+                String jobType = jobTypeInput.getText();
+
+                String jobDurationStr = jobDurationInput.getText();
+                int jobDuration = Integer.parseInt(jobDurationStr);
+
+                String jobDeadlineStr = jobDeadlineInput.getText();
+                int jobDeadline = Integer.parseInt(jobDeadlineStr);
+
+                String info = jobID + "/" + jobName + "/" + jobType
                         + "/" + jobDuration + "/" + jobDeadline + "/" + jobID + "/";
 
                 String messageIn = "";
@@ -220,9 +216,5 @@ public class ClientSubmission {
 
             ClientDashboard goToDash = new ClientDashboard();
         }
-    }
-
-    public static String readFile(File file, Charset charset) throws IOException {
-        return new String(Files.readAllBytes(file.toPath()), charset);
     }
 }

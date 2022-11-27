@@ -1,17 +1,12 @@
 package BackEnd.Entities;
 
+import java.sql.*;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class JobServer {
 
@@ -20,13 +15,16 @@ public class JobServer {
     static DataInputStream inputStream2;
     static DataOutputStream outputStream2;
 
+    static Connection connection = null;
+    static String url = "jdbc:mysql://127.0.0.1:3306/VCRTSGroup4?user=root?useTimezone=true&serverTimezone=UTC";
+    static String username = "root";
+    static String password = "CUS1166VCRTSGROUP4";
+
     public static void main(String[] args) {
 
         while (true) {
 
             String messageIn = "";
-
-            CloudController cc = new CloudController();
             try {
 
                 System.out.println("This is the server of of VCRTS");
@@ -48,37 +46,47 @@ public class JobServer {
 
                     messageIn = inputStream2.readUTF();
 
-                    System.out.println(messageIn);
-
                     String infoToBeAdded = messageIn;
-                    Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingJobApps.txt");
-                    File allVehiclesTranscript = file.toFile();
 
-                    String str = "";
-                    try {
-                        str = readFile(allVehiclesTranscript, StandardCharsets.UTF_8);
-                    } catch (IOException e2) {
-                        e2.printStackTrace();
-                    }
+                    String pre = infoToBeAdded;
+                    String[] split = pre.split("/");
+                    String jobID = split[0];
+                    String name = split[1];
+                    String type = split[2];
+                    String duration = split[3];
+                    String deadline = split[4];
+
+                    System.out.println(jobID + " " + name + " " + type + " " + duration + " " + deadline);
 
                     try {
-                        FileWriter regTranscript = new FileWriter(allVehiclesTranscript);
-                        regTranscript.write(str);
-                        regTranscript.write(infoToBeAdded + "\n");
-                        regTranscript.close();
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
+                        connection = DriverManager.getConnection(url, username, password);
+
+                        String sql = "INSERT INTO PendingJobApplications"
+                                + "(JobID , name, type, duration, deadline)"
+                                + "VALUES ("
+                                + Integer.parseInt(jobID)
+                                + ",'" + name
+                                + "','" + type
+                                + "'," + Integer.parseInt(duration)
+                                + "," + Integer.parseInt(deadline)
+                                + ")";
+
+                        System.out.println(sql);
+
+                        Statement statement = connection.createStatement();
+                        int row = statement.executeUpdate(sql);
+                        if (row > 0)
+                            System.out.println("Data was inserted!");
+
+                        connection.close();
+
+                    } catch (SQLException e) {
+                        e.getMessage();
                     }
                 }
             } catch (Exception e) {
-
                 e.printStackTrace();
             }
         }
     }
-
-    public static String readFile(File file, Charset charset) throws IOException {
-        return new String(Files.readAllBytes(file.toPath()), charset);
-    }
-
 }

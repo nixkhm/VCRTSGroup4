@@ -1,18 +1,14 @@
 package BackEnd.Entities;
 
+import java.sql.*;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import BackEnd.*;
 
@@ -183,6 +179,11 @@ public class CloudController {
       static DataInputStream inputStream;
       static DataOutputStream outputStream;
 
+      static Connection connection = null;
+      static String url = "jdbc:mysql://127.0.0.1:3306/VCRTSGroup4?user=root?useTimezone=true&serverTimezone=UTC";
+      static String username = "root";
+      static String password = "CUS1166VCRTSGROUP4";
+
       public static void main(String[] args) {
 
             while (true) {
@@ -190,7 +191,6 @@ public class CloudController {
                   String messageIn = "";
 
                   try {
-
                         System.out.println("This is the server of of VCRTS");
                         System.out.println("wating for client to connect...");
                         try {
@@ -209,37 +209,47 @@ public class CloudController {
 
                               messageIn = inputStream.readUTF();
 
-                              System.out.println(messageIn);
-
                               String infoToBeAdded = messageIn;
-                              Path file = FileSystems.getDefault().getPath("GUI/Transcripts/allPendingVehicleApps.txt");
-                              File allVehiclesTranscript = file.toFile();
 
-                              String str = "";
-                              try {
-                                    str = readFile(allVehiclesTranscript, StandardCharsets.UTF_8);
-                              } catch (IOException e2) {
-                                    e2.printStackTrace();
-                              }
+                              String pre = infoToBeAdded;
+                              String[] split = pre.split("/");
+                              String vehicleID = split[0];
+                              String make = split[1];
+                              String model = split[2];
+                              String year = split[3];
+                              String timeIn = split[4];
+                              String timeOut = split[5];
 
                               try {
-                                    FileWriter regTranscript = new FileWriter(allVehiclesTranscript);
-                                    regTranscript.write(str);
-                                    regTranscript.write(infoToBeAdded + "\n");
-                                    regTranscript.close();
-                              } catch (IOException e1) {
-                                    e1.printStackTrace();
+                                    connection = DriverManager.getConnection(url, username, password);
+
+                                    String sql = "INSERT INTO PendingVehicleApplications"
+                                                + "(VehicleID , Make, Model, Year, TimeIn, TimeOut)"
+                                                + "VALUES ("
+                                                + Integer.parseInt(vehicleID)
+                                                + ",'" + make
+                                                + "','" + model
+                                                + "'," + Integer.parseInt(year)
+                                                + "," + Integer.parseInt(timeIn)
+                                                + "," + Integer.parseInt(timeOut)
+                                                + ")";
+
+                                    System.out.println(sql);
+
+                                    Statement statement = connection.createStatement();
+                                    int row = statement.executeUpdate(sql);
+                                    if (row > 0)
+                                          System.out.println("Data was inserted!");
+
+                                    connection.close();
+
+                              } catch (SQLException e) {
+                                    e.getMessage();
                               }
                         }
                   } catch (Exception e) {
-
                         e.printStackTrace();
                   }
             }
       }
-
-      public static String readFile(File file, Charset charset) throws IOException {
-            return new String(Files.readAllBytes(file.toPath()), charset);
-      }
-
 }
