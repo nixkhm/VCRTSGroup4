@@ -14,27 +14,21 @@ import BackEnd.*;
 
 public class CloudController {
 
+      static Connection connection = null;
+      static String url = "jdbc:mysql://127.0.0.1:3306/VCRTSGroup4?user=root?useTimezone=true&serverTimezone=UTC";
+      static String username = "root";
+      static String password = "CUS1166VCRTSGROUP4";
+
       private ArrayList<Vehicle> pendingVehicles;
       private ArrayList<Job> pendingJobs;
+      private ArrayList<Vehicle> allVehicles;
+      private ArrayList<Job> allJobs;
 
       public CloudController() {
             pendingVehicles = new ArrayList<Vehicle>();
             pendingJobs = new ArrayList<Job>();
-
-            try {
-                  getAllPendingVehicles();
-            } catch (IOException e) {
-                  e.printStackTrace();
-            }
-
-            try {
-                  getAllPendingJobApps();
-            } catch (IOException e) {
-                  e.printStackTrace();
-            }
-
-            display();
-
+            allVehicles = new ArrayList<Vehicle>();
+            allJobs = new ArrayList<Job>();
       }
 
       public void display() {
@@ -91,87 +85,130 @@ public class CloudController {
             return allJobIds;
       }
 
-      public ArrayList<Vehicle> getAllVehicles()
-                  throws IOException {
-            clearPendingVehicles();
-            Scanner s = new Scanner(new File("GUI/Transcripts/allVehicles.txt"));
-            ArrayList<String> list = new ArrayList<String>();
-            while (s.hasNext()) {
-                  list.add(s.next());
+      public ArrayList<Vehicle> getAllVehicles() {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "SELECT * FROM AllVehicles";
+                  Statement statement = connection.createStatement();
+                  ResultSet rs = statement.executeQuery(sql);
+
+                  while (rs.next()) {
+                        Vehicle newVeh = new Vehicle(rs.getInt("VehicleID"), rs.getString("make"),
+                                    rs.getString("model"),
+                                    rs.getInt("year"), rs.getInt("timeIn"), rs.getInt("timeOut"));
+                        allVehicles.add(newVeh);
+                  }
+                  connection.close();
+            } catch (SQLException e) {
+                  e.getMessage();
             }
-            s.close();
-            for (int i = 0; i < list.size(); i++) {
+            return allVehicles;
+      }
 
-                  String pre = list.get(i);
-                  String[] split = pre.split("/");
-                  String make = split[0];
-                  String model = split[1];
-                  String yearStr = split[2];
-                  String inStr = split[3];
-                  String outStr = split[4];
+      public ArrayList<Vehicle> getAllPendingVehicles() {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "SELECT * FROM PendingVehicleApplications";
+                  Statement statement = connection.createStatement();
+                  ResultSet rs = statement.executeQuery(sql);
 
-                  Vehicle newVeh = new Vehicle(make, model, Integer.parseInt(yearStr), Integer.parseInt(inStr),
-                              Integer.parseInt(outStr));
-                  addToPendingVehicles(newVeh);
+                  while (rs.next()) {
+                        Vehicle newVeh = new Vehicle(rs.getInt("VehicleID"), rs.getString("make"),
+                                    rs.getString("model"),
+                                    rs.getInt("year"), rs.getInt("timeIn"), rs.getInt("timeOut"));
+                        pendingVehicles.add(newVeh);
+                  }
+                  connection.close();
+            } catch (SQLException e) {
+                  e.getMessage();
             }
             return pendingVehicles;
       }
 
-      public ArrayList<Vehicle> getAllPendingVehicles()
-                  throws IOException {
-            clearPendingVehicles();
-            Scanner s = new Scanner(new File("GUI/Transcripts/allPendingVehicleApps.txt"));
-            ArrayList<String> list = new ArrayList<String>();
-            while (s.hasNext()) {
-                  list.add(s.next());
+      public ArrayList<Job> getAllPendingJobApps() {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "SELECT * FROM PendingJobApplications";
+                  Statement statement = connection.createStatement();
+                  ResultSet rs = statement.executeQuery(sql);
+
+                  while (rs.next()) {
+                        Job newJob = new Job(rs.getInt("JobID"), rs.getString("name"),
+                                    rs.getString("type"),
+                                    rs.getInt("duration"), rs.getInt("deadline"));
+                        pendingJobs.add(newJob);
+                  }
+                  connection.close();
+            } catch (SQLException e) {
+                  e.getMessage();
             }
-            s.close();
-            for (int i = 0; i < list.size(); i++) {
-
-                  String pre = list.get(i);
-                  String[] split = pre.split("/");
-                  String make = split[0];
-                  String model = split[1];
-                  String yearStr = split[2];
-                  String inStr = split[3];
-                  String outStr = split[4];
-
-                  Vehicle newVeh = new Vehicle(make, model, Integer.parseInt(yearStr), Integer.parseInt(inStr),
-                              Integer.parseInt(outStr));
-                  addToPendingVehicles(newVeh);
-            }
-            for (Vehicle v : pendingVehicles)
-                  System.out.println(v);
-            return pendingVehicles;
-      }
-
-      public ArrayList<Job> getAllPendingJobApps()
-                  throws IOException {
-            clearPendingJobs();
-            Scanner s = new Scanner(new File("GUI/Transcripts/allPendingJobApps.txt"));
-            ArrayList<String> list = new ArrayList<String>();
-            while (s.hasNext()) {
-                  list.add(s.next());
-            }
-            s.close();
-            for (int i = 0; i < list.size(); i++) {
-
-                  String pre = list.get(i);
-                  String[] split = pre.split("/");
-                  String name = split[0];
-                  String type = split[1];
-                  String duration = split[2];
-                  String deadline = split[3];
-                  String ID = split[4];
-
-                  Job newJob = new Job(name, type, Integer.parseInt(duration), Integer.parseInt(deadline),
-                              Integer.parseInt(ID));
-                  addToPendingJobs(newJob);
-            }
-            for (Job j : pendingJobs)
-                  System.out.println(j);
             return pendingJobs;
+      }
 
+      public ArrayList<Job> getAllJobs() {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "SELECT * FROM AllJobs";
+                  Statement statement = connection.createStatement();
+                  ResultSet rs = statement.executeQuery(sql);
+
+                  while (rs.next()) {
+                        Job newJob = new Job(rs.getInt("JobID"), rs.getString("name"),
+                                    rs.getString("type"),
+                                    rs.getInt("duration"), rs.getInt("deadline"));
+                        pendingJobs.add(newJob);
+                  }
+                  connection.close();
+            } catch (SQLException e) {
+                  e.getMessage();
+            }
+            return pendingJobs;
+      }
+
+      public void acceptVehicle(String id) {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "SELECT * FROM PendingVehicleApplications WHERE VEHICLEID=" + id;
+                  Statement statement = connection.createStatement();
+                  ResultSet rs = statement.executeQuery(sql);
+
+                  while (rs.next()) {
+                        sql = "INSERT INTO AllVehicles"
+                                    + "(VehicleID , Make, Model, Year, TimeIn, TimeOut)"
+                                    + "VALUES ("
+                                    + rs.getInt("VehicleID")
+                                    + ",'" + rs.getString("make")
+                                    + "','" + rs.getString("model")
+                                    + "'," + rs.getInt("year")
+                                    + "," + rs.getInt("timeIn")
+                                    + "," + rs.getInt("timeOut")
+                                    + ")";
+
+                        statement = connection.createStatement();
+                        int row = statement.executeUpdate(sql);
+                        if (row > 0)
+                              System.out.println("Data was inserted!");
+                        sql = "DELETE FROM PendingVehicleApplications WHERE VEHICLEID =" + id;
+                        row = statement.executeUpdate(sql);
+                        if (row > 0)
+                              System.out.println("Data was DELETED!");
+                  }
+                  connection.close();
+            } catch (SQLException e1) {
+                  e1.getMessage();
+            }
+      }
+
+      public void declineVehicle(String id) {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "DELETE FROM PendingVehicleApplications WHERE VEHICLEID=" + id;
+                  Statement statement = connection.createStatement();
+                  int row = statement.executeUpdate(sql);
+                  connection.close();
+            } catch (SQLException e1) {
+                  e1.getMessage();
+            }
       }
 
       static ServerSocket serverSocket;
@@ -179,17 +216,10 @@ public class CloudController {
       static DataInputStream inputStream;
       static DataOutputStream outputStream;
 
-      static Connection connection = null;
-      static String url = "jdbc:mysql://127.0.0.1:3306/VCRTSGroup4?user=root?useTimezone=true&serverTimezone=UTC";
-      static String username = "root";
-      static String password = "CUS1166VCRTSGROUP4";
-
       public static void main(String[] args) {
 
             while (true) {
-
                   String messageIn = "";
-
                   try {
                         System.out.println("This is the server of of VCRTS");
                         System.out.println("wating for client to connect...");

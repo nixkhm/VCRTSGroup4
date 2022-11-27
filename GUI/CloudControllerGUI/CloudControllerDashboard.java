@@ -173,7 +173,11 @@ class logInListener implements ActionListener {
 // Returns pending applications
 class pendingAppsListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
-        PendingAppsFrame pendingAppsDashboard = new PendingAppsFrame();
+        try {
+            PendingAppsFrame pendingAppsDashboard = new PendingAppsFrame();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 }
 

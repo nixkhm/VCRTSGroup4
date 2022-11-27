@@ -51,7 +51,7 @@ public class JobsInProgressFrame {
         JIPPanel.setLayout(null);
 
         CloudController cloudController = new CloudController();
-        final ArrayList<Job> listOfJobs = cloudController.getAllPendingJobApps();
+        ArrayList<Job> listOfJobs = cloudController.getAllJobs();
         populateTable(cloudController, listOfJobs);
 
         // return button configuration

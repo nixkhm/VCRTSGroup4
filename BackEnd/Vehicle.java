@@ -16,15 +16,13 @@ public class Vehicle {
     private boolean approved;
     private Owner owner;
 
-    public Vehicle(String makeIn, String modelIn, int yearIn, int startIn, int endIn) {
-        vehicleID = new Random().nextInt(100);
-        inUse = false;
+    public Vehicle(int vehicleIDIn, String makeIn, String modelIn, int yearIn, int startIn, int endIn) {
+        vehicleID = vehicleIDIn;
         make = makeIn;
         model = modelIn;
         year = yearIn;
         timeStart = startIn;
         timeEnd = endIn;
-        approved = false;
     }
 
     public int getVehicleID() {

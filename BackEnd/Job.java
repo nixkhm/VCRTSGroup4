@@ -1,8 +1,5 @@
 package BackEnd;
 
-import java.time.LocalTime;
-import java.util.Random;
-
 public class Job {
 
     private int jobID;
@@ -13,12 +10,12 @@ public class Job {
     private String notes;
     private int progress;
 
-    public Job(String jobNameIn, String jobTypeIn, int durationIn, int jobDeadlineIn, int jobIDIn) {
+    public Job(int jobIDIn, String jobNameIn, String jobTypeIn, int durationIn, int jobDeadlineIn) {
+        jobID = jobIDIn;
         jobName = jobNameIn;
         jobType = jobTypeIn;
         duration = durationIn;
         jobDeadline = jobDeadlineIn;
-        jobID = jobIDIn;
     }
 
     public int getJobID() {
