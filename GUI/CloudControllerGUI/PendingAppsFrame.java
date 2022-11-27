@@ -31,8 +31,8 @@ public class PendingAppsFrame {
     JPanel returnPanel = new JPanel();
 
     JLabel dashboardTitle = new JLabel("Pending Applications");
-    JLabel ownerAppTitle = new JLabel("Owner Applications");
-    JLabel renterAppTitle = new JLabel("Renter Applications");
+    JLabel ownerAppTitle = new JLabel("Vehicle Applications");
+    JLabel renterAppTitle = new JLabel("Job Applications");
     JLabel noCurrentJobsLabel = new JLabel("No Current Job Applications");
     JLabel noCurrentVehiclesLabel = new JLabel("No Current Vehicle Applications");
 
@@ -55,7 +55,7 @@ public class PendingAppsFrame {
         // Setting up the title of the frame.
         titlePanel.setBackground(new Color(249, 217, 126));
         titlePanel.setBounds(300, 20, 600, 150);
-        dashboardTitle.setForeground(Color.white);
+        dashboardTitle.setForeground(Color.black);
         dashboardTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         titlePanel.add(dashboardTitle);
 
@@ -89,6 +89,8 @@ public class PendingAppsFrame {
         ActionListener cloud = new cloudControllerListener();
         ActionListener acceptVehListener = new acceptVehicleListener();
         ActionListener declineVehListener = new declineVehicleListener();
+        ActionListener acceptJobListener = new acceptJobListener();
+        ActionListener declineJobListener = new declineJobListener();
 
         // populating pending aplication tables for jobs and vehicles
         CloudController cc = new CloudController();
@@ -117,6 +119,20 @@ public class PendingAppsFrame {
             dashboard.dispose();
         });
         declineVehiclePanel.add(declineVehicleButton);
+
+        // accept job button
+        acceptJobButton.addActionListener(acceptJobListener);
+        acceptJobButton.addActionListener(e -> {
+            dashboard.dispose();
+        });
+        acceptJobPanel.add(acceptJobButton);
+
+        // decline job button
+        declineJobButton.addActionListener(declineJobListener);
+        declineJobButton.addActionListener(e -> {
+            dashboard.dispose();
+        });
+        declineJobPanel.add(declineJobButton);
 
         declineVehiclePanel.add(declineVehicleButton);
         acceptJobPanel.add(acceptJobButton);
@@ -197,6 +213,20 @@ public class PendingAppsFrame {
     public class declineVehicleListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             DeclineVehicleFrame accept = new DeclineVehicleFrame();
+
+        }
+    }
+
+    public class acceptJobListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            AcceptJobFrame accept = new AcceptJobFrame();
+
+        }
+    }
+
+    public class declineJobListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            DeclineJobFrame decline = new DeclineJobFrame();
 
         }
     }

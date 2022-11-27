@@ -36,7 +36,7 @@ public class VehicleListFrame {
         // Setting up the title of the frame.
         titlePanel.setBackground(new Color(249, 217, 126));
         titlePanel.setBounds(300, 20, 600, 150);
-        dashboardTitle.setForeground(Color.white);
+        dashboardTitle.setForeground(Color.black);
         dashboardTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         titlePanel.add(dashboardTitle);
         dashboard.add(titlePanel);
@@ -70,8 +70,8 @@ public class VehicleListFrame {
     }
 
     public void populateTable(CloudController cloudController, ArrayList<Vehicle> listOfVehicles) {
-        String headers[] = { "Make", "Model", "Year", "In", "Out" };
-        JTable vehicleList = new JTable(11, 5);
+        String headers[] = { "VehicleID", "Make", "Model", "Year", "In", "Out" };
+        JTable vehicleList = new JTable(11, 6);
 
         for (int i = 0; i < headers.length; i++) {
             vehicleList.setValueAt(headers[i], 0, i);
@@ -83,11 +83,12 @@ public class VehicleListFrame {
         }
 
         for (int i = 0; i < x; i++) {
-            vehicleList.setValueAt(listOfVehicles.get(i).getMake(), i + 1, 0);
-            vehicleList.setValueAt(listOfVehicles.get(i).getModel(), i + 1, 1);
-            vehicleList.setValueAt(listOfVehicles.get(i).getYear(), i + 1, 2);
-            vehicleList.setValueAt(listOfVehicles.get(i).getTimeStart(), i + 1, 3);
-            vehicleList.setValueAt(listOfVehicles.get(i).getTimeEnd(), i + 1, 4);
+            vehicleList.setValueAt(listOfVehicles.get(i).getVehicleID(), i + 1, 0);
+            vehicleList.setValueAt(listOfVehicles.get(i).getMake(), i + 1, 1);
+            vehicleList.setValueAt(listOfVehicles.get(i).getModel(), i + 1, 2);
+            vehicleList.setValueAt(listOfVehicles.get(i).getYear(), i + 1, 3);
+            vehicleList.setValueAt(listOfVehicles.get(i).getTimeStart(), i + 1, 4);
+            vehicleList.setValueAt(listOfVehicles.get(i).getTimeEnd(), i + 1, 5);
         }
 
         vehicleList.setBounds(550, 250, 750, 350);

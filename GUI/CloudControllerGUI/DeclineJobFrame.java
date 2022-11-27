@@ -12,25 +12,25 @@ import java.io.IOException;
 import BackEnd.*;
 import BackEnd.Entities.CloudController;
 
-public class AcceptVehicleFrame {
+public class DeclineJobFrame {
 
-    JFrame dashboard = new JFrame("Accept Vehicle");
-    JPanel ownerAppPanel = new JPanel();
+    JFrame dashboard = new JFrame("Decline Job");
+    JPanel jobAppPanel = new JPanel();
 
-    JLabel dashboardTitle = new JLabel("Accept a Vehicle");
+    JLabel dashboardTitle = new JLabel("Decline a Job");
     JPanel titlePanel = new JPanel();
 
     JPanel returnPanel = new JPanel();
     JButton returnButton = new JButton("Return");
 
-    JPanel vehicleIDPanel = new JPanel();
-    JLabel vehicleIDLabel = new JLabel("Vehicle ID");
-    JTextField vehicleIDInput = new JTextField();
+    JPanel jobIDPanel = new JPanel();
+    JLabel jobIDLabel = new JLabel("Job ID");
+    JTextField jobIDInput = new JTextField();
 
-    JButton submitButton = new JButton("Accept");
+    JButton submitButton = new JButton("Decline");
     JPanel submitPanel = new JPanel();
 
-    public AcceptVehicleFrame() {
+    public DeclineJobFrame() {
         dashboard.setSize(1200, 800);
         dashboard.setSize(1200, 800);
         dashboard.setLocationRelativeTo(null);
@@ -45,23 +45,23 @@ public class AcceptVehicleFrame {
         dashboardTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         titlePanel.add(dashboardTitle);
 
-        vehicleIDPanel.setBackground(Color.LIGHT_GRAY);
-        vehicleIDPanel.setBounds(700, 300, 200, 50);
+        jobIDPanel.setBackground(Color.LIGHT_GRAY);
+        jobIDPanel.setBounds(700, 300, 200, 50);
 
-        vehicleIDLabel.setBounds(750, 300, 50, 50);
-        vehicleIDPanel.add(vehicleIDLabel);
+        jobIDLabel.setBounds(750, 300, 50, 50);
+        jobIDPanel.add(jobIDLabel);
 
-        vehicleIDInput.setBounds(900, 300, 200, 50);
+        jobIDInput.setBounds(900, 300, 200, 50);
 
-        ownerAppPanel.setBackground(Color.LIGHT_GRAY);
-        ownerAppPanel.setBounds(50, 250, 550, 300);
+        jobAppPanel.setBackground(Color.LIGHT_GRAY);
+        jobAppPanel.setBounds(50, 250, 550, 300);
 
         CloudController cc = new CloudController();
-        ArrayList<Vehicle> listOfPendingVeh = cc.getAllPendingVehicles();
-        populatePendingVehicles(cc, listOfPendingVeh);
+        ArrayList<Job> listOfPendingJobs = cc.getAllPendingJobApps();
+        populatePendingJobs(cc, listOfPendingJobs);
 
         ActionListener back = new backToPending();
-        ActionListener acceptVehicle = new AcceptVehicle();
+        ActionListener declineJob = new DeclineJob();
 
         returnPanel.setBounds(550, 600, 100, 50);
         returnButton.addActionListener(back);
@@ -71,28 +71,28 @@ public class AcceptVehicleFrame {
         returnPanel.add(returnButton);
 
         submitPanel.setBounds(850, 400, 100, 50);
-        submitButton.addActionListener(acceptVehicle);
+        submitButton.addActionListener(declineJob);
         submitButton.addActionListener(e -> {
             dashboard.dispose();
         });
         submitPanel.add(submitButton);
 
-        dashboard.add(vehicleIDPanel);
-        dashboard.add(vehicleIDInput);
+        dashboard.add(jobIDPanel);
+        dashboard.add(jobIDInput);
         dashboard.add(titlePanel);
-        dashboard.add(ownerAppPanel);
+        dashboard.add(jobAppPanel);
         dashboard.add(returnPanel);
         dashboard.add(submitPanel);
 
         dashboard.setVisible(true);
     }
 
-    public void populatePendingVehicles(CloudController cloudController, ArrayList<Vehicle> listOfVehicles) {
-        String headers[] = { "VehicleID", "Make", "Model", "Year", "In", "Out" };
-        JTable vehicleList = new JTable(11, 6);
+    public void populatePendingJobs(CloudController cloudController, ArrayList<Job> listOfVehicles) {
+        String headers[] = { "JobID", "Name", "Type", "Duration", "Deadline" };
+        JTable jobList = new JTable(11, 5);
 
         for (int i = 0; i < headers.length; i++) {
-            vehicleList.setValueAt(headers[i], 0, i);
+            jobList.setValueAt(headers[i], 0, i);
         }
 
         int x = 10;
@@ -101,16 +101,15 @@ public class AcceptVehicleFrame {
         }
 
         for (int i = 0; i < x; i++) {
-            vehicleList.setValueAt(listOfVehicles.get(i).getVehicleID(), i + 1, 0);
-            vehicleList.setValueAt(listOfVehicles.get(i).getMake(), i + 1, 1);
-            vehicleList.setValueAt(listOfVehicles.get(i).getModel(), i + 1, 2);
-            vehicleList.setValueAt(listOfVehicles.get(i).getYear(), i + 1, 3);
-            vehicleList.setValueAt(listOfVehicles.get(i).getTimeStart(), i + 1, 4);
-            vehicleList.setValueAt(listOfVehicles.get(i).getTimeEnd(), i + 1, 5);
+            jobList.setValueAt(listOfVehicles.get(i).getJobID(), i + 1, 0);
+            jobList.setValueAt(listOfVehicles.get(i).getJobName(), i + 1, 1);
+            jobList.setValueAt(listOfVehicles.get(i).getJobType(), i + 1, 2);
+            jobList.setValueAt(listOfVehicles.get(i).getJobDuration(), i + 1, 3);
+            jobList.setValueAt(listOfVehicles.get(i).getJobDeadline(), i + 1, 4);
         }
 
-        vehicleList.setBounds(550, 250, 750, 350);
-        ownerAppPanel.add(vehicleList);
+        jobList.setBounds(550, 250, 750, 350);
+        jobAppPanel.add(jobList);
     }
 
     public class backToPending implements ActionListener {
@@ -123,22 +122,22 @@ public class AcceptVehicleFrame {
         }
     }
 
-    public class AcceptVehicle implements ActionListener {
+    public class DeclineJob implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JPanel responsePanel = new JPanel();
             responsePanel.setBackground(Color.LIGHT_GRAY);
             responsePanel.setBounds(300, 550, 250, 75);
             JLabel response = new JLabel("Error");
-            if (vehicleIDInput.getText().isEmpty()) {
+            if (jobIDInput.getText().isEmpty()) {
                 response.setText("All text fields must be completed");
                 responsePanel.add(response);
                 dashboard.add(responsePanel);
                 dashboard.setVisible(true);
             } else {
-                String vehicleIDStr = vehicleIDInput.getText();
-                System.out.println(vehicleIDStr);
+                String jobIDStr = jobIDInput.getText();
+                System.out.println(jobIDStr);
                 CloudController cc = new CloudController();
-                cc.acceptVehicle(vehicleIDStr);
+                cc.declineJob(jobIDStr);
                 try {
                     PendingAppsFrame frame = new PendingAppsFrame();
                 } catch (IOException e1) {

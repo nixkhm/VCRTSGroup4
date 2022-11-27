@@ -41,7 +41,7 @@ public class DeclineVehicleFrame {
 
         titlePanel.setBackground(new Color(249, 217, 126));
         titlePanel.setBounds(300, 20, 600, 150);
-        dashboardTitle.setForeground(Color.white);
+        dashboardTitle.setForeground(Color.black);
         dashboardTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         titlePanel.add(dashboardTitle);
 

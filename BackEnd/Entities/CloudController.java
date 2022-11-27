@@ -211,6 +211,51 @@ public class CloudController {
             }
       }
 
+      public void acceptJob(String id) {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "SELECT * FROM PendingJobApplications WHERE JOBID=" + id;
+                  Statement statement = connection.createStatement();
+                  ResultSet rs = statement.executeQuery(sql);
+
+                  while (rs.next()) {
+                        sql = "INSERT INTO AllJobs"
+                                    + "(JobID , Name, Type, Duration, Deadline)"
+                                    + "VALUES ("
+                                    + rs.getInt("JobID")
+                                    + ",'" + rs.getString("Name")
+                                    + "','" + rs.getString("Type")
+                                    + "'," + rs.getInt("Duration")
+                                    + "," + rs.getInt("Deadline")
+                                    + ")";
+
+                        statement = connection.createStatement();
+                        int row = statement.executeUpdate(sql);
+                        if (row > 0)
+                              System.out.println("Data was inserted!");
+                        sql = "DELETE FROM PendingJobApplications WHERE JOBID =" + id;
+                        row = statement.executeUpdate(sql);
+                        if (row > 0)
+                              System.out.println("Data was DELETED!");
+                  }
+                  connection.close();
+            } catch (SQLException e1) {
+                  e1.getMessage();
+            }
+      }
+
+      public void declineJob(String id) {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "DELETE FROM PendingJobApplications WHERE JOBID=" + id;
+                  Statement statement = connection.createStatement();
+                  int row = statement.executeUpdate(sql);
+                  connection.close();
+            } catch (SQLException e1) {
+                  e1.getMessage();
+            }
+      }
+
       static ServerSocket serverSocket;
       static Socket socket;
       static DataInputStream inputStream;
