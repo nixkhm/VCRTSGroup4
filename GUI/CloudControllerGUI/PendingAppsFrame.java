@@ -95,7 +95,7 @@ public class PendingAppsFrame {
         // populating pending aplication tables for jobs and vehicles
         CloudController cc = new CloudController();
         ArrayList<Vehicle> listOfPendingVeh = cc.getAllPendingVehicles();
-        ArrayList<Job> listOfPendingJobs = cc.getAllPendingJobApps();
+        ArrayList<Job> listOfPendingJobs = cc.getAllPendingJobs();
         populatePendingVehicles(cc, listOfPendingVeh);
         populatePendingJobs(cc, listOfPendingJobs);
 
