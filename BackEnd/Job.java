@@ -8,14 +8,15 @@ public class Job {
     private int duration;
     private int jobDeadline;
     private String notes;
-    private int progress;
+    private int status;
 
-    public Job(int jobIDIn, String jobNameIn, String jobTypeIn, int durationIn, int jobDeadlineIn) {
+    public Job(int jobIDIn, String jobNameIn, String jobTypeIn, int durationIn, int jobDeadlineIn, int statusIn) {
         jobID = jobIDIn;
         jobName = jobNameIn;
         jobType = jobTypeIn;
         duration = durationIn;
         jobDeadline = jobDeadlineIn;
+        status = statusIn;
     }
 
     public int getJobID() {
@@ -42,8 +43,8 @@ public class Job {
         return notes;
     }
 
-    public int getJobProgress() {
-        return progress;
+    public int getStatus() {
+        return status;
     }
 
     public String toString() {
