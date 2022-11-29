@@ -1,7 +1,7 @@
 -- Active: 1669699637682@@127.0.0.1@3306@vcrts_database
 create database VCRTS4Group;
-create table vehicle_application(vehicle_id int (5), vehicle_make varchar(50), vehicle_model varchar(50), vehicle_year int (4), time_start int (5), time_end int (5), primary key (vehicle_id));
-create table pending_vehicle_application(vehicle_id int (5), vehicle_make varchar(50), vehicle_model varchar(50), vehicle_year int (4), time_start int (5), time_end int (5), primary key (vehicle_id));
-create table pending_job_application(job_id int (5) not null, job_name varchar (50), job_type varchar (50), job_duration int (5), job_deadline int (5), primary key (job_id) );
-create table job_application(job_id int (5) not null, job_name varchar (50), job_type varchar (50), job_duration int (5), job_deadline int (5), primary key (job_id));
-
+use VCRTS4Group;
+create table AllVehicles(VEHICLEID int (5), make varchar(50), model varchar(50), year int (4), timeIn int (5), timeOut int (5), primary key (VehicleID));
+create table PendingVehicleApplications(VehicleID int (5), make varchar(50), model varchar(50), year int (4), timeIn int (5), timeOut int (5), primary key (VehicleID));
+create table PendingJobApplications(JobID int (5) not null, name varchar (50), type varchar (50), duration int (5), deadline int (5), primary key (JobID) );
+create table AllJobs(JobID int (5) not null, name varchar (50), type varchar (50), duration int (5), deadline int (5), primary key (JobID));
