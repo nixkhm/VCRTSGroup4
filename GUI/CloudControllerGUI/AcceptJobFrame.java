@@ -57,7 +57,7 @@ public class AcceptJobFrame {
         jobAppPanel.setBounds(50, 250, 550, 300);
 
         CloudController cc = new CloudController();
-        ArrayList<Job> listOfPendingJobs = cc.getAllPendingJobs();
+        ArrayList<Job> listOfPendingJobs = cc.getAllPendingJobApps();
         populatePendingJobs(cc, listOfPendingJobs);
 
         ActionListener back = new backToPending();

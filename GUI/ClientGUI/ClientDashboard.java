@@ -25,7 +25,7 @@ public class ClientDashboard {
     JButton homeButton = new JButton("Home");
     JButton submitJobButton = new JButton("Submit a Job");
     JButton jobsInProgressButton = new JButton("Jobs in Progress");
-    JButton statusButton = new JButton("Status");
+    JButton historyButton = new JButton("History");
     JButton settingsButton = new JButton("Settings");
     JButton profileButton = new JButton("Profile");
 
@@ -86,11 +86,11 @@ public class ClientDashboard {
         JobsInProgressPanel.add(jobsInProgressButton);
 
         // history button configuration
-        statusButton.setFont(new Font("Monospaced", Font.BOLD, 35));
-        statusButton.setOpaque(false);
-        statusButton.setContentAreaFilled(false);
-        statusButton.setBorderPainted(false);
-        historyPanel.add(statusButton);
+        historyButton.setFont(new Font("Monospaced", Font.BOLD, 35));
+        historyButton.setOpaque(false);
+        historyButton.setContentAreaFilled(false);
+        historyButton.setBorderPainted(false);
+        historyPanel.add(historyButton);
 
         // settings button configuration
         settingsButton.setFont(new Font("Monospaced", Font.BOLD, 35));
@@ -125,12 +125,6 @@ public class ClientDashboard {
             dashboard.dispose();
         });
 
-        ActionListener status = new jobStatusListener();
-        statusButton.addActionListener(status);
-        statusButton.addActionListener(e -> {
-            dashboard.dispose();
-        });
-
         dashboard.add(logoPanel);
         dashboard.add(homePanel);
         dashboard.add(submitJobPanel);
@@ -158,12 +152,5 @@ class submitAJobListener implements ActionListener {
 class jobsInProgressListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JIPFrame JIP = new JIPFrame();
-    }
-}
-
-// Register a Vehicle Button
-class jobStatusListener implements ActionListener {
-    public void actionPerformed(ActionEvent e) {
-        JobStatusFrame status = new JobStatusFrame();
     }
 }
