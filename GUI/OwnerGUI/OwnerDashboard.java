@@ -24,7 +24,7 @@ public class OwnerDashboard {
     JButton homeButton = new JButton("Home");
     JButton registerCarButton = new JButton("Register a Vehicle");
     JButton viewVehiclesButton = new JButton("View my Vehicles");
-    JButton historyButton = new JButton("History");
+    JButton statusButton = new JButton("Status");
     JButton settingsButton = new JButton("Settings");
     JButton profileButton = new JButton("Profile");
 
@@ -83,11 +83,11 @@ public class OwnerDashboard {
         viewVehiclesButton.setBorderPainted(false);
         viewVehiclesPanel.add(viewVehiclesButton);
 
-        historyButton.setFont(new Font("Monospaced", Font.BOLD, 35));
-        historyButton.setOpaque(false);
-        historyButton.setContentAreaFilled(false);
-        historyButton.setBorderPainted(false);
-        historyPanel.add(historyButton);
+        statusButton.setFont(new Font("Monospaced", Font.BOLD, 35));
+        statusButton.setOpaque(false);
+        statusButton.setContentAreaFilled(false);
+        statusButton.setBorderPainted(false);
+        historyPanel.add(statusButton);
 
         settingsButton.setFont(new Font("Monospaced", Font.BOLD, 35));
         settingsButton.setOpaque(false);
@@ -119,6 +119,12 @@ public class OwnerDashboard {
             dashboard.dispose();
         });
 
+        ActionListener status = new vehicleStatusListener();
+        statusButton.addActionListener(status);
+        statusButton.addActionListener(e -> {
+            dashboard.dispose();
+        });
+
         // adding the multiple panels onto the dashboard
         dashboard.add(logoPanel);
         dashboard.add(homePanel);
@@ -136,6 +142,13 @@ public class OwnerDashboard {
 class registerACarListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         RegistrationFrame registration = new RegistrationFrame();
+    }
+}
+
+// Register a Vehicle Button
+class vehicleStatusListener implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+        VehicleStatusFrame status = new VehicleStatusFrame();
     }
 }
 
