@@ -2,13 +2,6 @@ package BackEnd.Entities;
 
 import java.sql.*;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
-
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.*;
 import BackEnd.*;
 
@@ -23,12 +16,16 @@ public class CloudController {
       private ArrayList<Job> pendingJobs;
       private ArrayList<Vehicle> allVehicles;
       private ArrayList<Job> allJobs;
+      private ArrayList<Vehicle> declinedVehicles;
+      private ArrayList<Job> declinedJobs;
 
       public CloudController() {
             pendingVehicles = new ArrayList<Vehicle>();
             pendingJobs = new ArrayList<Job>();
             allVehicles = new ArrayList<Vehicle>();
             allJobs = new ArrayList<Job>();
+            declinedVehicles = new ArrayList<Vehicle>();
+            declinedJobs = new ArrayList<Job>();
       }
 
       public void display() {
@@ -50,52 +47,18 @@ public class CloudController {
             System.out.println("-------------------------------------------------------");
       }
 
-      public void addToPendingVehicles(Vehicle in) {
-            pendingVehicles.add(in);
-      }
-
-      public void clearPendingVehicles() {
-            pendingVehicles.clear();
-      }
-
-      public void addToPendingJobs(Job in) {
-            pendingJobs.add(in);
-      }
-
-      public void clearPendingJobs() {
-            pendingJobs.clear();
-      }
-
-      public String getFullJobTime() {
-            int[] jobTimes = new int[pendingJobs.size()];
-            jobTimes[0] = pendingJobs.get(0).getJobDuration();
-            for (int i = 1; i < pendingJobs.size(); i++) {
-                  jobTimes[i] = jobTimes[i - 1] + pendingJobs.get(i).getJobDuration();
-            }
-            String fullJobTime = Arrays.toString(jobTimes);
-            return fullJobTime;
-      }
-
-      public String getAllJobIds() {
-            int[] jobIds = new int[pendingJobs.size()];
-            for (int i = 0; i < pendingJobs.size(); i++) {
-                  jobIds[i] = pendingJobs.get(i).getJobID();
-            }
-            String allJobIds = Arrays.toString(jobIds);
-            return allJobIds;
-      }
-
       public ArrayList<Vehicle> getAllVehicles() {
             try {
                   connection = DriverManager.getConnection(url, username, password);
-                  String sql = "SELECT * FROM AllVehicles";
+                  String sql = "SELECT * FROM AllVehicles WHERE STATUS = 1";
                   Statement statement = connection.createStatement();
                   ResultSet rs = statement.executeQuery(sql);
 
                   while (rs.next()) {
                         Vehicle newVeh = new Vehicle(rs.getInt("VehicleID"), rs.getString("make"),
                                     rs.getString("model"),
-                                    rs.getInt("year"), rs.getInt("timeIn"), rs.getInt("timeOut"));
+                                    rs.getInt("year"), rs.getInt("timeIn"), rs.getInt("timeOut"),
+                                    rs.getString("status"));
                         allVehicles.add(newVeh);
                   }
                   connection.close();
@@ -108,14 +71,15 @@ public class CloudController {
       public ArrayList<Vehicle> getAllPendingVehicles() {
             try {
                   connection = DriverManager.getConnection(url, username, password);
-                  String sql = "SELECT * FROM PendingVehicleApplications";
+                  String sql = "SELECT * FROM AllVehicles WHERE STATUS = 0";
                   Statement statement = connection.createStatement();
                   ResultSet rs = statement.executeQuery(sql);
 
                   while (rs.next()) {
                         Vehicle newVeh = new Vehicle(rs.getInt("VehicleID"), rs.getString("make"),
                                     rs.getString("model"),
-                                    rs.getInt("year"), rs.getInt("timeIn"), rs.getInt("timeOut"));
+                                    rs.getInt("year"), rs.getInt("timeIn"), rs.getInt("timeOut"),
+                                    rs.getString("status"));
                         pendingVehicles.add(newVeh);
                   }
                   connection.close();
@@ -125,37 +89,37 @@ public class CloudController {
             return pendingVehicles;
       }
 
-      public ArrayList<Job> getAllPendingJobApps() {
+      public ArrayList<Job> getAllJobs() {
             try {
                   connection = DriverManager.getConnection(url, username, password);
-                  String sql = "SELECT * FROM PendingJobApplications";
+                  String sql = "SELECT * FROM AllJobs WHERE Status = 1";
                   Statement statement = connection.createStatement();
                   ResultSet rs = statement.executeQuery(sql);
 
                   while (rs.next()) {
                         Job newJob = new Job(rs.getInt("JobID"), rs.getString("name"),
                                     rs.getString("type"),
-                                    rs.getInt("duration"), rs.getInt("deadline"));
-                        pendingJobs.add(newJob);
+                                    rs.getInt("duration"), rs.getInt("deadline"), rs.getInt("status"));
+                        allJobs.add(newJob);
                   }
                   connection.close();
             } catch (SQLException e) {
                   e.getMessage();
             }
-            return pendingJobs;
+            return allJobs;
       }
 
-      public ArrayList<Job> getAllJobs() {
+      public ArrayList<Job> getAllPendingJobs() {
             try {
                   connection = DriverManager.getConnection(url, username, password);
-                  String sql = "SELECT * FROM AllJobs";
+                  String sql = "SELECT * FROM AllJobs WHERE STATUS = 0";
                   Statement statement = connection.createStatement();
                   ResultSet rs = statement.executeQuery(sql);
 
                   while (rs.next()) {
                         Job newJob = new Job(rs.getInt("JobID"), rs.getString("name"),
                                     rs.getString("type"),
-                                    rs.getInt("duration"), rs.getInt("deadline"));
+                                    rs.getInt("duration"), rs.getInt("deadline"), rs.getInt("status"));
                         pendingJobs.add(newJob);
                   }
                   connection.close();
@@ -168,31 +132,9 @@ public class CloudController {
       public void acceptVehicle(String id) {
             try {
                   connection = DriverManager.getConnection(url, username, password);
-                  String sql = "SELECT * FROM PendingVehicleApplications WHERE VEHICLEID=" + id;
+                  String sql = "UPDATE AllVehicles SET Status = 1 WHERE VEHICLEID=" + id;
                   Statement statement = connection.createStatement();
-                  ResultSet rs = statement.executeQuery(sql);
-
-                  while (rs.next()) {
-                        sql = "INSERT INTO AllVehicles"
-                                    + "(VehicleID , Make, Model, Year, TimeIn, TimeOut)"
-                                    + "VALUES ("
-                                    + rs.getInt("VehicleID")
-                                    + ",'" + rs.getString("make")
-                                    + "','" + rs.getString("model")
-                                    + "'," + rs.getInt("year")
-                                    + "," + rs.getInt("timeIn")
-                                    + "," + rs.getInt("timeOut")
-                                    + ")";
-
-                        statement = connection.createStatement();
-                        int row = statement.executeUpdate(sql);
-                        if (row > 0)
-                              System.out.println("Data was inserted!");
-                        sql = "DELETE FROM PendingVehicleApplications WHERE VEHICLEID =" + id;
-                        row = statement.executeUpdate(sql);
-                        if (row > 0)
-                              System.out.println("Data was DELETED!");
-                  }
+                  int row = statement.executeUpdate(sql);
                   connection.close();
             } catch (SQLException e1) {
                   e1.getMessage();
@@ -202,7 +144,7 @@ public class CloudController {
       public void declineVehicle(String id) {
             try {
                   connection = DriverManager.getConnection(url, username, password);
-                  String sql = "DELETE FROM PendingVehicleApplications WHERE VEHICLEID=" + id;
+                  String sql = "UPDATE AllVehicles SET Status = 2 WHERE VEHICLEID=" + id;
                   Statement statement = connection.createStatement();
                   int row = statement.executeUpdate(sql);
                   connection.close();
@@ -214,30 +156,9 @@ public class CloudController {
       public void acceptJob(String id) {
             try {
                   connection = DriverManager.getConnection(url, username, password);
-                  String sql = "SELECT * FROM PendingJobApplications WHERE JOBID=" + id;
+                  String sql = "UPDATE AllJobs SET Status = 1 WHERE JOBID=" + id;
                   Statement statement = connection.createStatement();
-                  ResultSet rs = statement.executeQuery(sql);
-
-                  while (rs.next()) {
-                        sql = "INSERT INTO AllJobs"
-                                    + "(JobID , Name, Type, Duration, Deadline)"
-                                    + "VALUES ("
-                                    + rs.getInt("JobID")
-                                    + ",'" + rs.getString("Name")
-                                    + "','" + rs.getString("Type")
-                                    + "'," + rs.getInt("Duration")
-                                    + "," + rs.getInt("Deadline")
-                                    + ")";
-
-                        statement = connection.createStatement();
-                        int row = statement.executeUpdate(sql);
-                        if (row > 0)
-                              System.out.println("Data was inserted!");
-                        sql = "DELETE FROM PendingJobApplications WHERE JOBID =" + id;
-                        row = statement.executeUpdate(sql);
-                        if (row > 0)
-                              System.out.println("Data was DELETED!");
-                  }
+                  int row = statement.executeUpdate(sql);
                   connection.close();
             } catch (SQLException e1) {
                   e1.getMessage();
@@ -247,7 +168,7 @@ public class CloudController {
       public void declineJob(String id) {
             try {
                   connection = DriverManager.getConnection(url, username, password);
-                  String sql = "DELETE FROM PendingJobApplications WHERE JOBID=" + id;
+                  String sql = "UPDATE AllJobs SET Status = 2 WHERE JOBID=" + id;
                   Statement statement = connection.createStatement();
                   int row = statement.executeUpdate(sql);
                   connection.close();
@@ -256,75 +177,68 @@ public class CloudController {
             }
       }
 
-      static ServerSocket serverSocket;
-      static Socket socket;
-      static DataInputStream inputStream;
-      static DataOutputStream outputStream;
+      public ArrayList<Vehicle> getDeclinedVehicles() {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "SELECT * FROM AllVehicles WHERE Status = 2";
+                  Statement statement = connection.createStatement();
+                  ResultSet rs = statement.executeQuery(sql);
 
-      public static void main(String[] args) {
-
-            while (true) {
-                  String messageIn = "";
-                  try {
-                        System.out.println("This is the server of of VCRTS");
-                        System.out.println("wating for client to connect...");
-                        try {
-                              serverSocket = new ServerSocket(8000);
-                        } catch (IOException e) {
-                              e.printStackTrace();
-                        }
-                        while (true) {
-                              try {
-                                    socket = serverSocket.accept();
-                              } catch (IOException e) {
-                                    System.out.println("I/O error: " + e);
-                              }
-
-                              inputStream = new DataInputStream(socket.getInputStream());
-
-                              messageIn = inputStream.readUTF();
-
-                              String infoToBeAdded = messageIn;
-
-                              String pre = infoToBeAdded;
-                              String[] split = pre.split("/");
-                              String vehicleID = split[0];
-                              String make = split[1];
-                              String model = split[2];
-                              String year = split[3];
-                              String timeIn = split[4];
-                              String timeOut = split[5];
-
-                              try {
-                                    connection = DriverManager.getConnection(url, username, password);
-
-                                    String sql = "INSERT INTO PendingVehicleApplications"
-                                                + "(VehicleID , Make, Model, Year, TimeIn, TimeOut)"
-                                                + "VALUES ("
-                                                + Integer.parseInt(vehicleID)
-                                                + ",'" + make
-                                                + "','" + model
-                                                + "'," + Integer.parseInt(year)
-                                                + "," + Integer.parseInt(timeIn)
-                                                + "," + Integer.parseInt(timeOut)
-                                                + ")";
-
-                                    System.out.println(sql);
-
-                                    Statement statement = connection.createStatement();
-                                    int row = statement.executeUpdate(sql);
-                                    if (row > 0)
-                                          System.out.println("Data was inserted!");
-
-                                    connection.close();
-
-                              } catch (SQLException e) {
-                                    e.getMessage();
-                              }
-                        }
-                  } catch (Exception e) {
-                        e.printStackTrace();
+                  while (rs.next()) {
+                        Vehicle newVeh = new Vehicle(rs.getInt("VehicleID"), rs.getString("make"),
+                                    rs.getString("model"),
+                                    rs.getInt("year"), rs.getInt("timeIn"), rs.getInt("timeOut"),
+                                    rs.getString("status"));
+                        declinedVehicles.add(newVeh);
                   }
+                  connection.close();
+            } catch (SQLException e) {
+                  e.getMessage();
             }
+            for (Vehicle v : declinedVehicles)
+                  System.out.println(v);
+            return declinedVehicles;
       }
+
+      public ArrayList<Job> getDeclinedJobs() {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "SELECT * FROM AllJobs WHERE Status = 2";
+                  Statement statement = connection.createStatement();
+                  ResultSet rs = statement.executeQuery(sql);
+
+                  while (rs.next()) {
+                        Job newJob = new Job(rs.getInt("JobID"), rs.getString("name"),
+                                    rs.getString("type"),
+                                    rs.getInt("duration"), rs.getInt("deadline"), rs.getInt("status"));
+                        declinedJobs.add(newJob);
+                  }
+                  connection.close();
+            } catch (SQLException e) {
+                  e.getMessage();
+            }
+            for (Vehicle v : declinedVehicles)
+                  System.out.println(v);
+            return declinedJobs;
+      }
+
+      public String getFullJobTime() {
+            int[] jobTimes = new int[allJobs.size()];
+            jobTimes[0] = allJobs.get(0).getJobDuration();
+            for (int i = 1; i < allJobs.size(); i++) {
+                  jobTimes[i] = jobTimes[i - 1] + allJobs.get(i).getJobDuration();
+            }
+            String fullJobTime = Arrays.toString(jobTimes);
+            return fullJobTime;
+      }
+
+      public String getAllJobIds() {
+            int[] jobIds = new int[allJobs.size()];
+            for (int i = 0; i < allJobs.size(); i++) {
+                  jobIds[i] = allJobs.get(i).getJobID();
+            }
+            String allJobIds = Arrays.toString(jobIds);
+            return allJobIds;
+      }
+
 }

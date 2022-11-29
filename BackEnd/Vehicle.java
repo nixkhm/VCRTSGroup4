@@ -7,30 +7,26 @@ import BackEnd.model.Owner;
 public class Vehicle {
 
     private int vehicleID;
-    private boolean inUse;
     private String make;
     private String model;
     private int year;
     private int timeStart;
     private int timeEnd;
-    private boolean approved;
-    private Owner owner;
+    private String status;
 
-    public Vehicle(int vehicleIDIn, String makeIn, String modelIn, int yearIn, int startIn, int endIn) {
+    public Vehicle(int vehicleIDIn, String makeIn, String modelIn, int yearIn, int startIn, int endIn,
+            String statusIn) {
         vehicleID = vehicleIDIn;
         make = makeIn;
         model = modelIn;
         year = yearIn;
         timeStart = startIn;
         timeEnd = endIn;
+        status = statusIn;
     }
 
     public int getVehicleID() {
         return vehicleID;
-    }
-
-    public boolean getInUseStatus() {
-        return inUse;
     }
 
     public String getMake() {
@@ -53,17 +49,13 @@ public class Vehicle {
         return timeEnd;
     }
 
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void approveVehicle() {
-        approved = true;
+    public String getStatus() {
+        return status;
     }
 
     public String toString() {
         return "Make: " + make + " / Model:" + model + " / Year:" + year + " / Time Start:" + timeStart + " / Time End:"
-                + timeEnd;
+                + timeEnd + "/ Status:" + status;
     }
 
 }
