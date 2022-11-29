@@ -156,6 +156,76 @@ public class RegistrationFrame {
         dashboard.setVisible(true);
     }
 
+    // submitting vehicle info to pending vehicle database
+    /*
+     * class submitButtonListener implements ActionListener {
+     * public void actionPerformed(ActionEvent e) {
+     * 
+     * JPanel responsePanel = new JPanel();
+     * responsePanel.setBackground(Color.LIGHT_GRAY);
+     * responsePanel.setBounds(300, 550, 250, 75);
+     * JLabel response = new JLabel("Registration Info");
+     * 
+     * if (carYearInput.getText().isEmpty() || carModelInput.getText().isEmpty()
+     * || carMakeInput.getText().isEmpty() || timeStartInput.getText().isEmpty()
+     * || timeEndInput.getText().isEmpty()) {
+     * response.setText("All text fields must be completed");
+     * responsePanel.add(response);
+     * dashboard.add(responsePanel);
+     * dashboard.setVisible(true);
+     * } else {
+     * String carMake = carMakeInput.getText();
+     * String carModel = carModelInput.getText();
+     * String carYearStr = carYearInput.getText();
+     * int carYear = Integer.parseInt(carYearStr);
+     * String timeInStr = timeStartInput.getText();
+     * int timeIn = Integer.parseInt(timeInStr);
+     * String timeEndStr = timeEndInput.getText();
+     * int timeEnd = Integer.parseInt(timeEndStr);
+     * 
+     * String info = carMake + "/" + carModel + "/"
+     * + carYear + "/" + timeIn + "/" + timeEnd + "/";
+     * 
+     * String messageIn = "";
+     * String messageOut = "";
+     * 
+     * try {
+     * System.out.println("----------*** This is client side ***--------");
+     * System.out.println("client started!");
+     * // connect the client socket to server
+     * Socket socket = new Socket("localhost", 8000);
+     * 
+     * // client reads a message from Server
+     * inputStream = new DataInputStream(socket.getInputStream());
+     * outputStream = new DataOutputStream(socket.getOutputStream());
+     * 
+     * // client reads a message from keyboard
+     * System.out.println("Enter a message you want to send to server side: ");
+     * // server sends the message to client
+     * boolean sent = false;
+     * 
+     * while (!sent) {
+     * messageOut = info;
+     * outputStream.writeUTF(messageOut);
+     * System.out.println("Message Sent!");
+     * sent = true;
+     * }
+     * sent = false;
+     * 
+     * } catch (Exception e1) {
+     * 
+     * e1.printStackTrace();
+     * 
+     * }
+     * 
+     * CloudController cc = new CloudController();
+     * OwnerDashboard dashboard1 = new OwnerDashboard();
+     * dashboard.dispose();
+     * }
+     * }
+     * }
+     */
+
     class submitPendingVehicle implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JPanel responsePanel = new JPanel();
@@ -189,7 +259,7 @@ public class RegistrationFrame {
                 int timeEnd = Integer.parseInt(timeEndStr);
 
                 String info = vehicleID + "/" + carMake + "/" + carModel + "/"
-                        + carYear + "/" + timeIn + "/" + timeEnd + "/" + "0";
+                        + carYear + "/" + timeIn + "/" + timeEnd + "/";
 
                 String messageIn = "";
                 String messageOut = "";
@@ -231,5 +301,9 @@ public class RegistrationFrame {
         public void actionPerformed(ActionEvent e) {
             OwnerDashboard goToDash = new OwnerDashboard();
         }
+    }
+
+    public static String readFile(File file, Charset charset) throws IOException {
+        return new String(Files.readAllBytes(file.toPath()), charset);
     }
 }

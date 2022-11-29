@@ -55,22 +55,20 @@ public class JobServer {
                     String type = split[2];
                     String duration = split[3];
                     String deadline = split[4];
-                    String status = split[5];
 
                     System.out.println(jobID + " " + name + " " + type + " " + duration + " " + deadline);
 
                     try {
                         connection = DriverManager.getConnection(url, username, password);
 
-                        String sql = "INSERT INTO AllJobs"
-                                + "(JobID , Name, Type, Duration, Deadline, Status)"
+                        String sql = "INSERT INTO PendingJobApplications"
+                                + "(JobID , name, type, duration, deadline)"
                                 + "VALUES ("
                                 + Integer.parseInt(jobID)
                                 + ",'" + name
                                 + "','" + type
                                 + "'," + Integer.parseInt(duration)
                                 + "," + Integer.parseInt(deadline)
-                                + "," + status
                                 + ")";
 
                         System.out.println(sql);

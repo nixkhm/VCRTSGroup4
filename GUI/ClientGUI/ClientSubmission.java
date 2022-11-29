@@ -168,10 +168,8 @@ public class ClientSubmission {
                 String jobDeadlineStr = jobDeadlineInput.getText();
                 int jobDeadline = Integer.parseInt(jobDeadlineStr);
 
-                String info = jobID + "/" + jobName + "/" + jobType + "/"
-                        + jobDuration + "/" + jobDeadline + "/" + "0";
-
-                System.out.println(info);
+                String info = jobID + "/" + jobName + "/" + jobType
+                        + "/" + jobDuration + "/" + jobDeadline + "/" + jobID + "/";
 
                 String messageIn = "";
                 String messageOut = "";
