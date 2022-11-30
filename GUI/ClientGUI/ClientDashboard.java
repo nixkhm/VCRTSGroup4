@@ -1,6 +1,8 @@
 package GUI.ClientGUI;
 
 import javax.swing.*;
+
+import BackEnd.Entities.CloudController;
 import GUI.ButtonListeners.logInListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,16 +22,18 @@ public class ClientDashboard {
     JPanel historyPanel = new JPanel();
     JPanel settingsPanel = new JPanel();
     JPanel profilePanel = new JPanel();
+    JPanel notificationPanel = new JPanel();
 
     // Label for "Home" option
     JButton homeButton = new JButton("Home");
     JButton submitJobButton = new JButton("Submit a Job");
-    JButton jobsInProgressButton = new JButton("Jobs in Progress");
+    JButton jobsInProgressButton = new JButton("View my Jobs");
     JButton statusButton = new JButton("Status");
     JButton settingsButton = new JButton("Settings");
     JButton profileButton = new JButton("Profile");
 
     JLabel logoLabel = new JLabel(new ImageIcon("GUI/Assets/logo.png"));
+    JLabel update = new JLabel("You have an update on your Job Applications. Please press Status");
 
     public ClientDashboard() {
 
@@ -63,6 +67,9 @@ public class ClientDashboard {
 
         profilePanel.setBackground(new Color(205, 205, 205));
         profilePanel.setBounds(1000, 30, 175, 50);
+
+        notificationPanel.setBackground(new Color(205, 205, 205));
+        notificationPanel.setBounds(450, 350, 650, 50);
 
         // home button configuration
         homeButton.setFont(new Font("Monospaced", Font.BOLD, 35));
@@ -131,6 +138,11 @@ public class ClientDashboard {
             dashboard.dispose();
         });
 
+        CloudController cc = new CloudController();
+        if (cc.getDeclinedJobs().size() > 0) {
+            notificationTrue();
+        }
+
         dashboard.add(logoPanel);
         dashboard.add(homePanel);
         dashboard.add(submitJobPanel);
@@ -140,6 +152,12 @@ public class ClientDashboard {
         dashboard.add(profilePanel);
 
         dashboard.setVisible(true);
+    }
+
+    public void notificationTrue() {
+        update.setFont(new Font("Monospaced", Font.BOLD, 15));
+        notificationPanel.add(update);
+        dashboard.add(notificationPanel);
     }
 }
 
@@ -157,7 +175,11 @@ class submitAJobListener implements ActionListener {
 
 class jobsInProgressListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
-        JIPFrame JIP = new JIPFrame();
+        try {
+            ViewJobsFrame JIP = new ViewJobsFrame();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 }
 

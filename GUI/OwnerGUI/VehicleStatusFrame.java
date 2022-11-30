@@ -4,13 +4,14 @@ import javax.swing.*;
 import GUI.ButtonListeners.returnButtonListener;
 import java.util.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import BackEnd.*;
 import BackEnd.Entities.CloudController;
 
 public class VehicleStatusFrame {
-    JFrame dashboard = new JFrame("Pending Application Dashboard");
+    JFrame dashboard = new JFrame("Vehicle Status and Notifications");
 
     JPanel titlePanel = new JPanel();
     JPanel acceptedAppTitlePanel = new JPanel();
@@ -18,14 +19,16 @@ public class VehicleStatusFrame {
     JPanel acceptedAppPanel = new JPanel();
     JPanel declinedAppPanel = new JPanel();
     JPanel returnPanel = new JPanel();
+    JPanel clearPanel = new JPanel();
 
     JLabel dashboardTitle = new JLabel("Status of Vehicle Applications");
-    JLabel acceptedAppTitle = new JLabel("Approved Applications");
-    JLabel declinedAppTitle = new JLabel("Rejected Applications");
+    JLabel acceptedAppTitle = new JLabel("Pending Applications");
+    JLabel declinedAppTitle = new JLabel("Declined Applications");
     JLabel noCurrentJobsLabel = new JLabel("No Current Vehicle Applications");
     JLabel noCurrentVehiclesLabel = new JLabel("No Current Vehicle Applications");
 
     JButton returnButton = new JButton("Return");
+    JButton clearDeclined = new JButton("Remove Declined Vehicles");
 
     public VehicleStatusFrame() {
         dashboard.setSize(1200, 800);
@@ -37,7 +40,7 @@ public class VehicleStatusFrame {
 
         // Setting up the title of the frame.
         titlePanel.setBackground(new Color(249, 217, 126));
-        titlePanel.setBounds(300, 20, 600, 150);
+        titlePanel.setBounds(300, 20, 750, 150);
         dashboardTitle.setForeground(Color.black);
         dashboardTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         titlePanel.add(dashboardTitle);
@@ -63,7 +66,10 @@ public class VehicleStatusFrame {
 
         returnPanel.setBounds(550, 600, 100, 50);
 
+        clearPanel.setBounds(850, 600, 220, 50);
+
         ActionListener owner = new returnButtonListener();
+        ActionListener clear = new ackowledgeDeclined();
 
         // return button
         returnButton.addActionListener(owner);
@@ -72,11 +78,18 @@ public class VehicleStatusFrame {
         });
         returnPanel.add(returnButton);
 
+        // clear button
+        clearDeclined.addActionListener(clear);
+        clearDeclined.addActionListener(e -> {
+            dashboard.dispose();
+        });
+        clearPanel.add(clearDeclined);
+
         // populating pending aplication tables for jobs and vehicles
         CloudController cc = new CloudController();
-        ArrayList<Vehicle> listOfApproved = cc.getAllVehicles();
+        ArrayList<Vehicle> listOfPending = cc.getAllPendingVehicles();
         ArrayList<Vehicle> listOfDeclined = cc.getDeclinedVehicles();
-        populateApprovedVehicles(cc, listOfApproved);
+        populatePendingVehicles(cc, listOfPending);
         populateDeclinedVehicles(cc, listOfDeclined);
 
         dashboard.add(titlePanel);
@@ -85,12 +98,13 @@ public class VehicleStatusFrame {
         dashboard.add(acceptedAppPanel);
         dashboard.add(declinedAppPanel);
         dashboard.add(returnPanel);
+        dashboard.add(clearPanel);
 
         dashboard.setVisible(true);
 
     }
 
-    public void populateApprovedVehicles(CloudController cloudController, ArrayList<Vehicle> listOfVehicles) {
+    public void populatePendingVehicles(CloudController cloudController, ArrayList<Vehicle> listOfVehicles) {
         String headers[] = { "VehicleID", "Make", "Model", "Year", "In", "Out" };
         JTable vehicleList = new JTable(11, 6);
 
@@ -140,6 +154,16 @@ public class VehicleStatusFrame {
 
         vehicleList.setBounds(550, 250, 750, 350);
         declinedAppPanel.add(vehicleList);
+    }
+
+    class ackowledgeDeclined implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            CloudController cc = new CloudController();
+            cc.clearDeclinedVehicles();
+            VehicleStatusFrame refresh = new VehicleStatusFrame();
+        }
     }
 
 }
