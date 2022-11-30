@@ -1,7 +1,7 @@
 package GUI.CloudControllerGUI;
 
 import java.sql.*;
-
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.*;
 import GUI.ButtonListeners.cloudControllerListener;
 import java.util.*;
@@ -134,6 +134,7 @@ public class DeclineJobFrame {
                 dashboard.add(responsePanel);
                 dashboard.setVisible(true);
             } else {
+                showMessageDialog(null, "The job has been declined.");
                 String jobIDStr = jobIDInput.getText();
                 System.out.println(jobIDStr);
                 CloudController cc = new CloudController();

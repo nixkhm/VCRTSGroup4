@@ -1,7 +1,7 @@
 package GUI.CloudControllerGUI;
 
 import java.sql.*;
-
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.*;
 import GUI.ButtonListeners.cloudControllerListener;
 import java.util.*;
@@ -135,6 +135,7 @@ public class AcceptVehicleFrame {
                 dashboard.add(responsePanel);
                 dashboard.setVisible(true);
             } else {
+                showMessageDialog(null, "The vehicle has been accepted.");
                 String vehicleIDStr = vehicleIDInput.getText();
                 System.out.println(vehicleIDStr);
                 CloudController cc = new CloudController();
