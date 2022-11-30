@@ -153,7 +153,7 @@ public class PendingAppsFrame {
     }
 
     public void populatePendingVehicles(CloudController cloudController, ArrayList<Vehicle> listOfVehicles) {
-        String headers[] = { "VehicleID", "Make", "Model", "Year", "In", "Out" };
+        String headers[] = { "VehicleID", "Car Make", "Car Model", "Car Year", "Time Start", "Time End" };
         JTable vehicleList = new JTable(11, 6);
 
         for (int i = 0; i < headers.length; i++) {
@@ -179,7 +179,7 @@ public class PendingAppsFrame {
     }
 
     public void populatePendingJobs(CloudController cloudController, ArrayList<Job> listOfJobs) {
-        String headers[] = { "JobID", "name", "type", "duration", "deadline" };
+        String headers[] = { "JobID", "Job Name", "Job Type", "Duration", "Deadline" };
         JTable jobList = new JTable(11, 5);
 
         for (int i = 0; i < headers.length; i++) {

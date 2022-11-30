@@ -68,7 +68,7 @@ public class ViewVehicleFrame {
 
     public void populateTable(CloudController cloudController, ArrayList<Vehicle> listOfVehicles) {
 
-        String headers[] = { "Make", "Model", "Year", "In", "Out" };
+        String headers[] = { "Car Make", "Car Model", "Car Year", "Time Start", "Time End" };
         JTable vehicleList = new JTable(11, 5);
 
         for (int i = 0; i < headers.length; i++) {

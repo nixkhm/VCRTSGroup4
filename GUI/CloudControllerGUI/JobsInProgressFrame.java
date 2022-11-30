@@ -72,7 +72,7 @@ public class JobsInProgressFrame {
     }
 
     public void populateTable(CloudController cloudController, ArrayList<Job> listOfJobs) {
-        String headers[] = { "Job ID", "Name", "Type", "Duration", "Deadline" };
+        String headers[] = { "Job ID", "Job Name", "Job Type", "Duration", "Deadline" };
         JTable JIP = new JTable(11, 5);
         for (int i = 0; i < headers.length; i++) {
             JIP.setValueAt(headers[i], 0, i);

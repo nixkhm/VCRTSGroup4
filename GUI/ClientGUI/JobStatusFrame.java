@@ -105,7 +105,7 @@ public class JobStatusFrame {
     }
 
     public void populatePendingJobs(CloudController cloudController, ArrayList<Job> listOfJobs) {
-        String headers[] = { "JobID", "Name", "Type", "Duration", "Deadline" };
+        String headers[] = { "JobID", "Job Name", "Job Type", "Duration", "Deadline" };
         JTable jobList = new JTable(11, 5);
 
         for (int i = 0; i < headers.length; i++) {
@@ -130,7 +130,7 @@ public class JobStatusFrame {
     }
 
     public void populateDeclinedJobs(CloudController cloudController, ArrayList<Job> listOfVehicles) {
-        String headers[] = { "JobID", "Name", "Type", "Duration", "Deadline" };
+        String headers[] = { "JobID", "Job Name", "Job Type", "Duration", "Deadline" };
         JTable jobList = new JTable(11, 5);
 
         for (int i = 0; i < headers.length; i++) {

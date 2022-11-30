@@ -105,7 +105,7 @@ public class VehicleStatusFrame {
     }
 
     public void populatePendingVehicles(CloudController cloudController, ArrayList<Vehicle> listOfVehicles) {
-        String headers[] = { "VehicleID", "Make", "Model", "Year", "In", "Out" };
+        String headers[] = { "VehicleID", "Car Make", "Car Model", "Car Year", "Time Start", "Time End" };
         JTable vehicleList = new JTable(11, 6);
 
         for (int i = 0; i < headers.length; i++) {
@@ -131,7 +131,7 @@ public class VehicleStatusFrame {
     }
 
     public void populateDeclinedVehicles(CloudController cloudController, ArrayList<Vehicle> listOfVehicles) {
-        String headers[] = { "VehicleID", "Make", "Model", "Year", "In", "Out" };
+        String headers[] = { "VehicleID", "Car Make", "Car Model", "Car Year", "Time Start", "Time End"   };
         JTable vehicleList = new JTable(11, 6);
 
         for (int i = 0; i < headers.length; i++) {
