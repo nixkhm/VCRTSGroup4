@@ -1,6 +1,8 @@
 package GUI.OwnerGUI;
 
 import javax.swing.*;
+
+import BackEnd.Entities.CloudController;
 import GUI.ButtonListeners.logInListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,6 +22,7 @@ public class OwnerDashboard {
     JPanel historyPanel = new JPanel();
     JPanel settingsPanel = new JPanel();
     JPanel profilePanel = new JPanel();
+    JPanel notificationPanel = new JPanel();
 
     JButton homeButton = new JButton("Home");
     JButton registerCarButton = new JButton("Register a Vehicle");
@@ -29,6 +32,7 @@ public class OwnerDashboard {
     JButton profileButton = new JButton("Profile");
 
     JLabel logo = new JLabel(new ImageIcon("GUI/Assets/logo.png"));
+    JLabel update = new JLabel("You have an update on your Vehicle Applications. Please press Status");
 
     public OwnerDashboard() {
 
@@ -64,6 +68,9 @@ public class OwnerDashboard {
 
         profilePanel.setBackground(new Color(205, 205, 205));
         profilePanel.setBounds(1000, 30, 175, 50);
+
+        notificationPanel.setBackground(new Color(205, 205, 205));
+        notificationPanel.setBounds(450, 350, 650, 50);
 
         homeButton.setFont(new Font("Monospaced", Font.BOLD, 35));
         homeButton.setOpaque(false);
@@ -125,6 +132,11 @@ public class OwnerDashboard {
             dashboard.dispose();
         });
 
+        CloudController cc = new CloudController();
+        if (cc.getDeclinedVehicles().size() > 0) {
+            notificationTrue();
+        }
+
         // adding the multiple panels onto the dashboard
         dashboard.add(logoPanel);
         dashboard.add(homePanel);
@@ -135,6 +147,12 @@ public class OwnerDashboard {
         dashboard.add(profilePanel);
 
         dashboard.setVisible(true);
+    }
+
+    public void notificationTrue() {
+        update.setFont(new Font("Monospaced", Font.BOLD, 15));
+        notificationPanel.add(update);
+        dashboard.add(notificationPanel);
     }
 }
 

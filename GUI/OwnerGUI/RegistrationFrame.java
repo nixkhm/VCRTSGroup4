@@ -21,8 +21,8 @@ import java.nio.file.Path;
 
 public class RegistrationFrame {
 
-    JFrame dashboard = new JFrame("Car Registration");
-    JLabel registrationTitle = new JLabel("Car Registration");
+    JFrame dashboard = new JFrame("Vehicle Registration");
+    JLabel registrationTitle = new JLabel("Vehicle Registration");
 
     JPanel carRegistrationPanel = new JPanel();
     JPanel vehicleIDPanel = new JPanel();
@@ -68,7 +68,7 @@ public class RegistrationFrame {
 
         carRegistrationPanel.setBackground(new Color(249, 217, 126));
         carRegistrationPanel.setBounds(300, 20, 600, 150);
-        registrationTitle.setForeground(Color.white);
+        registrationTitle.setForeground(Color.black);
         registrationTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         carRegistrationPanel.add(registrationTitle);
 

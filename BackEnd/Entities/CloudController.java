@@ -241,4 +241,28 @@ public class CloudController {
             return allJobIds;
       }
 
+      public void clearDeclinedVehicles() {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "DELETE FROM AllVehicles WHERE STATUS = 2";
+                  Statement statement = connection.createStatement();
+                  int row = statement.executeUpdate(sql);
+                  connection.close();
+            } catch (SQLException e1) {
+                  e1.getMessage();
+            }
+      }
+
+      public void clearDeclinedJobs() {
+            try {
+                  connection = DriverManager.getConnection(url, username, password);
+                  String sql = "DELETE FROM AllJobs WHERE STATUS = 2";
+                  Statement statement = connection.createStatement();
+                  int row = statement.executeUpdate(sql);
+                  connection.close();
+            } catch (SQLException e1) {
+                  e1.getMessage();
+            }
+      }
+
 }

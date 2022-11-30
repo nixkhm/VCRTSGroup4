@@ -11,7 +11,7 @@ import BackEnd.*;
 import BackEnd.Entities.CloudController;
 
 public class JobStatusFrame {
-    JFrame dashboard = new JFrame("Pending Application Dashboard");
+    JFrame dashboard = new JFrame("Job Status and Notifications");
 
     JPanel titlePanel = new JPanel();
     JPanel approvedAppTitlePanel = new JPanel();
@@ -19,14 +19,16 @@ public class JobStatusFrame {
     JPanel approvedAppPanel = new JPanel();
     JPanel declinedAppPanel = new JPanel();
     JPanel returnPanel = new JPanel();
+    JPanel clearPanel = new JPanel();
 
     JLabel dashboardTitle = new JLabel("Status of Job Applications");
-    JLabel approvedAppTitle = new JLabel("Approved Applications");
-    JLabel declinedAppTitle = new JLabel("Rejected Applications");
+    JLabel pendingAppTitle = new JLabel("Pending Applications");
+    JLabel declinedAppTitle = new JLabel("Declined Applications");
     JLabel noCurrentJobsLabel = new JLabel("No Current Job Applications");
     JLabel noCurrentVehiclesLabel = new JLabel("No Current Vehicle Applications");
 
     JButton returnButton = new JButton("Return");
+    JButton clearDeclined = new JButton("Remove Declined Jobs");
 
     public JobStatusFrame() {
         dashboard.setSize(1200, 800);
@@ -37,16 +39,16 @@ public class JobStatusFrame {
         dashboard.setLayout(null);
 
         // Setting up the title of the frame.
-        titlePanel.setBackground(new Color(249, 217, 126));
+        titlePanel.setBackground(new Color(50, 100, 100));
         titlePanel.setBounds(300, 20, 600, 150);
-        dashboardTitle.setForeground(Color.black);
+        dashboardTitle.setForeground(Color.white);
         dashboardTitle.setFont(new Font("Monospaced", Font.BOLD, 35));
         titlePanel.add(dashboardTitle);
 
         approvedAppTitlePanel.setBackground(Color.LIGHT_GRAY);
         approvedAppTitlePanel.setBounds(50, 200, 550, 50);
-        approvedAppTitle.setBounds(50, 200, 50, 50);
-        approvedAppTitlePanel.add(approvedAppTitle);
+        pendingAppTitle.setBounds(50, 200, 50, 50);
+        approvedAppTitlePanel.add(pendingAppTitle);
 
         approvedAppPanel.setBackground(Color.LIGHT_GRAY);
         approvedAppPanel.setBounds(50, 250, 550, 300);
@@ -64,7 +66,10 @@ public class JobStatusFrame {
 
         returnPanel.setBounds(550, 600, 100, 50);
 
+        clearPanel.setBounds(850, 600, 220, 50);
+
         ActionListener client = new returnListener();
+        ActionListener clear = new ackowledgeDeclined();
 
         // return button
         returnButton.addActionListener(client);
@@ -73,11 +78,18 @@ public class JobStatusFrame {
         });
         returnPanel.add(returnButton);
 
+        // clear button
+        clearDeclined.addActionListener(clear);
+        clearDeclined.addActionListener(e -> {
+            dashboard.dispose();
+        });
+        clearPanel.add(clearDeclined);
+
         // populating pending aplication tables for jobs and vehicles
         CloudController cc = new CloudController();
-        ArrayList<Job> listOfApproved = cc.getAllJobs();
+        ArrayList<Job> listOfPending = cc.getAllPendingJobs();
         ArrayList<Job> listOfDeclined = cc.getDeclinedJobs();
-        populateApprovedJobs(cc, listOfApproved);
+        populatePendingJobs(cc, listOfPending);
         populateDeclinedJobs(cc, listOfDeclined);
 
         dashboard.add(titlePanel);
@@ -86,14 +98,15 @@ public class JobStatusFrame {
         dashboard.add(approvedAppPanel);
         dashboard.add(declinedAppPanel);
         dashboard.add(returnPanel);
+        dashboard.add(clearPanel);
 
         dashboard.setVisible(true);
 
     }
 
-    public void populateApprovedJobs(CloudController cloudController, ArrayList<Job> listOfJobs) {
+    public void populatePendingJobs(CloudController cloudController, ArrayList<Job> listOfJobs) {
         String headers[] = { "JobID", "Name", "Type", "Duration", "Deadline" };
-        JTable jobList = new JTable(11, 6);
+        JTable jobList = new JTable(11, 5);
 
         for (int i = 0; i < headers.length; i++) {
             jobList.setValueAt(headers[i], 0, i);
@@ -149,5 +162,15 @@ class returnListener implements ActionListener {
         // TODO Auto-generated method stub
         ClientDashboard clientDash = new ClientDashboard();
 
+    }
+}
+
+class ackowledgeDeclined implements ActionListener {
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        CloudController cc = new CloudController();
+        cc.clearDeclinedJobs();
+        JobStatusFrame refresh = new JobStatusFrame();
     }
 }
