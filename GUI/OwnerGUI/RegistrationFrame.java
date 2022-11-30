@@ -3,7 +3,7 @@ package GUI.OwnerGUI;
 import javax.swing.*;
 
 import BackEnd.Entities.CloudController;
-
+import static javax.swing.JOptionPane.showMessageDialog;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -193,7 +193,7 @@ public class RegistrationFrame {
 
                 String messageIn = "";
                 String messageOut = "";
-
+                showMessageDialog(null, "The vehicle has been submitted and is now pending.");
                 try {
                     System.out.println("----------*** This is client side ***--------");
                     System.out.println("client started!");

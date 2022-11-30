@@ -3,7 +3,7 @@ package GUI.ClientGUI;
 import javax.swing.*;
 
 import BackEnd.Entities.CloudController;
-
+import static javax.swing.JOptionPane.showMessageDialog;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -154,7 +154,7 @@ public class ClientSubmission {
                 dashboard.add(responsePanel);
                 dashboard.setVisible(true);
             } else {
-
+                
                 String jobIDStr = jobIDInput.getText();
                 int jobID = Integer.parseInt(jobIDStr);
 
@@ -175,7 +175,7 @@ public class ClientSubmission {
 
                 String messageIn = "";
                 String messageOut = "";
-
+                showMessageDialog(null, "The job has been submitted and is now pending.");
                 try {
                     System.out.println("----------*** This is client side ***--------");
                     System.out.println("client started!");
