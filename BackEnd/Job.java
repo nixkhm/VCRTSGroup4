@@ -6,11 +6,11 @@ public class Job {
     private String jobName;
     private String jobType;
     private int duration;
-    private int jobDeadline;
+    private String jobDeadline;
     private String notes;
     private int status;
 
-    public Job(int jobIDIn, String jobNameIn, String jobTypeIn, int durationIn, int jobDeadlineIn, int statusIn) {
+    public Job(int jobIDIn, String jobNameIn, String jobTypeIn, int durationIn, String jobDeadlineIn, int statusIn) {
         jobID = jobIDIn;
         jobName = jobNameIn;
         jobType = jobTypeIn;
@@ -35,7 +35,7 @@ public class Job {
         return duration;
     }
 
-    public int getJobDeadline() {
+    public String getJobDeadline() {
         return jobDeadline;
     }
 

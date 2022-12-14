@@ -10,10 +10,6 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.Charset;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /*
  * This will be the frame where the owners can register their vehicle to be added to the VC
@@ -41,12 +37,17 @@ public class RegistrationFrame {
     JLabel timeInLabel = new JLabel("Time Start");
     JLabel timeOutLabel = new JLabel("Time End");
 
+    String hours[] = { "12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM", "6:00 AM", "7:00 AM",
+            "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
+            "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM",
+            "10:00 PM", "11:00 PM" };
+
     JTextField vehicleIDInput = new JTextField();
     JTextField carModelInput = new JTextField();
     JTextField carMakeInput = new JTextField();
     JTextField carYearInput = new JTextField();
-    JTextField timeStartInput = new JTextField();
-    JTextField timeEndInput = new JTextField();
+    JComboBox timeStartInput = new JComboBox(hours);
+    JComboBox timeEndInput = new JComboBox(hours);
 
     JButton submitButton = new JButton("Submit");
     JButton goBackButton = new JButton("Go Back");
@@ -164,8 +165,7 @@ public class RegistrationFrame {
             JLabel response = new JLabel("Registration Info");
 
             if (carYearInput.getText().isEmpty() || carModelInput.getText().isEmpty()
-                    || carMakeInput.getText().isEmpty() || timeStartInput.getText().isEmpty()
-                    || timeEndInput.getText().isEmpty()) {
+                    || carMakeInput.getText().isEmpty()) {
                 response.setText("All text fields must be completed");
                 responsePanel.add(response);
                 dashboard.add(responsePanel);
@@ -182,11 +182,9 @@ public class RegistrationFrame {
                 String carYearStr = carYearInput.getText();
                 int carYear = Integer.parseInt(carYearStr);
 
-                String timeInStr = timeStartInput.getText();
-                int timeIn = Integer.parseInt(timeInStr);
+                String timeIn = (String) timeStartInput.getSelectedItem();
 
-                String timeEndStr = timeEndInput.getText();
-                int timeEnd = Integer.parseInt(timeEndStr);
+                String timeEnd = (String) timeEndInput.getSelectedItem();
 
                 String info = vehicleID + "/" + carMake + "/" + carModel + "/"
                         + carYear + "/" + timeIn + "/" + timeEnd + "/" + "0";

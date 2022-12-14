@@ -10,11 +10,6 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public class ClientSubmission {
 
@@ -33,14 +28,19 @@ public class ClientSubmission {
     // Labels for each text box.
     JLabel jobName = new JLabel("Job Name");
     JLabel jobType = new JLabel("Job Type");
-    JLabel jobDuration = new JLabel("Approximate Job Duration");
+    JLabel jobDuration = new JLabel("Approximate Job Duration (mins)");
     JLabel jobDeadline = new JLabel("Job Deadline");
     JLabel jobID = new JLabel("Job ID");
 
     JTextField jobNameInput = new JTextField();
-    JTextField jobTypeInput = new JTextField();
+    String[] options = { "File Upload", "File Download", "File Transfer" };
+    JComboBox jobTypeInput = new JComboBox(options);
     JTextField jobDurationInput = new JTextField();
-    JTextField jobDeadlineInput = new JTextField();
+    String hours[] = { "12:00 AM", "1:00 AM", "2:00 AM", "3:00 AM", "4:00 AM", "5:00 AM", "6:00 AM", "7:00 AM",
+            "8:00 AM", "9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
+            "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM", "9:00 PM",
+            "10:00 PM", "11:00 PM" };
+    JComboBox jobDeadlineInput = new JComboBox(hours);
     JTextField jobIDInput = new JTextField();
 
     JButton submitButton = new JButton("Submit");
@@ -71,27 +71,27 @@ public class ClientSubmission {
         // Panels that are supposed to include all the labels.
 
         jobIDPanel.setBackground(Color.LIGHT_GRAY);
-        jobIDPanel.setBounds(50, 200, 200, 50);
+        jobIDPanel.setBounds(50, 200, 220, 50);
         jobID.setBounds(50, 200, 50, 50);
         jobIDPanel.add(jobID);
 
         jobNamePanel.setBackground(Color.LIGHT_GRAY);
-        jobNamePanel.setBounds(50, 250, 200, 50);
+        jobNamePanel.setBounds(50, 250, 220, 50);
         jobName.setBounds(50, 250, 50, 50);
         jobNamePanel.add(jobName);
 
         jobTypePanel.setBackground(Color.LIGHT_GRAY);
-        jobTypePanel.setBounds(50, 300, 200, 50);
+        jobTypePanel.setBounds(50, 300, 220, 50);
         jobType.setBounds(50, 300, 50, 50);
         jobTypePanel.add(jobType);
 
         jobDurationPanel.setBackground(Color.LIGHT_GRAY);
-        jobDurationPanel.setBounds(50, 350, 200, 50);
-        jobDuration.setBounds(50, 350, 50, 50);
+        jobDurationPanel.setBounds(50, 350, 220, 50);
+        jobDuration.setBounds(50, 350, 55, 50);
         jobDurationPanel.add(jobDuration);
 
         jobDeadlinePanel.setBackground(Color.LIGHT_GRAY);
-        jobDeadlinePanel.setBounds(50, 400, 200, 50);
+        jobDeadlinePanel.setBounds(50, 400, 220, 50);
         jobDeadline.setBounds(50, 400, 50, 50);
         jobDeadlinePanel.add(jobDeadline);
 
@@ -146,27 +146,25 @@ public class ClientSubmission {
             responsePanel.setBounds(300, 550, 250, 75);
             JLabel response = new JLabel("Registration Info");
 
-            if (jobNameInput.getText().isEmpty() || jobTypeInput.getText().isEmpty()
-                    || jobDurationInput.getText().isEmpty() || jobDeadlineInput.getText().isEmpty()
+            if (jobNameInput.getText().isEmpty() || jobDurationInput.getText().isEmpty()
                     || jobIDInput.getText().isEmpty()) {
                 response.setText("All text fields must be completed");
                 responsePanel.add(response);
                 dashboard.add(responsePanel);
                 dashboard.setVisible(true);
             } else {
-                
+
                 String jobIDStr = jobIDInput.getText();
                 int jobID = Integer.parseInt(jobIDStr);
 
                 String jobName = jobNameInput.getText();
 
-                String jobType = jobTypeInput.getText();
+                String jobType = (String) jobTypeInput.getSelectedItem();
 
                 String jobDurationStr = jobDurationInput.getText();
                 int jobDuration = Integer.parseInt(jobDurationStr);
 
-                String jobDeadlineStr = jobDeadlineInput.getText();
-                int jobDeadline = Integer.parseInt(jobDeadlineStr);
+                String jobDeadline = (String) jobDeadlineInput.getSelectedItem();
 
                 String info = jobID + "/" + jobName + "/" + jobType + "/"
                         + jobDuration + "/" + jobDeadline + "/" + "0";
