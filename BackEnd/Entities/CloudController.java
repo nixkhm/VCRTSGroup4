@@ -99,7 +99,7 @@ public class CloudController {
                   while (rs.next()) {
                         Job newJob = new Job(rs.getInt("JobID"), rs.getString("name"),
                                     rs.getString("type"),
-                                    rs.getInt("duration"), rs.getInt("deadline"), rs.getInt("status"));
+                                    rs.getInt("duration"), rs.getString("deadline"), rs.getInt("status"));
                         allJobs.add(newJob);
                   }
                   connection.close();
@@ -119,7 +119,7 @@ public class CloudController {
                   while (rs.next()) {
                         Job newJob = new Job(rs.getInt("JobID"), rs.getString("name"),
                                     rs.getString("type"),
-                                    rs.getInt("duration"), rs.getInt("deadline"), rs.getInt("status"));
+                                    rs.getInt("duration"), rs.getString("deadline"), rs.getInt("status"));
                         pendingJobs.add(newJob);
                   }
                   connection.close();
@@ -210,7 +210,7 @@ public class CloudController {
                   while (rs.next()) {
                         Job newJob = new Job(rs.getInt("JobID"), rs.getString("name"),
                                     rs.getString("type"),
-                                    rs.getInt("duration"), rs.getInt("deadline"), rs.getInt("status"));
+                                    rs.getInt("duration"), rs.getString("deadline"), rs.getInt("status"));
                         declinedJobs.add(newJob);
                   }
                   connection.close();

@@ -66,10 +66,10 @@ public class JobServer {
                                 + "(JobID , Name, Type, Duration, Deadline, Status)"
                                 + "VALUES ("
                                 + Integer.parseInt(jobID)
-                                + ",'" + name
-                                + "','" + type
-                                + "'," + Integer.parseInt(duration)
-                                + "," + Integer.parseInt(deadline)
+                                + "," + "'" + name + "'"
+                                + "," + "'" + type + "'"
+                                + "," + Integer.parseInt(duration)
+                                + "," + "'" + deadline + "'"
                                 + "," + status
                                 + ")";
 

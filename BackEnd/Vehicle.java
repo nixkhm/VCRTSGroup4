@@ -2,8 +2,6 @@ package BackEnd;
 
 import java.util.Random;
 
-import BackEnd.model.Owner;
-
 public class Vehicle {
 
     private int vehicleID;
