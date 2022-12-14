@@ -8,11 +8,11 @@ public class Vehicle {
     private String make;
     private String model;
     private int year;
-    private int timeStart;
-    private int timeEnd;
+    private String timeStart;
+    private String timeEnd;
     private String status;
 
-    public Vehicle(int vehicleIDIn, String makeIn, String modelIn, int yearIn, int startIn, int endIn,
+    public Vehicle(int vehicleIDIn, String makeIn, String modelIn, int yearIn, String startIn, String endIn,
             String statusIn) {
         vehicleID = vehicleIDIn;
         make = makeIn;
@@ -39,11 +39,11 @@ public class Vehicle {
         return year;
     }
 
-    public int getTimeStart() {
+    public String getTimeStart() {
         return timeStart;
     }
 
-    public int getTimeEnd() {
+    public String getTimeEnd() {
         return timeEnd;
     }
 

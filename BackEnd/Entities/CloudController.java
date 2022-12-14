@@ -57,7 +57,7 @@ public class CloudController {
                   while (rs.next()) {
                         Vehicle newVeh = new Vehicle(rs.getInt("VehicleID"), rs.getString("make"),
                                     rs.getString("model"),
-                                    rs.getInt("year"), rs.getInt("timeIn"), rs.getInt("timeOut"),
+                                    rs.getInt("year"), rs.getString("timeIn"), rs.getString("timeOut"),
                                     rs.getString("status"));
                         allVehicles.add(newVeh);
                   }
@@ -78,7 +78,7 @@ public class CloudController {
                   while (rs.next()) {
                         Vehicle newVeh = new Vehicle(rs.getInt("VehicleID"), rs.getString("make"),
                                     rs.getString("model"),
-                                    rs.getInt("year"), rs.getInt("timeIn"), rs.getInt("timeOut"),
+                                    rs.getInt("year"), rs.getString("timeIn"), rs.getString("timeOut"),
                                     rs.getString("status"));
                         pendingVehicles.add(newVeh);
                   }
@@ -187,7 +187,7 @@ public class CloudController {
                   while (rs.next()) {
                         Vehicle newVeh = new Vehicle(rs.getInt("VehicleID"), rs.getString("make"),
                                     rs.getString("model"),
-                                    rs.getInt("year"), rs.getInt("timeIn"), rs.getInt("timeOut"),
+                                    rs.getInt("year"), rs.getString("timeIn"), rs.getString("timeOut"),
                                     rs.getString("status"));
                         declinedVehicles.add(newVeh);
                   }

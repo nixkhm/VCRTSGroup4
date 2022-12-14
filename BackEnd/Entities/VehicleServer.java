@@ -64,11 +64,11 @@ public class VehicleServer {
                                 + "(VehicleID , Make, Model, Year, TimeIn, TimeOut, Status)"
                                 + "VALUES ("
                                 + Integer.parseInt(vehicleID)
-                                + ",'" + make
-                                + "','" + model
-                                + "'," + Integer.parseInt(year)
-                                + "," + Integer.parseInt(timeIn)
-                                + "," + Integer.parseInt(timeOut)
+                                + "," + "'" + make + "'"
+                                + "," + "'" + model + "'"
+                                + "," + Integer.parseInt(year)
+                                + "," + "'" + timeIn + "'"
+                                + "," + "'" + timeOut + "'"
                                 + "," + status
                                 + ")";
 
