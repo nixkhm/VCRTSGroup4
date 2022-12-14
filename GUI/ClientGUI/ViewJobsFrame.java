@@ -69,7 +69,7 @@ public class ViewJobsFrame {
 
     public void populateTable(CloudController cloudController, ArrayList<Job> listOfVehicles) {
 
-        String headers[] = { "Name", "Type", "Duration", "Deadline" };
+        String headers[] = { "Job Name", "Job Type", "Duration", "Deadline" };
         JTable jobList = new JTable(11, 4);
 
         for (int i = 0; i < headers.length; i++) {
